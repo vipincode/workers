@@ -1,8 +1,8 @@
+import Blogs from "../../components/home/blogs";
 import Hero from "../../components/home/hero";
 import HomeServices from "../../components/home/home-services";
 import MostBookedServices from "../../components/home/most-booked-services";
 import WorkProcess from "../../components/home/work-process";
-import Contact from "../../components/shared/contact";
 import Container from "../../components/shared/container";
 import SearchBox from "../../components/shared/search-box";
 
@@ -20,8 +20,9 @@ const HomePage = () => {
       <div>
         <MostBookedServices />
       </div>
+      <div>Our Partners</div>
       <div>
-        <Contact />
+        <Blogs />
       </div>
     </section>
   );

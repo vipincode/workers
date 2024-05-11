@@ -1,4 +1,4 @@
-import { DotIcon } from "lucide-react";
+import { BadgeCheck } from "lucide-react";
 import VCard from "../shared/v-card";
 import HeadingPrimary from "../typography/heading-primary";
 
@@ -13,9 +13,9 @@ const HomeServices = () => {
           <VCard key={item} />
         ))}
       </div>
-      <div className="grid grid-cols-8 gap-4 items-center mt-[100px]">
+      <div className="grid grid-cols-8 gap-[40px] items-center mt-[100px] pb-[100px]">
         <div className="col-span-5">
-          <h2 className="text-2xl font-semibold mb-6">Heading goes here</h2>
+          <HeadingPrimary>How we work</HeadingPrimary>
           <p>
             DESIGN IS AT THE HEART OF EVERYTHING WE DO Lorem Ipsum has been the industry's standard dummy text ever
             since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen
@@ -24,28 +24,28 @@ const HomeServices = () => {
           </p>
           <ul className="space-y-6 mt-6">
             <li className="flex">
-              <DotIcon size={32} />
+              <BadgeCheck className="text-secondary pr-2" size={32} />
               <span>
                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining
                 essentially unchange dtype and scrambled.
               </span>
             </li>
             <li className="flex">
-              <DotIcon size={32} />
+              <BadgeCheck className="text-secondary pr-2" size={32} />
               <span>
                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining
                 essentially unchange dtype and scrambled.
               </span>
             </li>
             <li className="flex">
-              <DotIcon size={32} />
+              <BadgeCheck className="text-secondary pr-2" size={32} />
               <span>
                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining
                 essentially unchange dtype and scrambled.
               </span>
             </li>
             <li className="flex">
-              <DotIcon size={32} />
+              <BadgeCheck className="text-secondary pr-2" size={32} />
               <span>
                 It has survived not only five centuries, but also the leap into electronic typesetting, remaining
                 essentially unchange dtype and scrambled.
@@ -53,8 +53,8 @@ const HomeServices = () => {
             </li>
           </ul>
         </div>
-        <div className="col-span-3">
-          <img src="/public/images/work.jpg" alt="" />
+        <div className="col-span-3 ">
+          <img src="/public/images/work.png" alt="" />
         </div>
       </div>
     </>
