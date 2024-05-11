@@ -2,7 +2,7 @@ import Blogs from "../../components/home/blogs";
 import Hero from "../../components/home/hero";
 import HomeServices from "../../components/home/home-services";
 import MostBookedServices from "../../components/home/most-booked-services";
-import WorkProcess from "../../components/home/work-process";
+import Category from "../../components/home/category";
 import Container from "../../components/shared/container";
 import Partners from "../../components/shared/partners";
 import SearchBox from "../../components/shared/search-box";
@@ -17,7 +17,7 @@ const HomePage = () => {
         <HomeServices />
       </Container>
       <div>
-        <WorkProcess />
+        <Category />
       </div>
       <div>
         <MostBookedServices />

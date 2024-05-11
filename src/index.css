@@ -25,3 +25,7 @@ body {
 .swiper-pagination-bullet-active {
   background-color: var(--secondary-color) !important;
 }
+
+.clip-rect {
+  clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
+}
