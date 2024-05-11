@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import CuttingImage from "../../assets/images/cutting.jpg";
 
 const HCard = () => {
   return (
@@ -6,7 +7,7 @@ const HCard = () => {
       to="#"
       className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row overflow-hidden"
     >
-      <img className="object-cover w-full h-[200px] md:w-48 " src="/public/images/cutting-1.jpg" alt="" />
+      <img className="object-cover w-full h-[200px] md:w-48 " src={CuttingImage} alt="" />
       <div className="flex flex-col justify-between p-4 leading-normal">
         <h5 className="mb-2 text-[24px] leading-[30px] font-semibold tracking-tight">
           Noteworthy technology acquisitions 2021
