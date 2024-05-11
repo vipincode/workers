@@ -1,6 +1,7 @@
 import { BadgeCheck } from "lucide-react";
 import VCard from "../shared/v-card";
 import HeadingPrimary from "../typography/heading-primary";
+import WorkImage from "../../assets/images/work.png";
 
 const HomeServices = () => {
   return (
@@ -54,7 +55,7 @@ const HomeServices = () => {
           </ul>
         </div>
         <div className="col-span-3 ">
-          <img src="/public/images/work.png" alt="" />
+          <img src={WorkImage} alt="" />
         </div>
       </div>
     </>
