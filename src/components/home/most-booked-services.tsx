@@ -1,9 +1,10 @@
+import Container from "../shared/container";
 import VCard from "../shared/v-card";
 import HeadingPrimary from "../typography/heading-primary";
 
 const MostBookedServices = () => {
   return (
-    <div className="container mx-auto px-4 my-[100px]">
+    <Container className="my-[100px]">
       <div className="text-center">
         <HeadingPrimary className="mb-10">Most booked services</HeadingPrimary>
       </div>
@@ -12,7 +13,7 @@ const MostBookedServices = () => {
           <VCard key={item} />
         ))}
       </div>
-    </div>
+    </Container>
   );
 };
 
