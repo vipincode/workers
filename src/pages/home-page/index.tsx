@@ -4,6 +4,7 @@ import HomeServices from "../../components/home/home-services";
 import MostBookedServices from "../../components/home/most-booked-services";
 import WorkProcess from "../../components/home/work-process";
 import Container from "../../components/shared/container";
+import Partners from "../../components/shared/partners";
 import SearchBox from "../../components/shared/search-box";
 
 const HomePage = () => {
@@ -20,7 +21,9 @@ const HomePage = () => {
       <div>
         <MostBookedServices />
       </div>
-      <div>Our Partners</div>
+      <div>
+        <Partners />
+      </div>
       <div>
         <Blogs />
       </div>

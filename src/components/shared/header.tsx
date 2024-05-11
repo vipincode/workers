@@ -2,7 +2,7 @@ const Header = () => {
   return (
     <div className="navbar bg-base-100 sticky top-0">
       <div className="flex-1">
-        <a className="btn btn-ghost text-xl">Logo</a>
+        <a className="btn btn-ghost text-xl">Dahatwala™</a>
       </div>
       <div className="flex-none gap-2">
         <div className="form-control">
