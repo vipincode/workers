@@ -11,7 +11,7 @@ const HomePage = () => {
     <section>
       <Hero />
       <SearchBox />
-      <Container className="my-[100px]">
+      <Container>
         <HomeServices />
       </Container>
       <div>

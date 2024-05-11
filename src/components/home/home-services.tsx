@@ -6,10 +6,10 @@ const HomeServices = () => {
   return (
     <>
       <div className="text-center">
-        <HeadingPrimary className="mb-10">Our Services</HeadingPrimary>
+        <HeadingPrimary className="mb-6 mt-6">Our Services</HeadingPrimary>
       </div>
       <div className="grid grid-cols-4 gap-4">
-        {[1, 2, 3, 4].map((item) => (
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
           <VCard key={item} />
         ))}
       </div>
