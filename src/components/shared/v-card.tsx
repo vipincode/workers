@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
+import RoadImage from "../../assets/images/road.jpg";
 
 const VCard = () => {
   return (
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg ">
       <Link to="#">
-        <img className="rounded-t-lg h-[100px] w-full object-cover" src="/public/images/road.jpg" alt="" />
+        <img className="rounded-t-lg h-[100px] w-full object-cover" src={RoadImage} alt="" />
       </Link>
       <div className="p-5">
         <Link to="#">
