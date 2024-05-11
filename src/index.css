@@ -2,9 +2,26 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --primary-color: #0d0106;
+  --secondary-color: #3626a7;
+  --secondary-color: #3626a7;
+  --accent-color: #657ed4;
+  --neutral-color: #fdf0d5;
+  --base-100-color: #fbfbff;
+  --info-color: #0092d8;
+  --success-color: #25ff6b;
+  --warning-color: #fca200;
+  --error-color: #c1121f;
+}
+
 body {
   font-family: "Poppins", sans-serif;
   font-size: 16px;
   font-weight: 300;
   line-height: 1.5;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: var(--secondary-color) !important;
 }

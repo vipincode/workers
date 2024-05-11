@@ -6,6 +6,7 @@ import WorkProcess from "../../components/home/work-process";
 import Container from "../../components/shared/container";
 import Partners from "../../components/shared/partners";
 import SearchBox from "../../components/shared/search-box";
+import Testimonials from "../../components/shared/testimonials";
 
 const HomePage = () => {
   return (
@@ -26,6 +27,9 @@ const HomePage = () => {
       </div>
       <div>
         <Blogs />
+      </div>
+      <div>
+        <Testimonials />
       </div>
     </section>
   );
