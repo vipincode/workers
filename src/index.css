@@ -29,3 +29,21 @@ body {
 .clip-rect {
   clip-path: polygon(0% 0%, 75% 0%, 100% 50%, 75% 100%, 0% 100%);
 }
+
+/* Blog Pages */
+
+.blog-content {
+  h2 {
+    font-size: 18px;
+    font-weight: 600;
+    line-height: 28px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 15px;
+    line-height: 28px;
+    font-weight: 400;
+    margin-bottom: 20px;
+  }
+}

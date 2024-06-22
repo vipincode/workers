@@ -4,7 +4,7 @@ import CuttingImage from "../../assets/images/cutting.jpg";
 const HCard = () => {
   return (
     <Link
-      to="#"
+      to="/blog"
       className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row overflow-hidden"
     >
       <img className="object-cover w-full h-[200px] md:w-48 " src={CuttingImage} alt="" />
