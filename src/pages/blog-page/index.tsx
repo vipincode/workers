@@ -42,7 +42,7 @@ const BlogPage = () => {
               </p>
               <div className="grid grid-cols-12 gap-6 w-full my-10 items-center">
                 <div className="col-span-5">
-                  <img src="/public/images/cutting-1.jpg" className="h-full" alt=" cutting images" />
+                  <img src="/images/cutting-1.jpg" className="h-full" alt=" cutting images" />
                 </div>
                 <article className="col-span-7">
                   <h2>Heading 2</h2>
@@ -85,7 +85,7 @@ const BlogPage = () => {
                   </p>
                 </article>
                 <div className="col-span-5">
-                  <img src="/public/images/cutting-1.jpg" className="h-full" alt=" cutting images" />
+                  <img src="/images/cutting-1.jpg" className="h-full" alt=" cutting images" />
                 </div>
               </div>
             </div>
