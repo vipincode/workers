@@ -12,31 +12,16 @@ const Header = () => {
         <div className="form-control">
           <ul className="flex items-center gap-6">
             <li>
-              <Link className="font-medium text-sm" to="#">
-                Link1
+              <Link className="font-medium text-sm" to="/about">
+                About Us
               </Link>
             </li>
             <li>
-              <Link className="font-medium text-sm" to="#">
-                Link2
+              <Link className="font-medium text-sm" to="/contact">
+                Contact
               </Link>
             </li>
-            <li>
-              <Link className="font-medium text-sm" to="#">
-                Link3
-              </Link>
-            </li>
-            <li>
-              <Link className="font-medium text-sm" to="#">
-                Link4
-              </Link>
-            </li>
-            <li>
-              <Link className="font-medium text-sm" to="#">
-                Link5
-              </Link>
-            </li>
-            <li>
+            <li className="pr-6">
               <Link className="font-medium text-sm" to="/blog">
                 Blog
               </Link>

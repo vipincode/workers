@@ -3,13 +3,14 @@ import { FC } from "react";
 interface Props {
   title: string;
   content?: string;
+  bgImage?: string;
 }
 
-const SmallBanner: FC<Props> = ({ title, content }) => {
+const SmallBanner: FC<Props> = ({ title, content, bgImage = "/images/cutting.jpg" }) => {
   return (
     <header
-      style={{ backgroundImage: `url("/images/cutting.jpg")` }}
-      className="hero min-h-[50vh] bg-base-200 bg-no-repeat bg-center bg-cover bg-fixed"
+      style={{ backgroundImage: `url(${bgImage})` }}
+      className="hero min-h-[40vh] bg-base-200 bg-no-repeat bg-center bg-cover bg-fixed"
     >
       <div className="hero-content text-center">
         <div className="max-w-[650px] text-white">
