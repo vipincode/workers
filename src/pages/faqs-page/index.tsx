@@ -11,7 +11,7 @@ const FaqsPage = () => {
       />
       <Container className="my-[50px]">
         <div className="max-w-[800px] px-6 mx-auto">
-          <h2 className="text-3xl font-semibold mb-5 text-center">FAQs</h2>
+          <h2 className="text-3xl font-semibold mb-5 text-center">Have any Questions ?</h2>
           <p className="text-base font-normal leading-8 text-center">
             Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsa error dicta provident explicabo, similique
             voluptatibus officia! Eligendi ducimus vitae deserunt delectus aperiam dolor, dolorem doloribus ad quo
