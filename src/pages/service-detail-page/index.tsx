@@ -67,6 +67,9 @@ const ServicesDetailsPage = () => {
                 <UserRatingCard />
                 <UserRatingCard />
               </div>
+              <div className="my-[60px] flex justify-center items-center">
+                <button className="btn btn-link">View all Reviews</button>
+              </div>
             </div>
             <div>
               <div className="flex justify-between mt-[100px]">
