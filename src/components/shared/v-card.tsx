@@ -1,9 +1,18 @@
 import { Link } from "react-router-dom";
 import RoadImage from "../../assets/images/road.jpg";
+import ServicesModal from "./modals";
+import { useRef } from "react";
+import ServicesListingCard from "../services/servies-listing-card";
 
 const VCard = () => {
+  const modalRef = useRef<HTMLDialogElement>(null);
+
+  const handleActiveModal = () => {
+    modalRef.current?.showModal();
+  };
+
   return (
-    <div className="max-w-sm bg-white border border-gray-200 rounded-lg ">
+    <div className="max-w-sm bg-white border border-gray-200 rounded-lg cursor-pointer" onClick={handleActiveModal}>
       <Link to="#">
         <img className="rounded-t-lg h-[100px] w-full object-cover" src={RoadImage} alt="" />
       </Link>
@@ -38,6 +47,13 @@ const VCard = () => {
           </svg>
         </Link>
       </div>
+
+      {/* Modals */}
+      <ServicesModal ref={modalRef} title="Sub Category Popup!">
+        {[1, 2, 3, 4, 5, 6].map((item) => (
+          <ServicesListingCard key={item} />
+        ))}
+      </ServicesModal>
     </div>
   );
 };

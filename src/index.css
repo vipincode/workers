@@ -13,6 +13,7 @@
   --success-color: #25ff6b;
   --warning-color: #fca200;
   --error-color: #c1121f;
+  --white: #ffffff;
 }
 
 body {
@@ -45,5 +46,23 @@ body {
     line-height: 28px;
     font-weight: 400;
     margin-bottom: 20px;
+  }
+}
+
+/* SWiper */
+
+.serviceDetailCarousel {
+  .swiper-slide {
+    min-height: 340px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    font-weight: 600;
+    color: var(--white);
+  }
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: var(--white);
   }
 }
