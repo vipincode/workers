@@ -24,3 +24,19 @@ const VCard = () => {
 
 export default VCard;
 ```
+
+## React query
+
+- caching data
+
+```js
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      retry: 3,
+      gcTime: 300_000, // 5min
+      staleTime: 10 * 1000, // 10 second
+    },
+  },
+});
+```
