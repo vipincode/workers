@@ -12,7 +12,7 @@ const Category = () => {
     return <p>Loading...</p>;
   }
 
-  if (error) <p>Oops! Something went wrong! {error.message}</p>;
+  if (isError) <p>Oops! Something went wrong! {error.message}</p>;
 
   return (
     <div className="bg-helmet-background bg-center bg-no-repeat bg-cover bg-fixed">
