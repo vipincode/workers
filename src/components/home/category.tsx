@@ -1,6 +1,6 @@
 import HeadingPrimary from "../typography/heading-primary";
 import CategoryCard from "../shared/category-card";
-import { useCategories } from "../../react-query/use-categories";
+import { useCategories } from "../../react-query/apis";
 
 const Category = () => {
   const { data, isPending, isError, error } = useCategories();
@@ -12,7 +12,7 @@ const Category = () => {
     return <p>Loading...</p>;
   }
 
-  if (isError) <p>Oops! Something went wrong! {error.message}</p>;
+  if (error) <p>Oops! Something went wrong! {error.message}</p>;
 
   return (
     <div className="bg-helmet-background bg-center bg-no-repeat bg-cover bg-fixed">
