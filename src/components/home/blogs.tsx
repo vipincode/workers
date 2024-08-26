@@ -1,14 +1,27 @@
 import Container from "../shared/container";
-import HCard from "../shared/h-card";
+import BlogCard from "../shared/blog-card";
 import HeadingPrimary from "../typography/heading-primary";
+import { useBlogs } from "../../react-query/hooks";
 
 const Blogs = () => {
+  const { data, status } = useBlogs();
+
+  if (status === "pending") {
+    return <p>Blog is loading...</p>;
+  }
+
+  if (status === "error") {
+    return <p>Oops something went wrong try again!</p>;
+  }
+
+  const { blogs } = data;
+
   return (
     <Container className="mb-[100px]">
       <HeadingPrimary className="mb-10">Latest Blog post</HeadingPrimary>
       <div className="grid grid-cols-2 gap-6">
-        {[1, 2, 3, 4].map((item) => (
-          <HCard key={item} />
+        {blogs.map((blog) => (
+          <BlogCard key={blog.id} data={blog} />
         ))}
       </div>
     </Container>

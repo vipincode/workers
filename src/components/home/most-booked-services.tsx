@@ -1,5 +1,5 @@
 import Container from "../shared/container";
-import VCard from "../shared/v-card";
+import ServicesCard from "../shared/services-card";
 import HeadingPrimary from "../typography/heading-primary";
 
 const MostBookedServices = () => {
@@ -10,7 +10,7 @@ const MostBookedServices = () => {
       </div>
       <div className="grid grid-cols-4 gap-4">
         {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-          <VCard key={item} />
+          <ServicesCard key={item} />
         ))}
       </div>
     </Container>

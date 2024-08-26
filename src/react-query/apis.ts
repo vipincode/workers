@@ -1,14 +1,29 @@
-import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { API_URL } from "./constants";
 
-export const API_URL = import.meta.env.VITE_API_BASE_URL;
-export const VITE_IMAGE_PATH_URL = import.meta.env.VITE_IMAGE_PATH_URL;
+/**
+ * @Categories
+ * Get Categories data.
+ */
+export const fetchCategories = () => axios.get<CategoriesProps>(`${API_URL}/get-categories`).then((res) => res.data);
 
-export function useCategories() {
-  const fetchCategories = () => axios.get<CategoriesProps>(`${API_URL}/get-categories`).then((res) => res.data);
-  return useQuery<CategoriesProps, Error>({
-    queryKey: ["category"],
-    queryFn: fetchCategories,
-    staleTime: 10 * 1000,
-  });
-}
+export const fetchSubCategories = (categoryId: number) =>
+  axios.get<SubCategoryProps>(`${API_URL}/get-sub-category/${categoryId}`).then((res) => res.data);
+
+/**
+ * @Services
+ * Get Services data.
+ */
+
+export const fetchServices = () => axios.get<ServicesProps>(`${API_URL}/get-services`).then((res) => res.data);
+
+/**
+ * @Blog
+ * Get Blog data.
+ */
+export const fetchBlog = () => axios.get<BlogProps>(`${API_URL}/get-blogs`).then((res) => res.data);
+
+/**
+ * @Blog
+ * Get Slider data.
+ */

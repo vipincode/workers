@@ -1,16 +1,30 @@
-import VCard from "../shared/v-card";
+import { useServices } from "../../react-query/hooks";
+import ServicesCard from "../shared/services-card";
 import HeadingPrimary from "../typography/heading-primary";
 import ServiceCardCarousel from "./service-card-carousel";
 
 const HomeServices = () => {
+  const { data, error, isLoading, isError } = useServices();
+
+  if (isLoading) {
+    return <div>Services Loading...</div>;
+  }
+
+  if (isError) {
+    return <p>Error{error.message}</p>;
+  }
+
+  //Get the data
+  const { services } = data;
+
   return (
     <>
       <div className="text-center">
         <HeadingPrimary className="mb-6 mt-6">Our Services</HeadingPrimary>
       </div>
       <div className="grid grid-cols-4 gap-4">
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-          <VCard key={item} />
+        {services.map((service) => (
+          <ServicesCard key={service.id} data={service} />
         ))}
       </div>
       <div className="mt-[100px] pb-[100px]">

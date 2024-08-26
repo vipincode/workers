@@ -6,7 +6,7 @@
 import ServicesModal from "./modals";
 import { useRef } from "react";
 
-const VCard = () => {
+const ServicesCard = () => {
   const modalRef = useRef < HTMLDialogElement > null;
 
   const handleActiveModal = () => {
@@ -22,7 +22,7 @@ const VCard = () => {
   );
 };
 
-export default VCard;
+export default ServicesCard;
 ```
 
 ## React query

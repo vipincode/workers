@@ -2,7 +2,7 @@ import "swiper/css";
 import "swiper/css/effect-coverflow";
 import "swiper/css/pagination";
 import { Swiper, SwiperSlide } from "swiper/react";
-import ServiceCard from "./service-card";
+import ServiceCard from "../shared/instant-service-card";
 
 import { Autoplay, FreeMode, Pagination, Navigation } from "swiper/modules";
 
