@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { useSubCategories } from "../../react-query/hooks";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
+import SubCategoryLoading from "./loader/sub-category-loading";
 
 const ServicesListingCard = ({ categoryId }: { categoryId: number }) => {
   const { data, status } = useSubCategories(categoryId);
 
   if (status === "pending") {
-    return <p>Subcategory loading...</p>;
+    return <SubCategoryLoading />;
   }
 
   if (status === "error") {

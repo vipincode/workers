@@ -114,6 +114,9 @@ interface Blog {
 interface BlogProps {
   blogs: Blog[];
 }
+interface SingleBlogProps {
+  blog: Blog;
+}
 
 interface BlogCardProps {
   data: Blog;

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchBlog, fetchCategories, fetchServices, fetchSubCategories } from "./apis";
+import { fetchBlog, fetchCategories, fetchServices, fetchSingleBlog, fetchSubCategories } from "./apis";
 
 // Category
 export function useCategories() {
@@ -32,5 +32,12 @@ export function useBlogs() {
     queryKey: ["blogs"],
     queryFn: fetchBlog,
     staleTime: 10 * 1000,
+  });
+}
+
+export function useSingleBlog(id: number) {
+  return useQuery<SingleBlogProps, Error>({
+    queryKey: ["single-blogs", id],
+    queryFn: () => fetchSingleBlog(id),
   });
 }

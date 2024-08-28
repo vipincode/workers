@@ -7,7 +7,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
     <>
       {data && (
         <Link
-          to="/blog"
+          to={`/blog/${data.id}`}
           className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row overflow-hidden"
         >
           <img
