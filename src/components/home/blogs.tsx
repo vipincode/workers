@@ -2,12 +2,13 @@ import Container from "../shared/container";
 import BlogCard from "../shared/blog-card";
 import HeadingPrimary from "../typography/heading-primary";
 import { useBlogs } from "../../react-query/hooks";
+import BlogLoading from "./loader/blog-loading";
 
 const Blogs = () => {
   const { data, status } = useBlogs();
 
   if (status === "pending") {
-    return <p>Blog is loading...</p>;
+    return <BlogLoading />;
   }
 
   if (status === "error") {

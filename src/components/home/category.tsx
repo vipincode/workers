@@ -1,12 +1,13 @@
 import HeadingPrimary from "../typography/heading-primary";
 import CategoryCard from "../shared/category-card";
 import { useCategories } from "../../react-query/hooks";
+import CategoryLoading from "./loader/category-loading";
 
 const Category = () => {
   const { data, isLoading, isError, error } = useCategories();
 
   if (isLoading) {
-    return <p>Category Loading...</p>;
+    return <CategoryLoading />;
   }
 
   if (isError) <p>Oops! Something went wrong! {error.message}</p>;

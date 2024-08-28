@@ -1,13 +1,14 @@
 import { useServices } from "../../react-query/hooks";
 import ServicesCard from "../shared/services-card";
 import HeadingPrimary from "../typography/heading-primary";
+import ServicesLoading from "./loader/services-loading";
 import ServiceCardCarousel from "./service-card-carousel";
 
 const HomeServices = () => {
   const { data, error, isLoading, isError } = useServices();
 
   if (isLoading) {
-    return <div>Services Loading...</div>;
+    return <ServicesLoading />;
   }
 
   if (isError) {

@@ -24,6 +24,6 @@ export const fetchServices = () => axios.get<ServicesProps>(`${API_URL}/get-serv
 export const fetchBlog = () => axios.get<BlogProps>(`${API_URL}/get-blogs`).then((res) => res.data);
 
 /**
- * @Blog
+ * @HomeSlider
  * Get Slider data.
  */
