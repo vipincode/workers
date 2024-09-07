@@ -31,3 +31,5 @@ export const fetchSingleBlog = (id: number) =>
  * @HomeSlider
  * Get Slider data.
  */
+
+export const fetchHeroCarousel = () => axios.get<SliderProps>(`${API_URL}/get-sliders`).then((res) => res.data);

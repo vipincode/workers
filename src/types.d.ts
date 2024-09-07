@@ -121,3 +121,27 @@ interface SingleBlogProps {
 interface BlogCardProps {
   data: Blog;
 }
+
+/**
+ * @type
+ *  Slider Types
+ */
+
+interface Slider {
+  id: number;
+  category_id: number;
+  title: string;
+  tagline: string;
+  rlink: string | null;
+  slider_img: string;
+  status: string;
+  slider_page: string | null;
+  image_link: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface SliderProps {
+  sliders: Slider[];
+}

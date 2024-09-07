@@ -1,5 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchBlog, fetchCategories, fetchServices, fetchSingleBlog, fetchSubCategories } from "./apis";
+import {
+  fetchBlog,
+  fetchCategories,
+  fetchHeroCarousel,
+  fetchServices,
+  fetchSingleBlog,
+  fetchSubCategories,
+} from "./apis";
 
 // Category
 export function useCategories() {
@@ -39,5 +46,14 @@ export function useSingleBlog(id: number) {
   return useQuery<SingleBlogProps, Error>({
     queryKey: ["single-blogs", id],
     queryFn: () => fetchSingleBlog(id),
+  });
+}
+
+// Carousel
+export function useHeroCarousel() {
+  return useQuery<SliderProps, Error>({
+    queryKey: ["hero-carousel"],
+    queryFn: fetchHeroCarousel,
+    staleTime: 10 * 1000,
   });
 }

@@ -2,7 +2,7 @@ import { Landmark, Search } from "lucide-react";
 
 const SearchBox = () => {
   return (
-    <div className="max-w-[800px] mx-auto mt-[-20px]">
+    <div className="max-w-[800px] mx-auto mt-[-20px] relative z-10">
       <div className="flex gap-2">
         <label className="flex-1 input input-bordered input-lg flex items-center gap-2">
           <div className="bg-white items-center px-2">
