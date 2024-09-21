@@ -66,3 +66,22 @@ body {
     color: var(--white);
   }
 }
+
+/* Date Picker */
+.react-datepicker__input-container {
+  border: 1px solid theme(colors.gray.200);
+  padding: 8px 16px;
+  border-radius: 6px;
+  input {
+    outline: none;
+    box-shadow: none;
+    background-color: transparent;
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.react-datepicker__close-icon::after {
+  background-color: theme(colors.red.600);
+}

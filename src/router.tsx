@@ -10,6 +10,8 @@ import ListingPage from "./pages/services-listing-page";
 import InstantServices from "./pages/instant-services";
 import PermanentServices from "./pages/permanent-services";
 import ServicesDetailsPage from "./pages/service-detail-page";
+import CartPage from "./pages/cart-page";
+import ServiceLetterPage from "./pages/service-letter";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
       {
         path: "/services-details",
         element: <ServicesDetailsPage />,
+      },
+      {
+        path: "/cart",
+        element: <CartPage />,
+      },
+      {
+        path: "/service-letter",
+        element: <ServiceLetterPage />,
       },
     ],
   },

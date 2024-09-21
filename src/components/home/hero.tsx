@@ -1,6 +1,5 @@
 "use client";
 import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
 import { useHeroCarousel } from "../../react-query/hooks";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
 
