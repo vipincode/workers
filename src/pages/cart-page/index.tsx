@@ -1,10 +1,15 @@
 import { IndianRupee } from "lucide-react";
 import Container from "../../components/shared/container";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CartPrices from "../../components/shared/cart-prices";
 
 const CartPage = () => {
   const navigation = useNavigate();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  // Get the value of the 'day' parameter
+  const day = queryParams.get("day");
   return (
     <div className="min-h-[60vh]">
       <Container>
@@ -74,7 +79,10 @@ const CartPage = () => {
                 <button className="btn btn-primary btn-xs">Apply</button>
               </div>
             </div>
-            <button className="btn btn-primary w-full" onClick={() => navigation("/service-letter")}>
+            <button
+              className="btn btn-primary w-full"
+              onClick={() => navigation(`/service-letter?${day ? "day" : "hour"}=service`)}
+            >
               Proceed Now
             </button>
           </div>
