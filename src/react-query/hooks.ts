@@ -3,6 +3,8 @@ import {
   fetchBlog,
   fetchCategories,
   fetchHeroCarousel,
+  fetchInstantService,
+  fetchPermanentService,
   fetchServices,
   fetchSingleBlog,
   fetchSubCategories,
@@ -29,6 +31,21 @@ export function useServices() {
   return useQuery<ServicesProps, Error>({
     queryKey: ["services"],
     queryFn: fetchServices,
+    staleTime: 10 * 1000,
+  });
+}
+export function useInstantServices(serviceId: number) {
+  return useQuery<InstantApiResponse, Error>({
+    queryKey: ["instant-services", serviceId],
+    queryFn: async () => fetchInstantService(serviceId),
+    staleTime: 10 * 1000,
+  });
+}
+
+export function usePermanentServices(serviceId: number) {
+  return useQuery<InstantApiResponse, Error>({
+    queryKey: ["permanent-services", serviceId],
+    queryFn: async () => fetchPermanentService(serviceId),
     staleTime: 10 * 1000,
   });
 }

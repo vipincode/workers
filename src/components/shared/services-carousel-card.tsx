@@ -2,14 +2,10 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import { Autoplay } from "swiper/modules";
 import { ClBoxCard } from "./cl-box-card";
-
-interface Props {
-  id: number;
-  title: string;
-}
+import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
 
 interface DataProp {
-  data: Props[];
+  data: InstantServiceSliderSlogan[];
 }
 
 const ServicesCarouselCard = ({ data }: DataProp) => {
@@ -25,8 +21,15 @@ const ServicesCarouselCard = ({ data }: DataProp) => {
       className="SvrclCard"
     >
       {data.map((item) => (
-        <SwiperSlide>
-          <ClBoxCard key={item.id}>{item.title}</ClBoxCard>
+        <SwiperSlide
+          key={item.id}
+          style={{
+            backgroundImage: `url('${VITE_IMAGE_PATH_URL}/sloganwithslider/${item.slogan_image}')`,
+          }}
+          className="rounded-md overflow-hidden bg-cover bg-center relative"
+        >
+          <div className="absolute inset-0 bg-black/55" />
+          <ClBoxCard>{item.slogan}</ClBoxCard>
         </SwiperSlide>
       ))}
     </Swiper>

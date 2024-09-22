@@ -33,3 +33,14 @@ export const fetchSingleBlog = (id: number) =>
  */
 
 export const fetchHeroCarousel = () => axios.get<SliderProps>(`${API_URL}/get-sliders`).then((res) => res.data);
+
+/**
+ * @InstantService
+ * Get Slider data.
+ */
+
+export const fetchInstantService = (serviceId: number) =>
+  axios.get<InstantApiResponse>(`${API_URL}/get-instant-service/${serviceId}`).then((res) => res.data);
+
+export const fetchPermanentService = (serviceId: number) =>
+  axios.get<InstantApiResponse>(`${API_URL}/get-permanent-service/${serviceId}`).then((res) => res.data);

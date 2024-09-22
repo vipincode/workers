@@ -2,43 +2,17 @@ import ServicesCarouselCard from "../../components/shared/services-carousel-card
 import Container from "../../components/shared/container";
 import { Link } from "react-router-dom";
 import BookServicesForm from "../../components/services/book-service-form";
-
-const servicesData = [
-  {
-    id: 1,
-    title: "8-12 hours working man power",
-  },
-  {
-    id: 2,
-    title: "We deliver 3-5 working days",
-  },
-  {
-    id: 3,
-    title: "Higher worker for uoy long term construction work",
-  },
-  {
-    id: 4,
-    title: "8-12 hours working man power",
-  },
-  {
-    id: 5,
-    title: "8-12 hours working man power",
-  },
-  {
-    id: 6,
-    title: "We deliver 3-5 working days",
-  },
-  {
-    id: 7,
-    title: "Higher worker for uoy long term construction work",
-  },
-  {
-    id: 8,
-    title: "8-12 hours working man power",
-  },
-];
+import { usePermanentServices } from "../../react-query/hooks";
 
 const PermanentServices = () => {
+  const { data, status } = usePermanentServices(3);
+  if (status === "error") {
+    return <p>Something went wrong try again</p>;
+  }
+
+  if (status === "pending") {
+    return <p>Loading...</p>;
+  }
   return (
     <div>
       <Container className="my-10 min-h-[60vh]">
@@ -51,7 +25,7 @@ const PermanentServices = () => {
           </ul>
         </div>
         <h2 className="text-[24px] font-semibold mb-6 mt-6">Permanent Services</h2>
-        <ServicesCarouselCard data={servicesData} />;
+        <ServicesCarouselCard data={data.slider_slogans} />;
         <div className="text-[24px] font-semibold mb-6 mt-6">
           <h2>Book your service Form</h2>
           <BookServicesForm />
