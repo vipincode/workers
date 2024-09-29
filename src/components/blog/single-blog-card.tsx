@@ -20,7 +20,7 @@ const SingleBlogCard = ({ blogId }: { blogId: number }) => {
     return (
       <>
         {otherBlogData.map((blog) => (
-          <div className="flex bg-white h-[110px]">
+          <div className="flex bg-white h-[110px]" key={blog.id}>
             <div className="w-[140px] h-full">
               <img className="h-[110px]" src={`${VITE_IMAGE_PATH_URL}/blog/${blog.blogimg}`} alt="" />
             </div>

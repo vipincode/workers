@@ -23,7 +23,7 @@ const ServicesListingCard = ({ categoryId }: { categoryId: number }) => {
   return (
     <>
       {subCategoryData.map((data) => (
-        <Link to="/services-listing">
+        <Link to="/services-listing" key={data.id}>
           <div className="card card-side bg-base-100 shadow-xl">
             <figure>
               <img

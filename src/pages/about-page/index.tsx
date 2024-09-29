@@ -71,8 +71,8 @@ const AboutPage = () => {
             <h2 className="text-2xl font-semibold my-5 text-center">Why us</h2>
           </div>
           <div className="grid grid-cols-3 gap-6">
-            {[1, 2, 3, 4, 5, 6].map((item) => (
-              <TextCard key={item} />
+            {Array.from({ length: 6 }, (_, index) => (
+              <TextCard key={index} />
             ))}
           </div>
         </div>

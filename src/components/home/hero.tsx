@@ -26,6 +26,7 @@ const Hero = () => {
         {data.sliders.map((item) => {
           return (
             <SwiperSlide
+              key={item.id}
               className="bg-no-repeat bg-center bg-cover"
               style={{ backgroundImage: `url(${VITE_IMAGE_PATH_URL}/slider/${item.slider_img})` }}
             >

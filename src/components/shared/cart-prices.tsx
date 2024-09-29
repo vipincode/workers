@@ -14,7 +14,7 @@ const CartPrices = () => {
   const day = queryParams.get("day");
   return (
     <div>
-      <h3 className="font-semibold">Days</h3>
+      <h3 className="font-semibold">Billing Overview</h3>
       {day ? (
         <div className="text-right divide-y">
           <p className="flex justify-between items-center text-sm gap-4 py-4">

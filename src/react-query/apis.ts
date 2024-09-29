@@ -1,5 +1,6 @@
 import axios from "axios";
 import { API_URL } from "./constants";
+import { employeeFormData } from "../schema/permanent-service/schema";
 
 /**
  * @Categories
@@ -44,3 +45,12 @@ export const fetchInstantService = (serviceId: number) =>
 
 export const fetchPermanentService = (serviceId: number) =>
   axios.get<InstantApiResponse>(`${API_URL}/get-permanent-service/${serviceId}`).then((res) => res.data);
+
+/**
+ * @PermanentService
+ * Post User Data
+ */
+export const postEmployeeData = async (data: employeeFormData) => {
+  const response = await axios.post("https://dehatwala.com/api/save-query-permanent-service", data);
+  return response.data;
+};
