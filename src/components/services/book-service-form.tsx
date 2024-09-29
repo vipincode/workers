@@ -83,7 +83,7 @@ const BookServicesForm = () => {
             </div>
             <div>
               <label htmlFor="" className="font-medium text-sm">
-                Which shifts workers do you need
+                Available Worker Shifts
               </label>
               <select
                 disabled={mutation.isPending}
