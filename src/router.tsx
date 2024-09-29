@@ -12,6 +12,7 @@ import PermanentServices from "./pages/permanent-services";
 import ServicesDetailsPage from "./pages/service-detail-page";
 import CartPage from "./pages/cart-page";
 import ServiceLetterPage from "./pages/service-letter";
+import JoinUsPage from "./pages/joinus-page";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
       {
         path: "/service-letter",
         element: <ServiceLetterPage />,
+      },
+      {
+        path: "/joinus",
+        element: <JoinUsPage />,
       },
     ],
   },
