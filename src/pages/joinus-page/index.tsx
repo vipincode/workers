@@ -1,67 +1,58 @@
-import { useState } from "react";
-import { twMerge } from "tailwind-merge";
-import StepFormOne from "../../components/joinus/step-form-one";
-import StepFormTwo from "../../components/joinus/step-form-two";
-import StepFormThree from "../../components/joinus/step-form.three";
-import StepFormFour from "../../components/joinus/step-form-four";
+import JoinCarouselBanner from "../../components/joinus/join-carousel-banner";
+import StepForm from "../../components/joinus/step-form";
 
-const JoinUsPage = () => {
-  const [currentStep, setCurrentStep] = useState(0);
+const data = [
+  {
+    id: 1,
+    slogan: "Innovating the Future",
+    slogan_image: "innovation.jpg",
+  },
+  {
+    id: 2,
+    slogan: "Empowering Progress",
+    slogan_image: "empower.jpg",
+  },
+  {
+    id: 3,
+    slogan: "Building Excellence",
+    slogan_image: "excellence.jpg",
+  },
+  {
+    id: 4,
+    slogan: "Shaping Tomorrow",
+    slogan_image: "tomorrow.jpg",
+  },
+  {
+    id: 5,
+    slogan: "Shaping Tomorrow",
+    slogan_image: "tomorrow.jpg",
+  },
+  {
+    id: 6,
+    slogan: "Shaping Tomorrow",
+    slogan_image: "tomorrow.jpg",
+  },
+];
 
-  const steps = [
-    { name: "Register", content: <StepFormOne /> },
-    { name: "Choose plan", content: <StepFormTwo /> },
-    { name: "Purchase", content: <StepFormThree /> },
-    { name: "Receive Product", content: <StepFormFour /> },
-  ];
-
+const JoinUs = () => {
   return (
     <div className="my-10 min-h-[60vh]">
-      <div className="max-w-[600px] mx-auto px-4">
-        <ul className="steps w-full my-[50px]">
-          {steps.map((step, index) => (
-            <li
-              key={index}
-              className={twMerge("step text-xs", index <= currentStep ? "step-primary" : "")}
-              onClick={() => setCurrentStep(index)}
-            >
-              {step.name}
-            </li>
-          ))}
-        </ul>
-
-        {/* Step content */}
-        <div className="min-h-[200px]">
-          <div>{steps[currentStep].content}</div>
+      <div className="container mx-auto px-4 space-y-6">
+        <div className="flex justify-center flex-col">
+          <h3 className="text-center font-semibold text-3xl mb-3">Register with us</h3>
+          <p className="text-center text-lg">Register as Labour | Mistry | Labour Thekedar</p>
         </div>
-
-        {/* Navigation buttons */}
-        <div className="flex justify-between items-center mt-10 w-[80%] mx-auto">
-          <button
-            className={twMerge(
-              "bg-primary text-white text-xs rounded-md px-4 py-2",
-              currentStep === 0 ? "opacity-50 cursor-not-allowed" : "active:bg-primary-dark"
-            )}
-            disabled={currentStep === 0}
-            onClick={() => setCurrentStep(currentStep - 1)}
-          >
-            Previous
-          </button>
-
-          <button
-            className={twMerge(
-              "bg-primary text-white  text-xs rounded-md px-4 py-2",
-              currentStep === steps.length - 1 ? "opacity-50 cursor-not-allowed" : "active:bg-primary-dark"
-            )}
-            disabled={currentStep === steps.length - 1}
-            onClick={() => setCurrentStep(currentStep + 1)}
-          >
-            Next
-          </button>
+        <div>
+          <JoinCarouselBanner data={data} />
+        </div>
+        <div className="p-8 bg-gray-100 rounded-lg">
+          <div className="max-w-[80%] mx-auto">
+            <StepForm />
+          </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default JoinUsPage;
+export default JoinUs;

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { API_URL } from "./constants";
 import { employeeFormData } from "../schema/permanent-service/schema";
+import { stepFormDataType } from "../schema/step-form";
 
 /**
  * @Categories
@@ -52,5 +53,14 @@ export const fetchPermanentService = (serviceId: number) =>
  */
 export const postEmployeeData = async (data: employeeFormData) => {
   const response = await axios.post("https://dehatwala.com/api/save-query-permanent-service", data);
+  return response.data;
+};
+
+/**
+ * @PermanentService
+ * Post User Data
+ */
+export const stepFormeData = async (data: stepFormDataType) => {
+  const response = await axios.post("https://dehatwala.com/api/join-us", data);
   return response.data;
 };
