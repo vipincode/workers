@@ -3,7 +3,7 @@ import { z } from "zod";
 export const stepFormSchema = z.object({
   // Step 1
   name: z.string().min(2, "Name must be at least 2 characters").optional(),
-  city: z.string().min(1, "Please select a city"),
+  city: z.string().min(1, "Please write your city name"),
   state: z.string().min(1, "Please select a state"),
   laborType: z.string().min(1, "Please select a labor type"),
   workTye: z.enum(["Meson", "Helper"], { required_error: "Please select a work type" }),

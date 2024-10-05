@@ -6,6 +6,7 @@ import toast from "react-hot-toast";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { stepFormeData } from "../../react-query/apis";
 import { stepFormDataType, stepFormSchema } from "../../schema/step-form";
+import { states } from "../../schema/states";
 
 const Step1 = () => {
   const {
@@ -32,26 +33,17 @@ const Step1 = () => {
         {/* City Field */}
         <div className="flex flex-col">
           <label className="font-medium leading-6" htmlFor="city">
-            Your City
+            Your city name
           </label>
-          <select
-            {...register("city")}
-            defaultValue=""
-            className={`select select-bordered w-full ${errors.city ? "border-red-600" : ""}`}
-          >
-            <option value="" disabled>
-              Select your City
-            </option>
-            <option value="Han Solo">Han Solo</option>
-            <option value="Greedo">Greedo</option>
-          </select>
+          <input {...register("city")} type="text" placeholder="Type here" className="input input-bordered w-full" />
+
           {errors.city && <p className="text-xs text-red-600 font-normal mt-2">{errors.city.message}</p>}
         </div>
 
         {/* State Field */}
         <div className="flex flex-col">
           <label className="font-medium leading-6" htmlFor="state">
-            Your state
+            Your state name
           </label>
           <select
             {...register("state")}
@@ -61,8 +53,12 @@ const Step1 = () => {
             <option value="" disabled>
               Select your state
             </option>
-            <option value="Han Solo">Han Solo</option>
-            <option value="Greedo">Greedo</option>
+
+            {states.map((state) => (
+              <option key={state} value={state}>
+                {state}
+              </option>
+            ))}
           </select>
           {errors.state && <p className="text-xs text-red-600 font-normal mt-2">{errors.state.message}</p>}
         </div>
