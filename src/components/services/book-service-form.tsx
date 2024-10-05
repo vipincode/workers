@@ -5,8 +5,14 @@ import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { postEmployeeData } from "../../react-query/apis";
 import { employeeFormData, employeeSchema } from "../../schema/permanent-service/schema";
+import MultiPhotoUpload from "../shared/multi-photo-upload";
 
 const BookServicesForm = () => {
+  // Photos upload
+  const handleUpload = (files: File[]) => {
+    console.log("Files uploaded:", files);
+  };
+
   const {
     register,
     handleSubmit,
@@ -35,6 +41,7 @@ const BookServicesForm = () => {
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="grid grid-cols-2 gap-6">
+          {/* Left Content */}
           <div className="space-y-2">
             <div>
               <label htmlFor="" className="font-medium text-sm">
@@ -147,9 +154,6 @@ const BookServicesForm = () => {
               ></textarea>
               {errors.address && <p className="text-xs text-red-600 font-normal">{errors.address.message}</p>}
             </div>
-          </div>
-
-          <div className="space-y-8 mt-6">
             <div>
               <h3 className="text-[16px] font-medium">How many workers do you need?</h3>
               <div className="grid grid-cols-2 gap-6">
@@ -198,6 +202,9 @@ const BookServicesForm = () => {
                 </label>
               </div>
             </div>
+          </div>
+          {/* Right Content */}
+          <div className="space-y-6 mt-6">
             <div>
               <h3 className="text-[16px] font-medium mt-4">For how long do you need the workers? </h3>
               <div className="grid grid-cols-3 gap-6">
@@ -281,9 +288,27 @@ const BookServicesForm = () => {
                 <p className="text-xs text-red-600 font-normal mt-2">{errors.phone_number.message}</p>
               )}
             </div>
+            <div>
+              <label htmlFor="" className="font-medium text-sm">
+                Upload Photos
+              </label>
+              <MultiPhotoUpload onUpload={handleUpload} maxFiles={10} uploadPath="/api/custom-upload" />
+            </div>
+            <div>
+              <label htmlFor="" className="font-medium text-sm">
+                Alternative Work
+              </label>
+              <input
+                {...register("alternative_work")}
+                type="text"
+                disabled={mutation.isPending}
+                placeholder="Alternative work: Brick work / Plaster work / etc."
+                className="input input-bordered w-full font-medium text-sm"
+              />
+            </div>
           </div>
         </div>
-        <div>
+        <div className="mt-10">
           <div className="flex items-center gap-2 my-4">
             <input type="checkbox" className="checkbox" />
             <label htmlFor="" className="font-medium text-sm">

@@ -25,6 +25,7 @@ export const employeeSchema = z.object({
   shift: z.string().min(1, { message: "Shift is required" }),
   state: z.string().min(1, { message: "State is required" }),
   year: z.string().min(1, { message: "Year is required" }),
+  alternative_work: z.string().optional(),
 });
 
 export type employeeFormData = z.infer<typeof employeeSchema>;
