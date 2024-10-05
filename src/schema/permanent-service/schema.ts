@@ -26,6 +26,15 @@ export const employeeSchema = z.object({
   state: z.string().min(1, { message: "State is required" }),
   year: z.string().min(1, { message: "Year is required" }),
   alternative_work: z.string().optional(),
+  images: z
+    .array(
+      z
+        .string()
+        .min(1, { message: "Image is required" })
+        .regex(/\.(jpg|jpeg|png|gif)$/, { message: "Invalid image format" })
+    )
+    .min(1, { message: "At least one image is required" })
+    .max(10, { message: "No more than 10 images are allowed" }),
 });
 
 export type employeeFormData = z.infer<typeof employeeSchema>;

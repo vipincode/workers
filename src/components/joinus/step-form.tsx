@@ -35,7 +35,12 @@ const Step1 = () => {
           <label className="font-medium leading-6" htmlFor="city">
             Your city name
           </label>
-          <input {...register("city")} type="text" placeholder="Type here" className="input input-bordered w-full" />
+          <input
+            {...register("city")}
+            type="text"
+            placeholder="Type here"
+            className={`input input-bordered w-full ${errors.city ? "border-red-600" : ""}`}
+          />
 
           {errors.city && <p className="text-xs text-red-600 font-normal mt-2">{errors.city.message}</p>}
         </div>
