@@ -13,6 +13,10 @@ import ServicesDetailsPage from "./pages/service-detail-page";
 import CartPage from "./pages/cart-page";
 import ServiceLetterPage from "./pages/service-letter";
 import JoinUsPage from "./pages/joinus-page";
+import JobListingsPage from "./pages/job-listings-page";
+import JobCategoriesPage from "./pages/job-categories-page";
+import DetailedJobListingPage from "./pages/detailed-job-listing-page";
+import JobDetailedViewPage from "./pages/detailed-job-view-page";
 
 const router = createBrowserRouter([
   {
@@ -71,6 +75,22 @@ const router = createBrowserRouter([
       {
         path: "/joinus",
         element: <JoinUsPage />,
+      },
+      {
+        path: "/jobs",
+        element: <JobListingsPage />,
+      },
+      {
+        path: "/more-jobs",
+        element: <JobCategoriesPage />,
+      },
+      {
+        path: "/more-jobs/:id",
+        element: <DetailedJobListingPage />,
+      },
+      {
+        path: "/jobs-details/:id",
+        element: <JobDetailedViewPage />,
       },
     ],
   },

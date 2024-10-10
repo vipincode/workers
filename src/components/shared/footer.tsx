@@ -66,26 +66,11 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">Download</h2>
+            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">Careers</h2>
             <ul className="text-gray-500 dark:text-gray-400 font-medium">
               <li className="mb-4">
-                <Link to="#" className="hover:underline">
-                  iOS
-                </Link>
-              </li>
-              <li className="mb-4">
-                <Link to="#" className="hover:underline">
-                  Android
-                </Link>
-              </li>
-              <li className="mb-4">
-                <Link to="#" className="hover:underline">
-                  Windows
-                </Link>
-              </li>
-              <li className="mb-4">
-                <Link to="#" className="hover:underline">
-                  MacOS
+                <Link to="/jobs" className="hover:underline">
+                  Jobs
                 </Link>
               </li>
             </ul>
