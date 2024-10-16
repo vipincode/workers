@@ -6,14 +6,15 @@ import { Link } from "react-router-dom";
 import { postEmployeeData } from "../../react-query/apis";
 import { employeeFormData, employeeSchema } from "../../schema/permanent-service/schema";
 import MultiPhotoUpload from "../shared/multi-photo-upload";
-// import { useState } from "react";
+import { useState } from "react";
+import { states } from "../../schema/states";
 
 const BookServicesForm = () => {
-  // const [files, setFiles] = useState<File[]>([]);
+  const [files, setFiles] = useState<File[]>([]);
   // Photos upload
   const handleUpload = (files: File[]) => {
     console.log("Files uploaded:", files);
-    // setFiles(files);
+    setFiles(files);
   };
 
   const {
@@ -110,21 +111,16 @@ const BookServicesForm = () => {
               {errors.shift && <p className="text-xs text-red-600 font-normal mt-2">{errors.shift.message}</p>}
             </div>
             <div>
-              <label htmlFor="" className="font-medium text-sm">
-                City{" "}
+              <label className="font-medium text-sm" htmlFor="">
+                Your city name
               </label>
-              <select
-                disabled={mutation.isPending}
-                defaultValue=""
+              <input
                 {...register("city")}
-                className="select select-bordered w-full"
-              >
-                <option value="" disabled>
-                  Select your city
-                </option>
-                <option value="Han Solo">Han Solo</option>
-                <option value="Greedo">Greedo</option>
-              </select>
+                type="text"
+                placeholder="Type here"
+                className="input input-bordered w-full font-medium text-sm"
+              />
+
               {errors.city && <p className="text-xs text-red-600 font-normal mt-2">{errors.city.message}</p>}
             </div>
             <div>
@@ -140,8 +136,12 @@ const BookServicesForm = () => {
                 <option value="" disabled>
                   Select your state
                 </option>
-                <option value="Han Solo">Han Solo</option>
-                <option value="Greedo">Greedo</option>
+
+                {states.map((state) => (
+                  <option key={state} value={state}>
+                    {state}
+                  </option>
+                ))}
               </select>
               {errors.state && <p className="text-xs text-red-600 font-normal mt-2">{errors.state.message}</p>}
             </div>

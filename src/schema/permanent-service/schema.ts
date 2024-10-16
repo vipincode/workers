@@ -34,7 +34,8 @@ export const employeeSchema = z.object({
         .regex(/\.(jpg|jpeg|png|gif)$/, { message: "Invalid image format" })
     )
     .min(1, { message: "At least one image is required" })
-    .max(10, { message: "No more than 10 images are allowed" }),
+    .max(10, { message: "No more than 10 images are allowed" })
+    .optional(),
 });
 
 export type employeeFormData = z.infer<typeof employeeSchema>;
