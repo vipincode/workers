@@ -6,15 +6,15 @@ import { Link } from "react-router-dom";
 import { postEmployeeData } from "../../react-query/apis";
 import { employeeFormData, employeeSchema } from "../../schema/permanent-service/schema";
 import MultiPhotoUpload from "../shared/multi-photo-upload";
-import { useState } from "react";
+// import { useState } from "react";
 import { states } from "../../schema/states";
 
 const BookServicesForm = () => {
-  const [files, setFiles] = useState<File[]>([]);
+  // const [files, setFiles] = useState<File[]>([]);
   // Photos upload
   const handleUpload = (files: File[]) => {
     console.log("Files uploaded:", files);
-    setFiles(files);
+    // setFiles(files);
   };
 
   const {
