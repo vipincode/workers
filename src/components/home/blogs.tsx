@@ -19,7 +19,7 @@ const Blogs = () => {
 
   return (
     <Container className="mb-[100px]">
-      <HeadingPrimary className="mb-10">Latest Blog post</HeadingPrimary>
+      <HeadingPrimary className="mb-10 text-center">Latest Blog post</HeadingPrimary>
       <div className="grid grid-cols-2 gap-6">
         {blogs.map((blog) => (
           <BlogCard key={blog.id} data={blog} />

@@ -2,6 +2,7 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { useHeroCarousel } from "../../react-query/hooks";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
+import { Autoplay } from "swiper/modules";
 
 const Hero = () => {
   const { data, isLoading, error, isError } = useHeroCarousel();
@@ -22,7 +23,14 @@ const Hero = () => {
 
   return (
     <header className="min-h-[50vh] bg-base-200">
-      <Swiper className="heroSwiper h-[400px]">
+      <Swiper
+        autoplay={{
+          delay: 2500,
+          disableOnInteraction: false,
+        }}
+        modules={[Autoplay]}
+        className="heroSwiper h-[400px]"
+      >
         {data.sliders.map((item) => {
           return (
             <SwiperSlide

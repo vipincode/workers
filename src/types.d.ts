@@ -71,7 +71,7 @@ interface Services {
   short_description: string;
   description: string;
   tags: string;
-  primary_image: string;
+  service_image: string;
   image_link: string | null;
   video_link: string | null;
   status: string;

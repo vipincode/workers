@@ -10,7 +10,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({ data }) => {
           <Link to="#">
             <img
               className="rounded-t-lg h-[100px] w-full object-cover"
-              src={`${VITE_IMAGE_PATH_URL}/service/${data?.primary_image}`}
+              src={`${VITE_IMAGE_PATH_URL}/service/${data?.service_image}`}
               alt={data.slug}
             />
           </Link>

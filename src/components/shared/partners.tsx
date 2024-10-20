@@ -5,7 +5,7 @@ import HeadingPrimary from "../typography/heading-primary";
 const Partners = () => {
   return (
     <Container className="mb-[100px]">
-      <HeadingPrimary className="mb-10">Our partners</HeadingPrimary>
+      <HeadingPrimary className="mb-10 text-center">Our partners</HeadingPrimary>
       <div className="grid grid-cols-4 gap-10">
         <div className="w-full border flex justify-center items-center py-6">
           <Landmark size={62} className="text-gray-400" />

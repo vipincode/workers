@@ -21,7 +21,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
           onClick={() => handleActiveModal(category.parent_id)}
         >
           <img
-            className="h-[140px] w-full bg-cover"
+            className="h-[140px] w-full object-cover"
             src={`${VITE_IMAGE_PATH_URL}/category/${category.cat_img}`}
             alt={category.slug}
           />
