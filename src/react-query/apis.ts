@@ -64,3 +64,30 @@ export const stepFormeData = async (data: stepFormDataType) => {
   const response = await axios.post("https://dehatwala.com/api/join-us", data);
   return response.data;
 };
+
+/**
+ * @JobCategory
+ * Post User Data
+ */
+export const jobsCategory = async () => {
+  const response = await axios.get<CateGoryApiResponse>("https://dehatwala.com/api/get-jobs-category");
+  return response.data;
+};
+
+export const jobsCategoryBySlug = async (slug: string) => {
+  const response = await axios.get<JobCategoryApiResponse>(`https://dehatwala.com/api/get-job-category/${slug}`);
+  return response.data;
+};
+
+export const jobs = async () => {
+  const response = await axios.get<JobApiResponse>("https://dehatwala.com/api/get-jobs");
+  return response.data;
+};
+
+export const jobsBySlug = async (slug: string) => {
+  if (!slug) {
+    throw new Error("No slug provided");
+  }
+  const response = await axios.get<JobDetailApiResponse>(`https://dehatwala.com/api/get-job-detail/${slug}`);
+  return response.data;
+};

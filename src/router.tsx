@@ -85,11 +85,11 @@ const router = createBrowserRouter([
         element: <JobCategoriesPage />,
       },
       {
-        path: "/more-jobs/:id",
+        path: "/more-jobs/:slug",
         element: <DetailedJobListingPage />,
       },
       {
-        path: "/jobs-details/:id",
+        path: "/job-detail/:slug",
         element: <JobDetailedViewPage />,
       },
     ],

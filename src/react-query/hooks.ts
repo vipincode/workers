@@ -8,6 +8,10 @@ import {
   fetchServices,
   fetchSingleBlog,
   fetchSubCategories,
+  jobs,
+  jobsBySlug,
+  jobsCategory,
+  jobsCategoryBySlug,
 } from "./apis";
 
 // Category
@@ -72,5 +76,39 @@ export function useHeroCarousel() {
     queryKey: ["hero-carousel"],
     queryFn: fetchHeroCarousel,
     staleTime: 10 * 1000,
+  });
+}
+
+// Jobs
+export function useJobsCategory() {
+  return useQuery<CateGoryApiResponse, Error>({
+    queryKey: ["job-category"],
+    queryFn: jobsCategory,
+    staleTime: 10 * 1000,
+  });
+}
+
+export function useJobsCategoryBySlug(slug: string) {
+  return useQuery<JobCategoryApiResponse, Error>({
+    queryKey: ["jobs", slug],
+    queryFn: () => jobsCategoryBySlug(slug),
+    staleTime: 10 * 1000,
+  });
+}
+
+export function useJobs() {
+  return useQuery<JobApiResponse, Error>({
+    queryKey: ["jobs"],
+    queryFn: jobs,
+    staleTime: 10 * 1000,
+  });
+}
+
+export function useJobsBySlug(slug: string) {
+  return useQuery<JobDetailApiResponse, Error>({
+    queryKey: ["job-detail", slug],
+    queryFn: () => jobsBySlug(slug),
+    staleTime: 10 * 1000,
+    enabled: !!slug,
   });
 }

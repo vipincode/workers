@@ -1,50 +1,69 @@
+import { useParams } from "react-router-dom";
+import { useJobsBySlug } from "../../react-query/hooks";
+import JobDetailSkelton from "../../components/skeleton/job-detal-skeltton";
+
 export default function JobDetailedViewPage() {
+  const { slug } = useParams();
+
+  const { data, isLoading, isError } = useJobsBySlug(slug);
+
+  if (isError) {
+    return <p>Error, Something went wrong</p>;
+  }
+  if (isLoading) {
+    return <JobDetailSkelton />;
+  }
+
+  const job = data?.job;
+
+  console.log(data);
+
   return (
     <div className="min-h-screen bg-gray-100 py-10 mb-[100px]">
       <div className="max-w-2xl mx-auto px-6">
         <div className="bg-white rounded-lg shadow-md p-6">
           <div className="mb-4">
-            <img src="https://dummyimage.com/300x200/000/fff" alt="Company Logo" className="w-24 h-24 mx-auto" />
+            <img
+              src={job.image_link || "https://dummyimage.com/300x200/000/fff"}
+              alt="Company Logo"
+              className="w-24 h-24 mx-auto rounded-md"
+            />
           </div>
-          <h1 className="text-2xl font-bold text-center mb-6">TATA</h1>
+          <h1 className="text-2xl font-bold text-center mb-6">{job.title}</h1>
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-4">
               <div>
                 <p className="font-semibold">Post:</p>
-                <p>Mason</p>
+                <p>{job.post}</p>
               </div>
               <div>
                 <p className="font-semibold">Vacancy:</p>
-                <p>190 Post</p>
+                <p>{job.vaccancy} Post</p>
               </div>
               <div>
                 <p className="font-semibold">Daily wages:</p>
-                <p>900/Day</p>
+                <p>{job.salary}/Day</p>
               </div>
               <div>
                 <p className="font-semibold">Facilities:</p>
-                <p>Day/Night Shift, Overtime, Lodge, Transport, ESI/PF</p>
+                <p>{job.facilities}</p>
               </div>
               <div>
                 <p className="font-semibold">Experience:</p>
-                <p>3+ Year</p>
+                <p>{job.experience} Year</p>
               </div>
               <div>
                 <p className="font-semibold">Job Skill:</p>
-                <p>Measuring Tape, Brickwork, Plasterwork, R.C.C casting, Earth & Excavation work</p>
+                <p>{job.skill}</p>
               </div>
               <div>
                 <p className="font-semibold">Location:</p>
-                <p>Delhi (Laxmi Nagar)</p>
+                <p>{job.location}</p>
               </div>
             </div>
             <div>
               <p className="font-semibold">Job description:</p>
-              <p>
-                TATA Company is Hiring for the Job profile of skilled mason for 190 candidates at location Delhi(Laxmi
-                Nagar) locality. For their Airport Project. If you interested in this Job then click the Button Given
-                Below on Apply Now.
-              </p>
+              <div className="text-gray-600" dangerouslySetInnerHTML={{ __html: job.description }} />
             </div>
           </div>
           <div className="mt-6 flex justify-center space-x-4">

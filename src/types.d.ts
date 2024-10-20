@@ -187,3 +187,66 @@ interface InstantApiResponse {
   instant_service: InstantService;
   slider_slogans: SliderSlogan[];
 }
+
+interface CategoryProps {
+  id: number;
+  name: string;
+  hindi_name: string | null;
+  slug: string;
+  parent_id: number;
+  description: string;
+  cat_img: string;
+  image_link: string | null;
+  meta_title: string | null;
+  meta_keyword: string | null;
+  meta_description: string | null;
+  status: string;
+  is_join_us: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+  jobs_count: number;
+}
+
+interface CateGoryApiResponse {
+  categories: CategoryProps[];
+}
+
+interface JobProps {
+  id: number;
+  user_id: number;
+  category_id: number;
+  meta_title: string;
+  meta_keyword: string;
+  meta_description: string;
+  title: string;
+  post: string;
+  vaccancy: string;
+  slug: string;
+  experience: string;
+  salary: number;
+  facilities: string;
+  description: string;
+  skill: string;
+  location: string;
+  last_date: string;
+  jobimg: string;
+  recruitment_letter: string;
+  image_link: string;
+  special_priority: string;
+  priority: string;
+  status: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface JobApiResponse {
+  jobs: JobProps[];
+}
+interface JobDetailApiResponse {
+  job: JobProps;
+}
+interface JobCategoryApiResponse {
+  job: JobProps[];
+}

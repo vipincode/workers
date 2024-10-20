@@ -1,17 +1,7 @@
 import { Link } from "react-router-dom";
 import JobCategoryCarousel from "../../components/jobs/job-category-carousel";
-
-const jobCategories = [
-  { id: 1, name: "Mason/Helper", available: 450 },
-  { id: 2, name: "Loading/Unloading/Packaging", available: 1200 },
-  { id: 3, name: "Heavy Machine Operator", available: 250 },
-  { id: 4, name: "Shuttering Carpenter", available: 320 },
-  { id: 5, name: "Steel Bar Bender", available: 500 },
-  { id: 6, name: "Scaffolding workers", available: 180 },
-  { id: 7, name: "Painter", available: 260 },
-  { id: 8, name: "Electrician", available: 300 },
-  { id: 9, name: "Plumber", available: 350 },
-];
+import { useJobsCategory } from "../../react-query/hooks";
+import JobCategorySkeleton from "../../components/skeleton/job-category-skeleton";
 
 export default function JobCategoriesPage() {
   const sliderTexts = [
@@ -22,6 +12,15 @@ export default function JobCategoriesPage() {
     "100% सत्यापित और निशुल्क नौकरिया",
   ];
 
+  const { data, isLoading, isError } = useJobsCategory();
+
+  if (isError) {
+    return <p>Error, Something went wrong</p>;
+  }
+  if (isLoading) {
+    return <JobCategorySkeleton />;
+  }
+
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="mb-6">
@@ -30,13 +29,13 @@ export default function JobCategoriesPage() {
       <div className="mx-auto max-w-[500px] h-[60px] bg-gray-200 mb-10 rounded-md flex justify-center items-center">
         <h2 className="text-2xl font-bold text-center">Choose Job by Categories</h2>
       </div>
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4 mb-[100px]">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {jobCategories.map((category) => (
-            <Link to={`/more-jobs/${category.id}`}>
+          {data.categories.map((category) => (
+            <Link to={`/more-jobs/${category.slug}`}>
               <div key={category.id} className="bg-white rounded-lg shadow-md p-4">
-                <h3 className="text-lg font-semibold">{category.name}</h3>
-                <p className="text-gray-600">{category.available} Jobs Available</p>
+                <h3 className="text-base font-semibold">{category.name}</h3>
+                <p className="text-gray-600 text-sm">{category.description}</p>
               </div>
             </Link>
           ))}
