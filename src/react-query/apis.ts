@@ -2,6 +2,7 @@ import axios from "axios";
 import { API_URL } from "./constants";
 import { employeeFormData } from "../schema/permanent-service/schema";
 import { stepFormDataType } from "../schema/step-form";
+import { BlogProps, CategoriesProps, CateGoryApiResponse, FormInputs, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, ServicesProps, SingleBlogProps, SliderProps, SubCategoryProps } from "../types";
 
 /**
  * @Categories
@@ -52,7 +53,7 @@ export const fetchPermanentService = (serviceId: number) =>
  * Post User Data
  */
 export const postEmployeeData = async (data: employeeFormData) => {
-  const response = await axios.post("https://dehatwala.com/api/save-query-permanent-service", data);
+  const response = await axios.post(`${API_URL}/save-query-permanent-service`, data);
   return response.data;
 };
 
@@ -61,7 +62,7 @@ export const postEmployeeData = async (data: employeeFormData) => {
  * Post User Data
  */
 export const stepFormeData = async (data: stepFormDataType) => {
-  const response = await axios.post("https://dehatwala.com/api/join-us", data);
+  const response = await axios.post(`${API_URL}/join-us`, data);
   return response.data;
 };
 
@@ -70,17 +71,17 @@ export const stepFormeData = async (data: stepFormDataType) => {
  * Post User Data
  */
 export const jobsCategory = async () => {
-  const response = await axios.get<CateGoryApiResponse>("https://dehatwala.com/api/get-jobs-category");
+  const response = await axios.get<CateGoryApiResponse>(`${API_URL}/get-jobs-category`);
   return response.data;
 };
 
 export const jobsCategoryBySlug = async (slug: string) => {
-  const response = await axios.get<JobCategoryApiResponse>(`https://dehatwala.com/api/get-job-category/${slug}`);
+  const response = await axios.get<JobCategoryApiResponse>(`${API_URL}/get-job-category/${slug}`);
   return response.data;
 };
 
 export const jobs = async () => {
-  const response = await axios.get<JobApiResponse>("https://dehatwala.com/api/get-jobs");
+  const response = await axios.get<JobApiResponse>(`${API_URL}/get-jobs`);
   return response.data;
 };
 
@@ -88,6 +89,15 @@ export const jobsBySlug = async (slug: string) => {
   if (!slug) {
     throw new Error("No slug provided");
   }
-  const response = await axios.get<JobDetailApiResponse>(`https://dehatwala.com/api/get-job-detail/${slug}`);
+  const response = await axios.get<JobDetailApiResponse>(`${API_URL}/get-job-detail/${slug}`);
+  return response.data;
+};
+
+/**
+ * @Apply Job
+ */
+
+export const applyJob = async (data: FormInputs) => {
+  const response = await axios.post(`${API_URL}/get-job-detail/save-apply-job`, data);
   return response.data;
 };

@@ -13,6 +13,7 @@ import {
   jobsCategory,
   jobsCategoryBySlug,
 } from "./apis";
+import { CategoriesProps, SubCategoryProps, ServicesProps, InstantApiResponse, BlogProps, SingleBlogProps, SliderProps, CateGoryApiResponse, JobCategoryApiResponse, JobApiResponse, JobDetailApiResponse } from "../types";
 
 // Category
 export function useCategories() {

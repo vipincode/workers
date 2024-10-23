@@ -250,3 +250,14 @@ interface JobDetailApiResponse {
 interface JobCategoryApiResponse {
   job: JobProps[];
 }
+
+// Apply job
+export type FormInputs = {
+  name: string;
+  email: string;
+  city: string;
+  state: string;
+  skills: string;
+  phone: string;
+  aboutYourself?: string;
+};

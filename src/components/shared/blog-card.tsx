@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import React from "react";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
+import { BlogCardProps } from "../../types";
 
 const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
   return (

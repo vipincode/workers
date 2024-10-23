@@ -18,6 +18,7 @@ import JobCategoriesPage from "./pages/job-categories-page";
 import DetailedJobListingPage from "./pages/detailed-job-listing-page";
 import JobDetailedViewPage from "./pages/detailed-job-view-page";
 import BlogDetailPage from "./pages/blog-detail-page";
+import ApplyJobPage from "./pages/apply-job-page";
 
 const router = createBrowserRouter([
   {
@@ -92,6 +93,10 @@ const router = createBrowserRouter([
       {
         path: "/job-detail/:slug",
         element: <JobDetailedViewPage />,
+      },
+      {
+        path: "/apply-job",
+        element: <ApplyJobPage />,
       },
     ],
   },

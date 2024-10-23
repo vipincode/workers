@@ -1,5 +1,6 @@
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { Link } from "react-router-dom";
+import { JobProps } from "../../types";
 
 interface JobCardProps {
   job: JobProps;

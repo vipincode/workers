@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { ClBoxCard } from "./cl-box-card";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
+import { InstantServiceSliderSlogan } from "../../types";
 
 interface DataProp {
   data: InstantServiceSliderSlogan[];

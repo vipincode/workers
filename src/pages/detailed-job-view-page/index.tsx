@@ -1,9 +1,11 @@
 import { useParams } from "react-router-dom";
-import { useJobsBySlug } from "../../react-query/hooks";
 import JobDetailSkelton from "../../components/skeleton/job-detal-skeltton";
+import { useJobsBySlug } from "../../react-query/hooks";
+import { useNavigate } from "react-router-dom";
 
 export default function JobDetailedViewPage() {
   const { slug } = useParams();
+  const navigate = useNavigate();
 
   const { data, isLoading, isError } = useJobsBySlug(slug);
 
@@ -16,7 +18,9 @@ export default function JobDetailedViewPage() {
 
   const job = data?.job;
 
-  console.log(data);
+  const handleClick = () => {
+    navigate("/apply-job");
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 py-10 mb-[100px]">
@@ -68,7 +72,9 @@ export default function JobDetailedViewPage() {
           </div>
           <div className="mt-6 flex justify-center space-x-4">
             <button className="btn btn-primary">Call Now</button>
-            <button className="btn btn-secondary">Apply Now</button>
+            <button className="btn btn-secondary" onClick={handleClick}>
+              Apply Now
+            </button>
             <button className="btn btn-accent">WhatsApp</button>
           </div>
         </div>

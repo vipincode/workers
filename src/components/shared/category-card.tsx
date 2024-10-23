@@ -2,6 +2,7 @@ import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
 import ServicesModal from "./modals";
 import React, { useRef, useState } from "react";
 import ServicesListingCard from "../services/servies-listing-card";
+import { CategoryCardProps } from "../../types";
 
 const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
   const modalRef = useRef<HTMLDialogElement>(null);

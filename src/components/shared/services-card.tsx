@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
+import { ServicesCardProps } from "../../types";
 
 const ServicesCard: React.FC<ServicesCardProps> = ({ data }) => {
   return (
