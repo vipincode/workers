@@ -261,3 +261,12 @@ export type FormInputs = {
   phone: string;
   aboutYourself?: string;
 };
+
+// Search 
+
+export interface SearchPostProps {
+  experience: string,
+  location: string,
+  category: string,
+  salary: string
+}

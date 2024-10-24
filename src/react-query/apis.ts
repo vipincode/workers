@@ -2,7 +2,7 @@ import axios from "axios";
 import { API_URL } from "./constants";
 import { employeeFormData } from "../schema/permanent-service/schema";
 import { stepFormDataType } from "../schema/step-form";
-import { BlogProps, CategoriesProps, CateGoryApiResponse, FormInputs, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, ServicesProps, SingleBlogProps, SliderProps, SubCategoryProps } from "../types";
+import { BlogProps, CategoriesProps, CateGoryApiResponse, FormInputs, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, SearchPostProps, ServicesProps, SingleBlogProps, SliderProps, SubCategoryProps } from "../types";
 
 /**
  * @Categories
@@ -77,6 +77,11 @@ export const jobsCategory = async () => {
 
 export const jobsCategoryBySlug = async (slug: string) => {
   const response = await axios.get<JobCategoryApiResponse>(`${API_URL}/get-job-category/${slug}`);
+  return response.data;
+};
+
+export const searchCategory = async () => {
+  const response = await axios.post<SearchPostProps>(`${API_URL}/get-job-category`);
   return response.data;
 };
 

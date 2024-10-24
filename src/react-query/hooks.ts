@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import { BlogProps, CategoriesProps, CateGoryApiResponse, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, ServicesProps, SingleBlogProps, SliderProps, SubCategoryProps } from "../types";
 import {
   fetchBlog,
   fetchCategories,
@@ -13,7 +14,6 @@ import {
   jobsCategory,
   jobsCategoryBySlug,
 } from "./apis";
-import { CategoriesProps, SubCategoryProps, ServicesProps, InstantApiResponse, BlogProps, SingleBlogProps, SliderProps, CateGoryApiResponse, JobCategoryApiResponse, JobApiResponse, JobDetailApiResponse } from "../types";
 
 // Category
 export function useCategories() {
