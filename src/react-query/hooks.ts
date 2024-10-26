@@ -31,6 +31,21 @@ export function useSubCategories(categoryId: number) {
   });
 }
 
+
+export function useSubFormCategories(selectedCategoryIds: number[]) {
+  return useQuery<SubCategoryProps[], Error>({
+    queryKey: ["subCategories", selectedCategoryIds],
+    queryFn: async () => {
+      const promises = selectedCategoryIds.map(id => fetchSubCategories(id));
+      const results = await Promise.all(promises);
+      // Here, we expect results to be of type SubCategoryProps
+      return results; // Make sure results is of type SubCategoryProps[]
+    },
+    enabled: selectedCategoryIds.length > 0,
+    staleTime: Infinity,
+  });
+}
+
 // Services
 export function useServices() {
   return useQuery<ServicesProps, Error>({

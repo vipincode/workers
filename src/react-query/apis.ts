@@ -1,8 +1,8 @@
 import axios from "axios";
-import { API_URL } from "./constants";
 import { employeeFormData } from "../schema/permanent-service/schema";
-import { stepFormDataType } from "../schema/step-form";
-import { BlogProps, CategoriesProps, CateGoryApiResponse, FormInputs, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, SearchPostProps, ServicesProps, SingleBlogProps, SliderProps, SubCategoryProps } from "../types";
+import { FormJoinUsType } from "../schema/step-form";
+import { BlogProps, CategoriesProps, CateGoryApiResponse, CitiesResponse, FormInputs, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, SearchPostProps, ServicesProps, SingleBlogProps, SliderProps, StateProps, SubCategoryProps } from "../types";
+import { API_URL } from "./constants";
 
 /**
  * @Categories
@@ -61,7 +61,7 @@ export const postEmployeeData = async (data: employeeFormData) => {
  * @PermanentService
  * Post User Data
  */
-export const stepFormeData = async (data: stepFormDataType) => {
+export const stepFormeData = async (data: FormJoinUsType) => {
   const response = await axios.post(`${API_URL}/join-us`, data);
   return response.data;
 };
@@ -106,3 +106,19 @@ export const applyJob = async (data: FormInputs) => {
   const response = await axios.post(`${API_URL}/get-job-detail/save-apply-job`, data);
   return response.data;
 };
+
+
+/**
+ * @Apply CITY STATE
+ */
+
+export const getStates = async () => {
+  const response = await axios.get<StateProps>(`${API_URL}/get-states`);
+  return response.data;
+};
+
+export const getCities = async (stateId:number) => {
+  const response = await axios.get<CitiesResponse>(`${API_URL}/get-city/${stateId}`);
+  return response.data;
+};
+

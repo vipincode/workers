@@ -270,3 +270,41 @@ export interface SearchPostProps {
   category: string,
   salary: string
 }
+
+// CITY STATE
+interface State {
+  id: number;
+  name: string;
+  country_id: number;
+  state_code: string;
+  pos: string;
+  pos_code: number;
+  status_launch: string;
+  status: string;
+  created_At: string; 
+  updated_at: string; 
+}
+
+interface StateProps {
+  states: State[]
+}
+
+interface StateApiProps {
+  states: State
+}
+
+interface City {
+  id: number;
+  country_id: number;
+  state_id: number;
+  name: string;
+  slug: string;
+  status: string;
+  deleted_at: string | null; 
+  created_at: string; 
+  updated_at: string; 
+}
+
+interface CitiesResponse {
+  cites: City[];
+}
