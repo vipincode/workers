@@ -62,7 +62,7 @@ export const postEmployeeData = async (data: employeeFormData) => {
  * Post User Data
  */
 export const stepFormeData = async (data: FormJoinUsType) => {
-  const response = await axios.post(`${API_URL}/join-us`, data);
+  const response = await axios.post(`${API_URL}/save-join-us-data`, data);
   return response.data;
 };
 

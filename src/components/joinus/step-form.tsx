@@ -51,17 +51,20 @@ export default function StepForm() {
     watch,
     trigger,
     control,
+    reset,
   } = useForm<FormJoinUsType>({
     defaultValues: {
       first_name: "",
       last_name: "",
-      state_id: 0,
-      city_id: 0,
+      email: "",
+      state_id: "0",
+      city_id: "0",
       work_experience: 0,
       shift: "",
       joining: "",
       mobile_number: "",
       password: "",
+      password_confirmation: "",
       skills: [
         {
           skill_name: "",
@@ -81,6 +84,21 @@ export default function StepForm() {
   useEffect(() => {
     setSelectedStateId(Number(stateValue));
   }, [stateValue]);
+
+  // const [selectedState, setSelectedState] = useState<number[]>([]);
+  // useEffect(() => {
+
+  //   setSelectedStateId((prev) => {
+  //     // If stateValue is already in the array, remove it (unchecking)
+  //     if (stateValue !== null && prev.includes(Number(stateValue))) {
+  //       return prev.filter((id) => id !== stateValue);
+  //     } else if (stateValue !== null) {
+  //       // Otherwise, add it (checking)
+  //       return [...prev, stateValue];
+  //     }
+  //     return prev;
+  //   });
+  // }, [stateValue]);
 
   const handleCategoryChange = (categoryId: number) => {
     setSelectedCategoryIds((prev) =>
@@ -119,6 +137,7 @@ export default function StepForm() {
       skills: data.skills.filter((skill) => skill.work_with_skill.length > 0 && !skill.skill_name.startsWith("/")),
     };
     mutation.mutate(cleanedData);
+    reset();
   };
 
   const nextStep = async () => {
@@ -141,8 +160,25 @@ export default function StepForm() {
   const prevStep = () => setCurrentStep((prev) => (prev > 1 ? prev - 1 : prev));
 
   if (isErrorStates || isErrorCities || categoryError || subCategoryError) return <p>Error loading data...</p>;
-  // if (isLoadingStates || isLoadingCities || categoryLoading || subCategoryLoading) return <p>Loading...</p>;
 
+  // Password
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setError("");
+  };
+
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    if (e.target.value !== password) {
+      setError("Passwords do not match");
+    } else {
+      setError("");
+    }
+  };
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-2xl font-bold mb-4">Join Us</h1>
@@ -175,6 +211,19 @@ export default function StepForm() {
                   className={`input input-bordered ${errors.last_name ? "input-error" : ""}`}
                 />
                 {errors.last_name && <span className="text-error text-sm mt-1">{errors.last_name.message}</span>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="last_name">
+                  <span className="label-text">Email</span>
+                </label>
+                <input
+                  type="text"
+                  id="email"
+                  {...register("email", { required: "Last name is required" })}
+                  placeholder="Your email"
+                  className={`input input-bordered ${errors.email ? "input-error" : ""}`}
+                />
+                {errors.email && <span className="text-error text-sm mt-1">{errors.email.message}</span>}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -438,10 +487,39 @@ export default function StepForm() {
                     message: "Password must be at least 8 characters long",
                   },
                 })}
+                value={password}
+                onChange={handlePasswordChange}
                 placeholder="Password"
                 className={`input input-bordered ${errors.password ? "input-error" : ""}`}
               />
               {errors.password && <span className="text-error text-sm mt-1">{errors.password.message}</span>}
+            </div>
+
+            <div className="form-control">
+              <label className="label" htmlFor="password_confirmation">
+                <span className="label-text">Confirm Password</span>
+              </label>
+              <input
+                type="password"
+                id="password_confirmation"
+                {...register("password_confirmation", {
+                  required: "Password confirmation is required",
+                  minLength: {
+                    value: 8,
+                    message: "Password confirmation must be at least 8 characters long",
+                  },
+                })}
+                value={confirmPassword}
+                onChange={handleConfirmPasswordChange}
+                placeholder="Confirm Password"
+                className={`input input-bordered ${
+                  errors.password_confirmation || errors.password ? "input-error" : ""
+                }`}
+              />
+              {errors.password_confirmation && (
+                <span className="text-error text-sm mt-1">{errors.password_confirmation.message}</span>
+              )}
+              {error && <p className="text-error text-sm mt-1">{error}</p>}
             </div>
           </div>
         )}
@@ -461,7 +539,7 @@ export default function StepForm() {
 
         {currentStep === 3 && (
           <button type="submit" className="btn btn-primary mt-4 min-w-[200px]">
-            Submit
+            {mutation.isPending ? "Submitting..." : "Submit"}
           </button>
         )}
       </form>
