@@ -86,7 +86,7 @@ export const searchCategory = async () => {
 };
 
 export const jobs = async () => {
-  const response = await axios.get<JobApiResponse>(`${API_URL}/get-jobs`);
+  const response = await axios.post<JobApiResponse>(`${API_URL}/get-jobs`);
   return response.data;
 };
 
