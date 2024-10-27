@@ -140,8 +140,8 @@ export default function StepForm() {
 
   const prevStep = () => setCurrentStep((prev) => (prev > 1 ? prev - 1 : prev));
 
-  if (isErrorStates || isErrorCities || categoryError || subCategoryError) return <p>Error loading data</p>;
-  if (isLoadingStates || isLoadingCities || categoryLoading || subCategoryLoading) return <p>Loading...</p>;
+  if (isErrorStates || isErrorCities || categoryError || subCategoryError) return <p>Error loading data...</p>;
+  // if (isLoadingStates || isLoadingCities || categoryLoading || subCategoryLoading) return <p>Loading...</p>;
 
   return (
     <div className="container mx-auto p-4">
@@ -178,44 +178,58 @@ export default function StepForm() {
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <div className="form-control">
-                <label className="label" htmlFor="state_id">
-                  <span className="label-text">State</span>
-                </label>
-                <select
-                  id="state_id"
-                  {...register("state_id", { required: "State is required" })}
-                  className={`select select-bordered w-full ${errors.state_id ? "select-error" : ""}`}
-                >
-                  <option value="">Select a state</option>
-                  {states?.states.map((state) => (
-                    <option key={state.id} value={state.id}>
-                      {state.name}
-                    </option>
-                  ))}
-                </select>
-                {errors.state_id && <span className="text-error text-sm mt-1">{errors.state_id.message}</span>}
-              </div>
+              {isLoadingStates ? (
+                <div className="space-y-3">
+                  <div className="skeleton h-5 w-16" />
+                  <div className="skeleton h-8 w-full" />
+                </div>
+              ) : (
+                <div className="form-control">
+                  <label className="label" htmlFor="state_id">
+                    <span className="label-text">State</span>
+                  </label>
+                  <select
+                    id="state_id"
+                    {...register("state_id", { required: "State is required" })}
+                    className={`select select-bordered w-full ${errors.state_id ? "select-error" : ""}`}
+                  >
+                    <option value="">Select a state</option>
+                    {states?.states.map((state) => (
+                      <option key={state.id} value={state.id}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.state_id && <span className="text-error text-sm mt-1">{errors.state_id.message}</span>}
+                </div>
+              )}
 
-              <div className="form-control">
-                <label className="label" htmlFor="city_id">
-                  <span className="label-text">City</span>
-                </label>
-                <select
-                  id="city_id"
-                  {...register("city_id", { required: "City is required" })}
-                  className={`select select-bordered w-full ${errors.city_id ? "select-error" : ""}`}
-                  disabled={!selectedStateId || isLoadingCities}
-                >
-                  <option value="">Select a city</option>
-                  {(cities?.cites || []).map((city) => (
-                    <option key={city.id} value={city.id}>
-                      {city.name}
-                    </option>
-                  ))}
-                </select>
-                {errors.city_id && <span className="text-error text-sm mt-1">{errors.city_id.message}</span>}
-              </div>
+              {isLoadingCities ? (
+                <div className="space-y-3">
+                  <div className="skeleton h-5 w-16" />
+                  <div className="skeleton h-8 w-full" />
+                </div>
+              ) : (
+                <div className="form-control">
+                  <label className="label" htmlFor="city_id">
+                    <span className="label-text">City</span>
+                  </label>
+                  <select
+                    id="city_id"
+                    {...register("city_id", { required: "City is required" })}
+                    className={`select select-bordered w-full ${errors.city_id ? "select-error" : ""}`}
+                    disabled={!selectedStateId || isLoadingCities}
+                  >
+                    <option value="">Select a city</option>
+                    {(cities?.cites || []).map((city) => (
+                      <option key={city.id} value={city.id}>
+                        {city.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.city_id && <span className="text-error text-sm mt-1">{errors.city_id.message}</span>}
+                </div>
+              )}
             </div>
           </div>
         )}
@@ -223,98 +237,121 @@ export default function StepForm() {
         {currentStep === 2 && (
           <div>
             <h3 className="text-[20px] font-semibold my-6">Select Category</h3>
-            <div className="flex flex-wrap gap-4">
-              {categories?.categories.map((category) => (
-                <div key={category.id} className="form-control">
-                  <label className="cursor-pointer label bg-base-200 px-4 py-3 rounded-md flex items-center gap-3">
-                    <span className="label-text">{category.name}</span>
-                    <input
-                      type="checkbox"
-                      value={category.id}
-                      onChange={() => handleCategoryChange(category.id)}
-                      checked={selectedCategoryIds.includes(category.id)}
-                      className="checkbox checkbox-primary"
-                    />
-                  </label>
-                </div>
-              ))}
-            </div>
+            {categoryLoading ? (
+              <div className="flex flex-wrap gap-4">
+                {Array.from({ length: 10 }).map((_, index) => (
+                  <div key={index} className="skeleton h-8 w-[200px]" />
+                ))}
+              </div>
+            ) : (
+              <div className="flex flex-wrap gap-4">
+                {categories?.categories.map((category) => (
+                  <div key={category.id} className="form-control">
+                    <label className="cursor-pointer label bg-base-200 px-4 py-3 rounded-md flex items-center gap-3">
+                      <span className="label-text">{category.name}</span>
+                      <input
+                        type="checkbox"
+                        value={category.id}
+                        onChange={() => handleCategoryChange(category.id)}
+                        checked={selectedCategoryIds.includes(category.id)}
+                        className="checkbox checkbox-primary"
+                      />
+                    </label>
+                  </div>
+                ))}
+              </div>
+            )}
             {selectedCategoryIds.length > 0 && (
               <h3 className="text-lg font-semibold my-6">Select Skill Type and Sub Categories</h3>
             )}
-            <div className="space-y-4">
-              {fields.map((field, index) => {
-                const category = categories?.categories.find((c) => field.skill_name.startsWith(c.name));
-                const relatedSubCategories = subCategories.filter((sub) => sub.parent_id === category?.id);
-                // If no category return null
-                if (!category || relatedSubCategories.length === 0) return null;
-                return (
-                  <div key={field.id} className="space-y-4 border-b pb-4">
-                    <h4 className="font-medium text-lg capitalize">{field.skill_name}</h4>
-                    <Controller
-                      name={`skills.${index}.skill_type`}
-                      control={control}
-                      rules={{ required: "Skill type is required" }}
-                      render={({ field: { onChange, value } }) => (
-                        <div className="form-control">
-                          <div className="flex space-x-4">
-                            <label className="label cursor-pointer">
-                              <input
-                                type="radio"
-                                className="radio radio-primary"
-                                value="Meson"
-                                checked={value === "Meson"}
-                                onChange={() => onChange("Meson")}
+            {subCategoryLoading ? (
+              <div className="space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="skeleton h-5 w-16" />
+                  <div className="skeleton h-5 w-16" />
+                </div>
+                <div className="max-w-[400px] space-y-3">
+                  <div className="skeleton h-8 w-full" />
+                  <div className="skeleton h-8 w-full" />
+                  <div className="skeleton h-8 w-full" />
+                  <div className="skeleton h-8 w-full" />
+                </div>
+              </div>
+            ) : (
+              <div className="space-y-4">
+                {fields.map((field, index) => {
+                  const category = categories?.categories.find((c) => field.skill_name.startsWith(c.name));
+                  const relatedSubCategories = subCategories.filter((sub) => sub.parent_id === category?.id);
+                  // If no category return null
+                  if (!category || relatedSubCategories.length === 0) return null;
+                  return (
+                    <div key={field.id} className="space-y-4 border-b pb-4">
+                      <h4 className="font-medium text-lg capitalize">{field.skill_name}</h4>
+                      <Controller
+                        name={`skills.${index}.skill_type`}
+                        control={control}
+                        rules={{ required: "Skill type is required" }}
+                        render={({ field: { onChange, value } }) => (
+                          <div className="form-control">
+                            <div className="flex space-x-4">
+                              <label className="label cursor-pointer">
+                                <input
+                                  type="radio"
+                                  className="radio radio-primary"
+                                  value="Meson"
+                                  checked={value === "Meson"}
+                                  onChange={() => onChange("Meson")}
+                                />
+                                <span className="label-text ml-2">Meson</span>
+                              </label>
+                              <label className="label cursor-pointer">
+                                <input
+                                  type="radio"
+                                  className="radio radio-primary"
+                                  value="Helper"
+                                  checked={value === "Helper"}
+                                  onChange={() => onChange("Helper")}
+                                />
+                                <span className="label-text ml-2">Helper</span>
+                              </label>
+                            </div>
+                          </div>
+                        )}
+                      />
+                      {errors.skills?.[index]?.skill_type && (
+                        <span className="text-error text-sm">{errors.skills[index].skill_type.message}</span>
+                      )}
+                      <div className="space-y-2">
+                        {relatedSubCategories.map((subcategory) => (
+                          <div key={subcategory.id} className="form-control">
+                            <label className="label cursor-pointer justify-start gap-2">
+                              <Controller
+                                name={`skills.${index}.work_with_skill`}
+                                control={control}
+                                render={({ field: { onChange, value } }) => (
+                                  <input
+                                    type="checkbox"
+                                    className="checkbox checkbox-primary"
+                                    checked={value.includes(subcategory.name)}
+                                    onChange={(e) => {
+                                      const updatedValue = e.target.checked
+                                        ? [...value, subcategory.name]
+                                        : value.filter((name: string) => name !== subcategory.name);
+                                      onChange(updatedValue);
+                                    }}
+                                  />
+                                )}
                               />
-                              <span className="label-text ml-2">Meson</span>
-                            </label>
-                            <label className="label cursor-pointer">
-                              <input
-                                type="radio"
-                                className="radio radio-primary"
-                                value="Helper"
-                                checked={value === "Helper"}
-                                onChange={() => onChange("Helper")}
-                              />
-                              <span className="label-text ml-2">Helper</span>
+                              <span className="label-text">{subcategory.name}</span>
                             </label>
                           </div>
-                        </div>
-                      )}
-                    />
-                    {errors.skills?.[index]?.skill_type && (
-                      <span className="text-error text-sm">{errors.skills[index].skill_type.message}</span>
-                    )}
-                    <div className="space-y-2">
-                      {relatedSubCategories.map((subcategory) => (
-                        <div key={subcategory.id} className="form-control">
-                          <label className="label cursor-pointer justify-start gap-2">
-                            <Controller
-                              name={`skills.${index}.work_with_skill`}
-                              control={control}
-                              render={({ field: { onChange, value } }) => (
-                                <input
-                                  type="checkbox"
-                                  className="checkbox checkbox-primary"
-                                  checked={value.includes(subcategory.name)}
-                                  onChange={(e) => {
-                                    const updatedValue = e.target.checked
-                                      ? [...value, subcategory.name]
-                                      : value.filter((name: string) => name !== subcategory.name);
-                                    onChange(updatedValue);
-                                  }}
-                                />
-                              )}
-                            />
-                            <span className="label-text">{subcategory.name}</span>
-                          </label>
-                        </div>
-                      ))}
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         )}
 
