@@ -1,5 +1,17 @@
 import { useQuery } from "@tanstack/react-query";
-import { BlogProps, CategoriesProps, CateGoryApiResponse, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, ServicesProps, SingleBlogProps, SliderProps, SubCategoryProps } from "../types";
+import {
+  BlogProps,
+  CategoriesProps,
+  CateGoryApiResponse,
+  InstantApiResponse,
+  JobApiResponse,
+  JobCategoryApiResponse,
+  JobDetailApiResponse,
+  ServicesProps,
+  SingleBlogProps,
+  SliderProps,
+  SubCategoryProps,
+} from "../types";
 import {
   fetchBlog,
   fetchCategories,
@@ -31,12 +43,11 @@ export function useSubCategories(categoryId: number) {
   });
 }
 
-
 export function useSubFormCategories(selectedCategoryIds: number[]) {
   return useQuery<SubCategoryProps[], Error>({
     queryKey: ["subCategories", selectedCategoryIds],
     queryFn: async () => {
-      const promises = selectedCategoryIds.map(id => fetchSubCategories(id));
+      const promises = selectedCategoryIds.map((id) => fetchSubCategories(id));
       const results = await Promise.all(promises);
       // Here, we expect results to be of type SubCategoryProps
       return results; // Make sure results is of type SubCategoryProps[]

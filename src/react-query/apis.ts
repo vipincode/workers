@@ -1,7 +1,23 @@
 import axios from "axios";
 import { employeeFormData } from "../schema/permanent-service/schema";
 import { FormJoinUsType } from "../schema/step-form";
-import { BlogProps, CategoriesProps, CateGoryApiResponse, CitiesResponse, FormInputs, InstantApiResponse, JobApiResponse, JobCategoryApiResponse, JobDetailApiResponse, SearchPostProps, ServicesProps, SingleBlogProps, SliderProps, StateProps, SubCategoryProps } from "../types";
+import {
+  BlogProps,
+  CategoriesProps,
+  CateGoryApiResponse,
+  CitiesResponse,
+  FormInputs,
+  InstantApiResponse,
+  JobApiResponse,
+  JobCategoryApiResponse,
+  JobDetailApiResponse,
+  SearchPostProps,
+  ServicesProps,
+  SingleBlogProps,
+  SliderProps,
+  StateProps,
+  SubCategoryProps,
+} from "../types";
 import { API_URL } from "./constants";
 
 /**
@@ -90,6 +106,11 @@ export const jobs = async () => {
   return response.data;
 };
 
+export const fetchJobs = async (filters: Record<string, string>) => {
+  const response = await axios.post(`${API_URL}/get-jobs`, filters);
+  return response.data;
+};
+
 export const jobsBySlug = async (slug: string) => {
   if (!slug) {
     throw new Error("No slug provided");
@@ -107,7 +128,6 @@ export const applyJob = async (data: FormInputs) => {
   return response.data;
 };
 
-
 /**
  * @Apply CITY STATE
  */
@@ -117,8 +137,7 @@ export const getStates = async () => {
   return response.data;
 };
 
-export const getCities = async (stateId:number) => {
+export const getCities = async (stateId: number) => {
   const response = await axios.get<CitiesResponse>(`${API_URL}/get-city/${stateId}`);
   return response.data;
 };
-

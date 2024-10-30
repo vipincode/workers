@@ -8,6 +8,7 @@ import { useCategories, useSubFormCategories } from "../../react-query/hooks";
 import { CitiesResponse, StateProps } from "../../types";
 import { FormJoinUsType } from "../../schema/step-form";
 import toast from "react-hot-toast";
+import { AxiosError } from "axios";
 
 export default function StepForm() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
@@ -83,61 +84,75 @@ export default function StepForm() {
   const stateValue = watch("state_id");
   useEffect(() => {
     setSelectedStateId(Number(stateValue));
+    console.log(selectedStateId);
   }, [stateValue]);
 
-  // const [selectedState, setSelectedState] = useState<number[]>([]);
-  // useEffect(() => {
-
-  //   setSelectedStateId((prev) => {
-  //     // If stateValue is already in the array, remove it (unchecking)
-  //     if (stateValue !== null && prev.includes(Number(stateValue))) {
-  //       return prev.filter((id) => id !== stateValue);
-  //     } else if (stateValue !== null) {
-  //       // Otherwise, add it (checking)
-  //       return [...prev, stateValue];
-  //     }
-  //     return prev;
-  //   });
-  // }, [stateValue]);
-
+  // Handle category check and uncheck
   const handleCategoryChange = (categoryId: number) => {
     setSelectedCategoryIds((prev) =>
       prev.includes(categoryId) ? prev.filter((id) => id !== categoryId) : [...prev, categoryId]
     );
-
-    const category = categories?.categories.find((c) => c.id === categoryId);
-    if (category) {
-      const existingSkillIndex = fields.findIndex((field) => field.skill_name.startsWith(category.name));
-      if (category.name) {
-        append({
-          skill_name: category.name,
-          skill_type: "",
-          work_with_skill: [],
-        });
-      } else if (!selectedCategoryIds.includes(categoryId)) {
-        remove(existingSkillIndex);
-      }
-    }
   };
+
+  // useEffect to handle the appending and removing of skills based on selectedCategoryIds
+  useEffect(() => {
+    selectedCategoryIds.forEach((categoryId) => {
+      const category = categories?.categories.find((c) => c.id === categoryId);
+      if (category) {
+        const existingSkillIndex = fields.findIndex((field) => field.skill_name === category.name);
+
+        // Only append if the skill does not already exist
+        if (existingSkillIndex === -1) {
+          append({
+            skill_name: category.name,
+            skill_type: "",
+            work_with_skill: [],
+          });
+        }
+      }
+    });
+
+    // Remove skills that are no longer in selectedCategoryIds
+    fields.forEach((field, index) => {
+      const categoryExists = selectedCategoryIds.some(
+        (categoryId) => categories?.categories.find((c) => c.id === categoryId)?.name === field.skill_name
+      );
+
+      if (!categoryExists) {
+        remove(index);
+      }
+    });
+  }, [selectedCategoryIds, categories, fields, append, remove]);
+
+  // END Handle category check and uncheck
 
   const mutation = useMutation({
     mutationFn: stepFormeData,
     onSuccess: () => {
       toast.success("Data added successfully!");
+      reset();
     },
-    onError: (error) => {
-      console.error("Error saving data:", error);
-      toast.error("Error submitting form. Please try again.");
+    onError: (error: AxiosError<{ success: boolean; message: string }>) => {
+      if (error.response?.status === 500 && error.response.data?.message) {
+        const errorMessage = error.response.data.message;
+
+        if (errorMessage.includes("email has already been taken")) {
+          toast.error("This email is already registered. Please use a different email.");
+        } else {
+          toast.error("Error submitting form. Please try again.");
+        }
+      } else {
+        console.error("Error saving data:", error);
+        toast.error("An unexpected error occurred. Please try again.");
+      }
     },
   });
-
   const onSubmit = (data: FormJoinUsType) => {
     const cleanedData = {
       ...data,
       skills: data.skills.filter((skill) => skill.work_with_skill.length > 0 && !skill.skill_name.startsWith("/")),
     };
     mutation.mutate(cleanedData);
-    reset();
   };
 
   const nextStep = async () => {

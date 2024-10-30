@@ -1,40 +1,46 @@
 import { useState } from "react";
 import JobCard from "../../components/jobs/job-card";
 import { Link } from "react-router-dom";
-import { useJobs, useJobsCategory } from "../../react-query/hooks";
 import JobCardSkeleton from "../../components/skeleton/job-card-skeleton";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
-import { searchCategory } from "../../react-query/apis";
+import { useQuery } from "@tanstack/react-query";
+import { fetchJobs } from "../../react-query/apis";
 import { SearchIcon } from "lucide-react";
+import { useJobsCategory } from "../../react-query/hooks";
+import { JobApiResponse } from "../../types";
 
 export default function JobListingsPage() {
   const [expandedJob, setExpandedJob] = useState<string | null>(null);
-
-  // Fetch job and category data
-  const { data, isLoading, isError } = useJobs();
-  const { data: Categories, isLoading: categoryLoading, isError: categoryError } = useJobsCategory();
-
-  // React Hook Form setup
-  const { register, handleSubmit } = useForm();
-
-  // Mutation for category search
-  const mutation = useMutation({
-    mutationFn: searchCategory,
+  const [filters, setFilters] = useState({});
+  const { register, handleSubmit } = useForm({
+    defaultValues: {
+      location: "",
+      category: "",
+      experience: "",
+      salary: "",
+    },
   });
 
+  const {
+    data: jobApiResponse,
+    isLoading,
+    isError,
+  } = useQuery<JobApiResponse>({
+    queryKey: ["fetch-jobs", filters],
+    queryFn: () => fetchJobs(filters),
+    enabled: true,
+  });
+
+  const jobs = jobApiResponse?.jobs ?? [];
+
+  const { data: Categories, isLoading: categoryLoading, isError: categoryError } = useJobsCategory();
+
   const onSubmit = (data) => {
-    console.log(data);
-    mutation.mutate(data);
+    setFilters(data);
   };
 
-  // Loading and error states
-  if (isError || categoryError) {
-    return <p>Error, Something went wrong</p>;
-  }
-  if (isLoading || categoryLoading) {
-    return <JobCardSkeleton />;
-  }
+  if (isLoading) return <JobCardSkeleton />;
+  if (isError || categoryError) return <p>Error loading jobs or categories.</p>;
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
@@ -55,21 +61,25 @@ export default function JobListingsPage() {
               <SearchIcon className="absolute right-5 top-9" />
             </div>
             <div className="flex items-center gap-4">
-              <div>
-                <label htmlFor="category" className="font-medium block text-sm mb-1">
-                  Category
-                </label>
-                <select {...register("category")} defaultValue="" className="select select-bordered w-full max-w-xs">
-                  <option value="" disabled>
-                    Select category
-                  </option>
-                  {Categories?.categories?.map((category) => (
-                    <option key={category.id} value={category.name}>
-                      {category.name}
+              {categoryLoading ? (
+                "Loading..."
+              ) : (
+                <div>
+                  <label htmlFor="category" className="font-medium block text-sm mb-1">
+                    Category
+                  </label>
+                  <select {...register("category")} defaultValue="" className="select select-bordered w-full max-w-xs">
+                    <option value="" disabled>
+                      Select category
                     </option>
-                  ))}
-                </select>
-              </div>
+                    {Categories?.categories?.map((category) => (
+                      <option key={category.id} value={category.name}>
+                        {category.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              )}
               <div>
                 <label htmlFor="experience" className="font-medium block text-sm mb-1">
                   Experience
@@ -121,9 +131,9 @@ export default function JobListingsPage() {
       </div>
 
       <div className="container mx-auto px-4">
-        {data?.jobs?.length ? (
+        {jobs.length > 0 ? (
           <div className="grid grid-cols-2 gap-4">
-            {data.jobs.map((job) => (
+            {jobs.map((job) => (
               <JobCard key={job.id} job={job} expandedJob={expandedJob} setExpandedJob={setExpandedJob} />
             ))}
           </div>
