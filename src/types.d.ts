@@ -262,13 +262,13 @@ export type FormInputs = {
   aboutYourself?: string;
 };
 
-// Search 
+// Search
 
 export interface SearchPostProps {
-  experience: string,
-  location: string,
-  category: string,
-  salary: string
+  experience: string;
+  location: string;
+  category: string;
+  salary: string;
 }
 
 // CITY STATE
@@ -281,16 +281,16 @@ interface State {
   pos_code: number;
   status_launch: string;
   status: string;
-  created_At: string; 
-  updated_at: string; 
+  created_At: string;
+  updated_at: string;
 }
 
 interface StateProps {
-  states: State[]
+  states: State[];
 }
 
 interface StateApiProps {
-  states: State
+  states: State;
 }
 
 interface City {
@@ -300,12 +300,27 @@ interface City {
   name: string;
   slug: string;
   status: string;
-  deleted_at: string | null; 
-  created_at: string; 
-  updated_at: string; 
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
 }
 
 interface CitiesResponse {
   cites: City[];
 }
 
+interface Faq {
+  id: number;
+  category_id: number | null;
+  question: string;
+  slug: string;
+  answer: string;
+  status: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface FaqApiResponse {
+  faqs: Faq[];
+}

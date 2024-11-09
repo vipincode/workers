@@ -3,6 +3,7 @@ import {
   BlogProps,
   CategoriesProps,
   CateGoryApiResponse,
+  FaqApiResponse,
   InstantApiResponse,
   JobApiResponse,
   JobCategoryApiResponse,
@@ -21,6 +22,7 @@ import {
   fetchServices,
   fetchSingleBlog,
   fetchSubCategories,
+  getFaqs,
   jobs,
   jobsBySlug,
   jobsCategory,
@@ -137,5 +139,14 @@ export function useJobsBySlug(slug: string) {
     queryFn: () => jobsBySlug(slug),
     staleTime: 10 * 1000,
     enabled: !!slug,
+  });
+}
+
+// FAQs
+export function useFetchFaqs() {
+  return useQuery<FaqApiResponse, Error>({
+    queryKey: ["faqs"],
+    queryFn: getFaqs,
+    staleTime: Infinity,
   });
 }

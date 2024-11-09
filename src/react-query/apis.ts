@@ -6,6 +6,7 @@ import {
   CategoriesProps,
   CateGoryApiResponse,
   CitiesResponse,
+  FaqApiResponse,
   FormInputs,
   InstantApiResponse,
   JobApiResponse,
@@ -139,5 +140,14 @@ export const getStates = async () => {
 
 export const getCities = async (stateId: number) => {
   const response = await axios.get<CitiesResponse>(`${API_URL}/get-city/${stateId}`);
+  return response.data;
+};
+
+/**
+ * @Apply FAQs
+ */
+
+export const getFaqs = async () => {
+  const response = await axios.get<FaqApiResponse>(`${API_URL}/get-faqs`);
   return response.data;
 };

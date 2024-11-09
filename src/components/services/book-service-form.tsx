@@ -1,15 +1,16 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
-import { postEmployeeData } from "../../react-query/apis";
+import { getCities, getStates, postEmployeeData } from "../../react-query/apis";
 import { employeeFormData, employeeSchema } from "../../schema/permanent-service/schema";
 import MultiPhotoUpload from "../shared/multi-photo-upload";
-// import { useState } from "react";
-import { states } from "../../schema/states";
+import { useEffect, useState } from "react";
+import { CitiesResponse, StateProps } from "../../types";
 
 const BookServicesForm = () => {
+  const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   // const [files, setFiles] = useState<File[]>([]);
   // Photos upload
   const handleUpload = (files: File[]) => {
@@ -18,11 +19,38 @@ const BookServicesForm = () => {
   };
 
   const {
+    data: states,
+    isLoading: isLoadingStates,
+    isError: isErrorStates,
+  } = useQuery<StateProps, Error>({
+    queryKey: ["states"],
+    queryFn: getStates,
+    staleTime: Infinity,
+  });
+
+  const {
+    data: cities,
+    isLoading: isLoadingCities,
+    isError: isErrorCities,
+  } = useQuery<CitiesResponse, Error>({
+    queryKey: ["cities", selectedStateId],
+    queryFn: () => getCities(selectedStateId),
+    enabled: !!selectedStateId,
+    staleTime: Infinity,
+  });
+
+  const {
     register,
     handleSubmit,
+    setValue,
+    getValues,
+    watch,
     formState: { errors },
   } = useForm<employeeFormData>({
     resolver: zodResolver(employeeSchema),
+    defaultValues: {
+      faculties: [],
+    },
   });
 
   const mutation = useMutation({
@@ -37,10 +65,31 @@ const BookServicesForm = () => {
     },
   });
 
+  const stateValue = watch("state_id");
+  useEffect(() => {
+    setSelectedStateId(Number(stateValue));
+    console.log(selectedStateId);
+  }, [stateValue]);
+
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { value, checked } = event.target;
+    const faculties = getValues("faculties");
+
+    if (checked) {
+      setValue("faculties", [...faculties, value]); // Add value if checked
+    } else {
+      setValue(
+        "faculties",
+        faculties.filter((item) => item !== value)
+      ); // Remove value if unchecked
+    }
+  };
+
   const onSubmit = (data: employeeFormData) => {
     mutation.mutate(data);
   };
 
+  if (isErrorStates || isErrorCities) return <p>Error loading data...</p>;
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -69,13 +118,11 @@ const BookServicesForm = () => {
               <input
                 type="text"
                 disabled={mutation.isPending}
-                {...register("email_address")}
+                {...register("email")}
                 placeholder="Type here"
                 className="input input-bordered w-full font-medium text-sm"
               />
-              {errors.email_address && (
-                <p className="text-xs text-red-600 font-normal mt-2">{errors.email_address.message}</p>
-              )}
+              {errors.email && <p className="text-xs text-red-600 font-normal mt-2">{errors.email.message}</p>}
             </div>
             <div>
               <label htmlFor="" className="font-medium text-sm">
@@ -110,41 +157,62 @@ const BookServicesForm = () => {
               </select>
               {errors.shift && <p className="text-xs text-red-600 font-normal mt-2">{errors.shift.message}</p>}
             </div>
-            <div>
-              <label className="font-medium text-sm" htmlFor="">
-                Your city name
-              </label>
-              <input
-                {...register("city")}
-                type="text"
-                placeholder="Type here"
-                className="input input-bordered w-full font-medium text-sm"
-              />
 
-              {errors.city && <p className="text-xs text-red-600 font-normal mt-2">{errors.city.message}</p>}
-            </div>
-            <div>
-              <label htmlFor="" className="font-medium text-sm">
-                State
-              </label>
-              <select
-                disabled={mutation.isPending}
-                defaultValue=""
-                {...register("state")}
-                className="select select-bordered w-full"
-              >
-                <option value="" disabled>
-                  Select your state
-                </option>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {isLoadingStates ? (
+                <div className="space-y-3">
+                  <div className="skeleton h-5 w-16" />
+                  <div className="skeleton h-8 w-full" />
+                </div>
+              ) : (
+                <div className="form-control">
+                  <label className="label" htmlFor="state_id">
+                    <span className="label-text">State</span>
+                  </label>
+                  <select
+                    id="state_id"
+                    {...register("state_id", { required: "State is required" })}
+                    className={`select select-bordered w-full ${errors.state_id ? "select-error" : ""}`}
+                  >
+                    <option value="">Select a state</option>
+                    {states?.states.map((state) => (
+                      <option key={state.id} value={state.id}>
+                        {state.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.state_id && <span className="text-error text-sm mt-1">{errors.state_id.message}</span>}
+                </div>
+              )}
 
-                {states.map((state) => (
-                  <option key={state} value={state}>
-                    {state}
-                  </option>
-                ))}
-              </select>
-              {errors.state && <p className="text-xs text-red-600 font-normal mt-2">{errors.state.message}</p>}
+              {isLoadingCities ? (
+                <div className="space-y-3">
+                  <div className="skeleton h-5 w-16" />
+                  <div className="skeleton h-8 w-full" />
+                </div>
+              ) : (
+                <div className="form-control">
+                  <label className="label" htmlFor="city_id">
+                    <span className="label-text">City</span>
+                  </label>
+                  <select
+                    id="city_id"
+                    {...register("city_id", { required: "City is required" })}
+                    className={`select select-bordered w-full ${errors.city_id ? "select-error" : ""}`}
+                    disabled={!selectedStateId || isLoadingCities}
+                  >
+                    <option value="">Select a city</option>
+                    {(cities?.cites || []).map((city) => (
+                      <option key={city.id} value={city.id}>
+                        {city.name}
+                      </option>
+                    ))}
+                  </select>
+                  {errors.city_id && <span className="text-error text-sm mt-1">{errors.city_id.message}</span>}
+                </div>
+              )}
             </div>
+
             <div>
               <label htmlFor="" className="font-medium text-sm">
                 Address{" "}
@@ -165,8 +233,8 @@ const BookServicesForm = () => {
                     Meson
                   </label>
                   <input
-                    {...register("meson")}
-                    type="text"
+                    {...register("meson", { valueAsNumber: true })}
+                    type="number"
                     disabled={mutation.isPending}
                     placeholder="ex: 23"
                     className="input input-bordered w-full font-medium text-sm"
@@ -178,8 +246,8 @@ const BookServicesForm = () => {
                     Helper
                   </label>
                   <input
-                    {...register("helper")}
-                    type="text"
+                    {...register("helper", { valueAsNumber: true })}
+                    type="number"
                     disabled={mutation.isPending}
                     placeholder="ex: 43"
                     className="input input-bordered w-full font-medium text-sm"
@@ -191,18 +259,12 @@ const BookServicesForm = () => {
             <div>
               <h3 className="text-[16px] font-medium mt-4">What faculties do you provide to workers?</h3>
               <div className="flex gap-6 mt-4">
-                <label htmlFor="" className="font-medium text-sm flex items-center gap-2">
-                  <input {...register("food")} type="checkbox" defaultChecked className="checkbox" /> Food
-                </label>
-                <label htmlFor="" className="font-medium text-sm flex items-center gap-2">
-                  <input {...register("stay")} type="checkbox" className="checkbox" /> Stay
-                </label>
-                <label htmlFor="" className="font-medium text-sm flex items-center gap-2">
-                  <input {...register("over_time")} type="checkbox" className="checkbox" /> Over time
-                </label>
-                <label htmlFor="" className="font-medium text-sm flex items-center gap-2">
-                  <input {...register("medical_insurance")} type="checkbox" className="checkbox" /> Medical insurance
-                </label>
+                {["food", "stay", "over_time", "medical_insurance"].map((facility) => (
+                  <label key={facility} className="font-medium text-sm flex items-center gap-2">
+                    <input type="checkbox" value={facility} onChange={handleCheckboxChange} className="checkbox" />
+                    {facility.replace("_", " ")} {/* Display facility name */}
+                  </label>
+                ))}
               </div>
             </div>
           </div>
@@ -216,8 +278,8 @@ const BookServicesForm = () => {
                     Day{" "}
                   </label>
                   <input
-                    {...register("day")}
-                    type="text"
+                    {...register("day", { valueAsNumber: true })}
+                    type="number"
                     disabled={mutation.isPending}
                     placeholder="ex:23"
                     className="input input-bordered w-full font-medium text-sm"
@@ -229,8 +291,8 @@ const BookServicesForm = () => {
                     Month{" "}
                   </label>
                   <input
-                    {...register("month")}
-                    type="text"
+                    {...register("month", { valueAsNumber: true })}
+                    type="number"
                     disabled={mutation.isPending}
                     placeholder="ex: 3"
                     className="input input-bordered w-full font-medium text-sm"
@@ -242,8 +304,8 @@ const BookServicesForm = () => {
                     Year{" "}
                   </label>
                   <input
-                    {...register("year")}
-                    type="text"
+                    {...register("year", { valueAsNumber: true })}
+                    type="number"
                     disabled={mutation.isPending}
                     placeholder="ex: 2024"
                     className="input input-bordered w-full font-medium text-sm"
@@ -281,14 +343,14 @@ const BookServicesForm = () => {
                 Phone number
               </label>
               <input
-                {...register("phone_number")}
+                {...register("mobile_number")}
                 type="text"
                 disabled={mutation.isPending}
                 placeholder="Type here"
                 className="input input-bordered w-full font-medium text-sm"
               />
-              {errors.phone_number && (
-                <p className="text-xs text-red-600 font-normal mt-2">{errors.phone_number.message}</p>
+              {errors.mobile_number && (
+                <p className="text-xs text-red-600 font-normal mt-2">{errors.mobile_number.message}</p>
               )}
             </div>
             <div>
@@ -313,7 +375,7 @@ const BookServicesForm = () => {
         </div>
         <div className="mt-10">
           <div className="flex items-center gap-2 my-4">
-            <input type="checkbox" className="checkbox" />
+            <input type="checkbox" {...register("term_and_conditions")} className="checkbox" />
             <label htmlFor="" className="font-medium text-sm">
               Do you accept our terms and conditions?{" "}
               <Link to="#" title="Terms & Condition" className="text-blue-700">
@@ -321,7 +383,12 @@ const BookServicesForm = () => {
               </Link>
             </label>
           </div>
-          <button className="btn btn-primary min-w-[120px]">{mutation.isPending ? "Submitting..." : "Get OTP"}</button>
+          {errors.term_and_conditions && (
+            <p className="text-xs text-red-600 font-normal mb-8">{errors.term_and_conditions.message}</p>
+          )}
+          <button type="submit" className="btn btn-primary min-w-[120px]" disabled={mutation.isPending}>
+            {mutation.isPending ? "Submitting..." : "Get OTP"}
+          </button>
         </div>
       </form>
     </div>
