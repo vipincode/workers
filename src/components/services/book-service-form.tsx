@@ -1,22 +1,17 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link } from "react-router-dom";
 import { getCities, getStates, postEmployeeData } from "../../react-query/apis";
 import { employeeFormData, employeeSchema } from "../../schema/permanent-service/schema";
-import MultiPhotoUpload from "../shared/multi-photo-upload";
 import { useEffect, useState } from "react";
 import { CitiesResponse, StateProps } from "../../types";
+import { X } from "lucide-react";
 
 const BookServicesForm = () => {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
-  // const [files, setFiles] = useState<File[]>([]);
-  // Photos upload
-  const handleUpload = (files: File[]) => {
-    console.log("Files uploaded:", files);
-    // setFiles(files);
-  };
+  const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
   const {
     data: states,
@@ -45,11 +40,13 @@ const BookServicesForm = () => {
     setValue,
     getValues,
     watch,
+    control,
     formState: { errors },
   } = useForm<employeeFormData>({
     resolver: zodResolver(employeeSchema),
     defaultValues: {
       faculties: [],
+      upload_photos: [],
     },
   });
 
@@ -68,7 +65,6 @@ const BookServicesForm = () => {
   const stateValue = watch("state_id");
   useEffect(() => {
     setSelectedStateId(Number(stateValue));
-    console.log(selectedStateId);
   }, [stateValue]);
 
   const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -86,10 +82,25 @@ const BookServicesForm = () => {
   };
 
   const onSubmit = (data: employeeFormData) => {
+    const formData = new FormData();
+    selectedFiles.forEach((file) => formData.append("upload_photos", file));
+    // Add other form fields to formData
+    Object.entries(data).forEach(([key, value]) => {
+      if (key !== "upload_photos") {
+        formData.append(key, value as string);
+      }
+    });
+
+    console.log(data);
     mutation.mutate(data);
   };
 
+  const removeFile = (index: number) => {
+    setSelectedFiles((prevFiles) => prevFiles.filter((_, i) => i !== index));
+  };
+
   if (isErrorStates || isErrorCities) return <p>Error loading data...</p>;
+
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -357,8 +368,112 @@ const BookServicesForm = () => {
               <label htmlFor="" className="font-medium text-sm">
                 Upload Photos
               </label>
-              <MultiPhotoUpload onUpload={handleUpload} maxFiles={10} uploadPath="/api/custom-upload" />
+              {/* <Controller
+                name="upload_photos"
+                control={control}
+                render={({ field }) => (
+                  <input type="file" multiple onChange={(e) => field.onChange([...e.target.files])} />
+                )}
+              /> */}
             </div>
+            <>
+              {/* <div>
+                <label htmlFor="upload_photos" className="block text-sm font-medium text-gray-700">
+                  Upload Photos
+                </label>
+                <Controller
+                  name="upload_photos"
+                  control={control}
+                  render={({ field: { onChange, onBlur, name, ref } }) => (
+                    <input
+                      id="upload_photos"
+                      type="file"
+                      multiple
+                      ref={ref}
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files || []);
+                        setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
+                        onChange(files); // This updates the form state
+                      }}
+                      onBlur={onBlur}
+                      name={name}
+                      className="mt-1 block w-full text-sm text-gray-500
+                         file:mr-4 file:py-2 file:px-4
+                         file:rounded-md file:border-0
+                         file:text-sm file:font-semibold
+                         file:bg-blue-50 file:text-blue-700
+                         hover:file:bg-blue-100"
+                    />
+                  )}
+                />
+                {errors.upload_photos && <p className="mt-2 text-sm text-red-600">{errors.upload_photos.message}</p>}
+              </div> */}
+
+              <div>
+                <label htmlFor="upload_photos" className="block text-sm font-medium text-gray-700">
+                  Upload Photos
+                </label>
+                <Controller
+                  name="upload_photos"
+                  control={control}
+                  render={({ field: { onChange, onBlur, name, ref } }) => (
+                    <input
+                      id="upload_photos"
+                      type="file"
+                      multiple
+                      ref={ref}
+                      onChange={(e) => {
+                        const files = Array.from(e.target.files || []);
+                        const updatedFiles = [...selectedFiles, ...files];
+
+                        setSelectedFiles(updatedFiles);
+                        onChange(updatedFiles); // Pass all selected files to the form state
+                      }}
+                      onBlur={onBlur}
+                      name={name}
+                      className="mt-1 block w-full text-sm text-gray-500
+                   file:mr-4 file:py-2 file:px-4
+                   file:rounded-md file:border-0
+                   file:text-sm file:font-semibold
+                   file:bg-blue-50 file:text-blue-700
+                   hover:file:bg-blue-100"
+                    />
+                  )}
+                />
+                {errors.upload_photos && <p className="mt-2 text-sm text-red-600">{errors.upload_photos.message}</p>}
+              </div>
+
+              {selectedFiles.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="text-sm font-medium text-gray-900">Selected Files:</h4>
+                  <ul className="mt-2 grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
+                    {selectedFiles.map((file, index) => (
+                      <li key={index} className="relative">
+                        <div className="group aspect-w-10 aspect-h-7 block w-full overflow-hidden rounded-lg bg-gray-100">
+                          {file.type.startsWith("image/") ? (
+                            <img src={URL.createObjectURL(file)} alt={file.name} className="object-cover" />
+                          ) : (
+                            <div className="flex items-center justify-center h-full">
+                              <span className="text-gray-500">{file.name}</span>
+                            </div>
+                          )}
+                          <button
+                            type="button"
+                            className="absolute top-0 right-0 p-1 bg-white rounded-bl-lg"
+                            onClick={() => removeFile(index)}
+                          >
+                            <X className="h-4 w-4 text-gray-500" />
+                          </button>
+                        </div>
+                        <p className="mt-2 block text-sm font-medium text-gray-900 truncate pointer-events-none">
+                          {file.name}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </>
             <div>
               <label htmlFor="" className="font-medium text-sm">
                 Alternative Work

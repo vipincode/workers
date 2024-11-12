@@ -1,6 +1,7 @@
 import Container from "../../components/shared/container";
 import SmallBanner from "../../components/shared/small-banner";
 import { useFetchFaqs } from "../../react-query/hooks";
+import DOMPurify from "dompurify";
 
 const FaqsPage = () => {
   const { data, isLoading, isError } = useFetchFaqs();
@@ -12,6 +13,8 @@ const FaqsPage = () => {
   if (isError) {
     return <p>OOps Something went wrong!</p>;
   }
+
+  console.log(data);
 
   return (
     <div>
@@ -51,7 +54,11 @@ const FaqsPage = () => {
                   <input type="radio" name="my-accordion-4" defaultChecked />
                   <div className="collapse-title text-xl font-medium">{faq.question}</div>
                   <div className="collapse-content">
-                    <p>{faq.answer}</p>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: faq.answer ? DOMPurify.sanitize(faq.answer) : "<p>No content available</p>",
+                      }}
+                    />
                   </div>
                 </div>
               ))}

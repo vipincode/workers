@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
 import { useBlogs } from "../../react-query/hooks";
 import SingleBlogCardLoading from "./loader/single-blog-card-loading";
@@ -20,13 +21,16 @@ const SingleBlogCard = ({ blogId }: { blogId: number }) => {
     return (
       <>
         {otherBlogData.map((blog) => (
-          <div className="flex bg-white h-[110px]" key={blog.id}>
+          <div className="flex bg-white h-[130px]" key={blog.id}>
             <div className="w-[140px] h-full">
-              <img className="h-[110px]" src={`${VITE_IMAGE_PATH_URL}/blog/${blog.blogimg}`} alt="" />
+              <img className="h-[130px] object-cover" src={`${VITE_IMAGE_PATH_URL}/blog/${blog.blogimg}`} alt="" />
             </div>
             <div className="flex-1 p-4">
               <h3 className="text-sm font-semibold mb-2">{blog.title}</h3>
-              <p className="text-sm font-normal">{blog.short_description}</p>
+              <p className="text-sm font-normal">{blog.short_description.slice(0, 60)}</p>
+              <Link to={`/blog/${blog.id}`} className="text-xs font-semibold text-blue-600">
+                Read more
+              </Link>
             </div>
           </div>
         ))}

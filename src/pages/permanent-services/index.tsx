@@ -6,7 +6,7 @@ import { usePermanentServices } from "../../react-query/hooks";
 import PermanentServiceLoading from "../../components/services/loader/permanent-service-loading";
 
 const PermanentServices = () => {
-  const { data, status } = usePermanentServices(3);
+  const { data, status } = usePermanentServices(4);
   if (status === "error") {
     return <p>Something went wrong try again</p>;
   }
@@ -26,7 +26,7 @@ const PermanentServices = () => {
           </ul>
         </div>
         <h2 className="text-[24px] font-semibold mb-6 mt-6">Permanent Services</h2>
-        <ServicesCarouselCard data={data.slider_slogans} />;
+        <ServicesCarouselCard data={data.slider_slogans} />
         <div className="text-[24px] font-semibold mb-6 mt-6">
           <h2>Book Your Service</h2>
           <BookServicesForm />
