@@ -100,7 +100,7 @@ const router = createBrowserRouter([
         element: <ApplyJobPage />,
       },
       {
-        path: "/page/:slug",
+        path: "/:slug",
         element: <PolicyPage />,
       },
     ],

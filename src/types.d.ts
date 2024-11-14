@@ -372,3 +372,31 @@ interface PolicyType {
 interface PolicyApiResponse {
   page: PolicyType;
 }
+
+// Services listing
+interface Service {
+  id: number;
+  user_id: number;
+  category_id: number;
+  meta_title: string | null;
+  meta_keyword: string | null;
+  meta_description: string | null;
+  title: string;
+  slug: string;
+  short_description: string;
+  description: string;
+  tags: string;
+  service_image: string;
+  image_link: string;
+  video_link: string;
+  status: string;
+  is_instant_service: number;
+  is_permanent_service: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ServiceApiResponse {
+  services: Service[];
+}

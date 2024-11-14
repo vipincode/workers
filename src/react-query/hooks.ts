@@ -11,6 +11,7 @@ import {
   JobDetailApiResponse,
   PartnersApiResponse,
   PolicyApiResponse,
+  ServiceApiResponse,
   ServicesProps,
   SingleBlogProps,
   SliderProps,
@@ -29,6 +30,7 @@ import {
   getFaqs,
   getPartners,
   getPolicies,
+  getServices,
   jobs,
   jobsBySlug,
   jobsCategory,
@@ -181,5 +183,14 @@ export function useFetchPolicies(slug: string) {
     queryKey: ["policies", slug],
     queryFn: () => getPolicies(slug),
     staleTime: 60 * 1000,
+  });
+}
+
+// Clients
+export function useFetchServices() {
+  return useQuery<ServiceApiResponse, Error>({
+    queryKey: ["services"],
+    queryFn: getServices,
+    staleTime: Infinity,
   });
 }

@@ -16,6 +16,7 @@ import {
   PartnersApiResponse,
   PolicyApiResponse,
   SearchPostProps,
+  ServiceApiResponse,
   ServicesProps,
   SingleBlogProps,
   SliderProps,
@@ -180,5 +181,14 @@ export const getPartners = async () => {
 
 export const getPolicies = async (slug: string) => {
   const response = await axios.get<PolicyApiResponse>(`${API_URL}/page/${slug}`);
+  return response.data;
+};
+
+/**
+ * @Apply Services
+ */
+
+export const getServices = async () => {
+  const response = await axios.get<ServiceApiResponse>(`${API_URL}/get-services`);
   return response.data;
 };

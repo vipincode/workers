@@ -1,15 +1,18 @@
 import { Calendar, MapPin } from "lucide-react";
 import Rating from "../shared/ratings";
 import { Link } from "react-router-dom";
+import { Service } from "../../types";
+import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
+// import DOMPurify from "dompurify";
 
-const ListingCard = () => {
+const ListingCard = ({ data }: { data: Service }) => {
   return (
     <div className="card card-side bg-base-100 shadow-xl">
       <figure>
         <Link to="/services-details">
           <img
-            className="max-h-[200px]"
-            src="https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.jpg"
+            className="max-h-[200px] w-[150px] h-full object-cover"
+            src={`${VITE_IMAGE_PATH_URL}/service/${data.service_image}`}
             alt="Movie"
           />
         </Link>
@@ -18,9 +21,14 @@ const ListingCard = () => {
         <div className="flex flex-wrap justify-between">
           <div>
             <Link to="/services-details">
-              <h2 className="card-title">Service Title</h2>
+              <h2 className="card-title">{data.title}</h2>
             </Link>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+            <p>{data.short_description}</p>
+            {/* <div
+              dangerouslySetInnerHTML={{
+                __html: data.description ? DOMPurify.sanitize(data.description) : "<p>No content available</p>",
+              }}
+            /> */}
           </div>
           <div className="flex items-center flex-col gap-1">
             <div className="badge">
