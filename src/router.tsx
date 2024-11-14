@@ -19,6 +19,7 @@ import DetailedJobListingPage from "./pages/detailed-job-listing-page";
 import JobDetailedViewPage from "./pages/detailed-job-view-page";
 import BlogDetailPage from "./pages/blog-detail-page";
 import ApplyJobPage from "./pages/apply-job-page";
+import PolicyPage from "./pages/policy-page";
 
 const router = createBrowserRouter([
   {
@@ -97,6 +98,10 @@ const router = createBrowserRouter([
       {
         path: "/apply-job",
         element: <ApplyJobPage />,
+      },
+      {
+        path: "/page/:slug",
+        element: <PolicyPage />,
       },
     ],
   },

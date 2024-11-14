@@ -3,11 +3,14 @@ import {
   BlogProps,
   CategoriesProps,
   CateGoryApiResponse,
+  ClientsApiResponse,
   FaqApiResponse,
   InstantApiResponse,
   JobApiResponse,
   JobCategoryApiResponse,
   JobDetailApiResponse,
+  PartnersApiResponse,
+  PolicyApiResponse,
   ServicesProps,
   SingleBlogProps,
   SliderProps,
@@ -22,7 +25,10 @@ import {
   fetchServices,
   fetchSingleBlog,
   fetchSubCategories,
+  getClients,
   getFaqs,
+  getPartners,
+  getPolicies,
   jobs,
   jobsBySlug,
   jobsCategory,
@@ -148,5 +154,32 @@ export function useFetchFaqs() {
     queryKey: ["faqs"],
     queryFn: getFaqs,
     staleTime: Infinity,
+  });
+}
+
+// Clients
+export function useFetchClients() {
+  return useQuery<ClientsApiResponse, Error>({
+    queryKey: ["clients"],
+    queryFn: getClients,
+    staleTime: Infinity,
+  });
+}
+
+// Clients
+export function useFetchPartners() {
+  return useQuery<PartnersApiResponse, Error>({
+    queryKey: ["partners"],
+    queryFn: getPartners,
+    staleTime: Infinity,
+  });
+}
+
+// Clients
+export function useFetchPolicies(slug: string) {
+  return useQuery<PolicyApiResponse, Error>({
+    queryKey: ["policies", slug],
+    queryFn: () => getPolicies(slug),
+    staleTime: 60 * 1000,
   });
 }

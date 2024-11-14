@@ -6,12 +6,15 @@ import {
   CategoriesProps,
   CateGoryApiResponse,
   CitiesResponse,
+  ClientsApiResponse,
   FaqApiResponse,
   FormInputs,
   InstantApiResponse,
   JobApiResponse,
   JobCategoryApiResponse,
   JobDetailApiResponse,
+  PartnersApiResponse,
+  PolicyApiResponse,
   SearchPostProps,
   ServicesProps,
   SingleBlogProps,
@@ -69,6 +72,7 @@ export const fetchPermanentService = (serviceId: number) =>
  * @PermanentService
  * Post User Data
  */
+
 export const postEmployeeData = async (data: employeeFormData) => {
   const response = await axios.post(`${API_URL}/save-query-permanent-service`, data);
   return response.data;
@@ -149,5 +153,32 @@ export const getCities = async (stateId: number) => {
 
 export const getFaqs = async () => {
   const response = await axios.get<FaqApiResponse>(`${API_URL}/get-faqs`);
+  return response.data;
+};
+
+/**
+ * @Apply Clients
+ */
+
+export const getClients = async () => {
+  const response = await axios.get<ClientsApiResponse>(`${API_URL}/get-client-says`);
+  return response.data;
+};
+
+/**
+ * @Apply Partners
+ */
+
+export const getPartners = async () => {
+  const response = await axios.get<PartnersApiResponse>(`${API_URL}/get-partners`);
+  return response.data;
+};
+
+/**
+ * @Apply Policies
+ */
+
+export const getPolicies = async (slug: string) => {
+  const response = await axios.get<PolicyApiResponse>(`${API_URL}/page/${slug}`);
   return response.data;
 };

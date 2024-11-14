@@ -91,8 +91,8 @@ const BookServicesForm = () => {
       }
     });
 
-    console.log(data);
-    mutation.mutate(data);
+    // console.log(data);
+    mutation.mutate(formData as unknown as employeeFormData);
   };
 
   const removeFile = (index: number) => {
@@ -377,38 +377,6 @@ const BookServicesForm = () => {
               /> */}
             </div>
             <>
-              {/* <div>
-                <label htmlFor="upload_photos" className="block text-sm font-medium text-gray-700">
-                  Upload Photos
-                </label>
-                <Controller
-                  name="upload_photos"
-                  control={control}
-                  render={({ field: { onChange, onBlur, name, ref } }) => (
-                    <input
-                      id="upload_photos"
-                      type="file"
-                      multiple
-                      ref={ref}
-                      onChange={(e) => {
-                        const files = Array.from(e.target.files || []);
-                        setSelectedFiles((prevFiles) => [...prevFiles, ...files]);
-                        onChange(files); // This updates the form state
-                      }}
-                      onBlur={onBlur}
-                      name={name}
-                      className="mt-1 block w-full text-sm text-gray-500
-                         file:mr-4 file:py-2 file:px-4
-                         file:rounded-md file:border-0
-                         file:text-sm file:font-semibold
-                         file:bg-blue-50 file:text-blue-700
-                         hover:file:bg-blue-100"
-                    />
-                  )}
-                />
-                {errors.upload_photos && <p className="mt-2 text-sm text-red-600">{errors.upload_photos.message}</p>}
-              </div> */}
-
               <div>
                 <label htmlFor="upload_photos" className="block text-sm font-medium text-gray-700">
                   Upload Photos

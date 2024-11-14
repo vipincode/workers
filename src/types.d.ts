@@ -324,3 +324,51 @@ interface Faq {
 interface FaqApiResponse {
   faqs: Faq[];
 }
+
+// Clients
+interface Client {
+  id: number;
+  user_id: number | null;
+  name: string;
+  company: string;
+  designation: string;
+  content: string;
+  client_image: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface ClientsApiResponse {
+  clients: Client[];
+}
+
+// Partners
+interface Partner {
+  id: number;
+  user_id: number | null;
+  name: string;
+  url: string;
+  logo: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface PartnersApiResponse {
+  partners: Partner[];
+}
+
+interface PolicyType {
+  id: number;
+  title: string;
+  slug: string;
+  content: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface PolicyApiResponse {
+  page: PolicyType;
+}

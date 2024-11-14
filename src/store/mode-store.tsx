@@ -1,13 +1,21 @@
 import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
 interface ModeStore {
   mode: "day" | "hour";
   setMode: (selectedMode: "day" | "hour") => void;
 }
 
-const useModeStore = create<ModeStore>((set) => ({
-  mode: "day",
-  setMode: (selectedMode) => set({ mode: selectedMode }),
-}));
+const useModeStore = create(
+  persist<ModeStore>(
+    (set) => ({
+      mode: "day",
+      setMode: (selectedMode) => set({ mode: selectedMode }),
+    }),
+    {
+      name: "mode-storage", // unique name for the storage
+    }
+  )
+);
 
 export default useModeStore;

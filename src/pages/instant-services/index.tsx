@@ -11,13 +11,14 @@ import InstantServiceLoading from "../../components/services/loader/instant-serv
 
 const InstantServices = () => {
   const navigation = useNavigate();
-  const { mode } = useModeStore();
+  // const { mode } = useModeStore();
+  const mode = useModeStore((state) => state.mode);
 
   const { totalPrice } = useDayRateStore();
 
   const { totalHourPrice } = useHourRateStore();
 
-  const { data, status } = useInstantServices(3);
+  const { data, status } = useInstantServices(4);
   if (status === "error") {
     return <p>Something went wrong..</p>;
   }

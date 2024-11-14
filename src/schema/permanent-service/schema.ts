@@ -24,14 +24,6 @@ export const employeeSchema = z.object({
   day: z.number().min(1, { message: "Day is required" }),
   employee_position: z.string().min(1, { message: "Employee position is required" }),
 
-  // Upload photo as an array of images (optional, max 10)
-  // upload_photo: z
-  //   .array(z.string().regex(/\.(jpg|jpeg|png|gif)$/, { message: "Invalid image format" }))
-  //   .min(1, { message: "At least one image is required" })
-  //   .max(10, { message: "No more than 10 images are allowed" })
-  //   .optional(),
-
-  // upload_photos: z.array(z.instanceof(File)).nonempty("Please upload at least one photo").optional(),
   upload_photos: z
     .array(z.instanceof(File))
     .min(1, "At least one photo is required")
