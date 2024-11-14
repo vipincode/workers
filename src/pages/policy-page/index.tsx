@@ -10,7 +10,18 @@ const PolicyPage = () => {
     return <p>Oops something went wrong...</p>;
   }
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <div>
+        <div className="container mx-auto p-14 min-h-[60vh] bg-gray-100 my-[60px] rounded-md">
+          <div className="flex w-full flex-col gap-4">
+            <div className="skeleton h-32 w-full"></div>
+            <div className="skeleton h-4 w-28"></div>
+            <div className="skeleton h-4 w-full"></div>
+            <div className="skeleton h-4 w-full"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
   return (
     <div>

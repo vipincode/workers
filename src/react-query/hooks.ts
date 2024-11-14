@@ -162,7 +162,7 @@ export function useFetchClients() {
   return useQuery<ClientsApiResponse, Error>({
     queryKey: ["clients"],
     queryFn: getClients,
-    staleTime: Infinity,
+    // staleTime: Infinity,
   });
 }
 

@@ -13,7 +13,7 @@ const useModeStore = create(
       setMode: (selectedMode) => set({ mode: selectedMode }),
     }),
     {
-      name: "mode-storage", // unique name for the storage
+      name: "mode-storage",
     }
   )
 );

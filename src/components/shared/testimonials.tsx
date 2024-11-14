@@ -11,7 +11,22 @@ const Testimonials = () => {
     return <p>Oops something went wrong...</p>;
   }
   if (isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <Container className="my-[200px]">
+        <div className="flex justify-center items-center">
+          <div className="flex w-52 flex-col gap-4">
+            <div className="flex items-center flex-col gap-4">
+              <div className="skeleton h-16 w-16 shrink-0 rounded-full"></div>
+              <div className="flex flex-col gap-4">
+                <div className="skeleton h-4 w-28"></div>
+                <div className="skeleton h-4 w-[230px]"></div>
+                <div className="skeleton h-4 w-[230px]"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Container>
+    );
   }
   return (
     <Container className="my-[200px]">
