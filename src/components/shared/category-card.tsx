@@ -7,7 +7,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
     <>
       {category && (
         <div className="bg-white rounded-md overflow-hidden">
-          <Link to={`/services-listing`}>
+          <Link to={`/services-listing?category-id=${category.id}`}>
             <img
               className="h-[140px] w-full object-cover"
               src={`${VITE_IMAGE_PATH_URL}/category/${category.cat_img}`}

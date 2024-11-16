@@ -13,7 +13,7 @@ const Partners = () => {
       <Container className="mb-[100px]">
         <div className="grid grid-cols-4 gap-6">
           {Array.from({ length: 4 }).map((_, index) => (
-            <div className="flex w-52 flex-col gap-4">
+            <div key={index} className="flex w-52 flex-col gap-4">
               <div className="flex items-center gap-4" key={index}>
                 <div className="skeleton h-16 w-16 shrink-0 rounded-full"></div>
                 <div className="flex flex-col gap-4">
@@ -32,7 +32,7 @@ const Partners = () => {
       <HeadingPrimary className="mb-10 text-center">Our partners</HeadingPrimary>
       <div className="grid grid-cols-4 gap-10">
         {data.partners.map((partner) => (
-          <div className="w-full border flex justify-center items-center gap-5 py-6">
+          <div key={partner.id} className="w-full border flex justify-center items-center gap-5 py-6">
             <img
               className="w-[62px] h-[48px] object-cover rounded-md"
               src={`${VITE_IMAGE_PATH_URL}/partner/${partner.logo}`}

@@ -21,7 +21,7 @@ const Header = () => {
                 Contact
               </Link>
             </li>
-            <li className="pr-6">
+            <li>
               <Link className="font-medium text-sm" to="/blog">
                 Blog
               </Link>
@@ -29,6 +29,11 @@ const Header = () => {
             <li className="pr-6">
               <Link className="font-medium text-sm" to="/joinus">
                 Join us
+              </Link>
+            </li>
+            <li className="pr-6">
+              <Link className="font-medium text-sm" to="/sign-in">
+                Sign in
               </Link>
             </li>
           </ul>

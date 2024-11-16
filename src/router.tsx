@@ -20,6 +20,9 @@ import JobDetailedViewPage from "./pages/detailed-job-view-page";
 import BlogDetailPage from "./pages/blog-detail-page";
 import ApplyJobPage from "./pages/apply-job-page";
 import PolicyPage from "./pages/policy-page";
+import SignIn from "./pages/sign-in-page";
+import SignUp from "./pages/sign-up-page";
+import ForgotPassword from "./pages/forgot-password-page";
 
 const router = createBrowserRouter([
   {
@@ -102,6 +105,18 @@ const router = createBrowserRouter([
       {
         path: "/:slug",
         element: <PolicyPage />,
+      },
+      {
+        path: "/sign-in",
+        element: <SignIn />,
+      },
+      {
+        path: "/sign-up",
+        element: <SignUp />,
+      },
+      {
+        path: "/forgot-password",
+        element: <ForgotPassword />,
       },
     ],
   },

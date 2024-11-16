@@ -182,7 +182,7 @@ export function useFetchPolicies(slug: string) {
   return useQuery<PolicyApiResponse, Error>({
     queryKey: ["policies", slug],
     queryFn: () => getPolicies(slug),
-    staleTime: 60 * 1000,
+    staleTime: Infinity,
   });
 }
 

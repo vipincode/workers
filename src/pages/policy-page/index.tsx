@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useFetchPolicies } from "../../react-query/hooks";
 import DOMPurify from "dompurify";
 
@@ -7,7 +7,14 @@ const PolicyPage = () => {
 
   const { data, isError, isLoading } = useFetchPolicies(slug);
   if (isError) {
-    return <p>Oops something went wrong...</p>;
+    return (
+      <div className="container mx-auto p-14 min-h-[60vh] bg-gray-100 my-[60px] rounded-md flex flex-col gap-2 justify-center items-center">
+        <div className="text-3xl font-bold">No data available...</div>
+        <Link to="/" className="btn btn-primary">
+          Back to home{" "}
+        </Link>
+      </div>
+    );
   }
   if (isLoading) {
     return (
