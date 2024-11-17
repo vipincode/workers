@@ -27,11 +27,6 @@ const Header = () => {
               </Link>
             </li>
             <li className="pr-6">
-              <Link className="font-medium text-sm" to="/joinus">
-                Join us
-              </Link>
-            </li>
-            <li className="pr-6">
               <Link className="font-medium text-sm" to="/sign-in">
                 Sign in
               </Link>

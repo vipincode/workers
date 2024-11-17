@@ -9,9 +9,9 @@ const SmallHeader = () => {
           <PhoneCall size={18} /> <span className="cursor-pointer">+91-8600999922</span>
         </div>
         <div className="flex items-center gap-6">
-          <Link to="#" className="text-xs tracking-wide flex gap-2">
+          <Link to="/join-us" className="text-xs tracking-wide flex gap-2">
             <User size={18} />
-            <span>Register as admin</span>
+            <span>Join Us</span>
           </Link>
           <Link to="#" className="text-xs tracking-wide flex gap-2">
             <HelpCircle size={18} />

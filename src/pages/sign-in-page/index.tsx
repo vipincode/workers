@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
-import { FcGoogle } from "react-icons/fc";
 
 type SignInInputs = {
   email: string;
@@ -49,7 +48,7 @@ export default function SignIn() {
   const router = useNavigate();
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
-    const result = await postData(`${API_URL}/signin`, data);
+    const result = await postData(`${API_URL}/login`, data);
     if (result) {
       // Successful sign-in, redirect to dashboard
       router("/");
@@ -106,16 +105,16 @@ export default function SignIn() {
               </button>
             </div>
           </form>
-          <div className="divider">OR</div>
+          {/* <div className="divider">OR</div>
           <div className="form-control">
             <button className="btn btn-outline btn-primary">
               <FcGoogle size={24} /> <span>Continue with Google</span>
             </button>
-          </div>
+          </div> */}
           <p className="text-center mt-4">
             Don't have an account?{" "}
-            <Link to="/sign-up" className="link link-primary">
-              Sign up
+            <Link to="/join-us" className="link link-primary">
+              Join Us
             </Link>
           </p>
         </div>

@@ -12,7 +12,7 @@ const HomePage = () => {
   return (
     <section>
       <Hero />
-      <SearchBox />
+      <SearchBox setSearchQuery={() => {}} />
       <Container>
         <HomeServices />
       </Container>

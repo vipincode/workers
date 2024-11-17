@@ -3,13 +3,12 @@ import Rating from "../shared/ratings";
 import { Link } from "react-router-dom";
 import { Service } from "../../types";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
-// import DOMPurify from "dompurify";
 
 const ListingCard = ({ data }: { data: Service }) => {
   return (
     <div className="card card-side bg-base-100 shadow-xl">
       <figure>
-        <Link to="/services-details">
+        <Link to="/services-detail">
           <img
             className="max-h-[200px] w-[150px] h-full object-cover"
             src={`${VITE_IMAGE_PATH_URL}/service/${data.service_image}`}
@@ -20,15 +19,10 @@ const ListingCard = ({ data }: { data: Service }) => {
       <div className="card-body space-y-6">
         <div className="flex flex-wrap justify-between">
           <div>
-            <Link to="/services-details">
+            <Link to="/services-detail">
               <h2 className="card-title">{data.title}</h2>
             </Link>
             <p>{data.short_description}</p>
-            {/* <div
-              dangerouslySetInnerHTML={{
-                __html: data.description ? DOMPurify.sanitize(data.description) : "<p>No content available</p>",
-              }}
-            /> */}
           </div>
           <div className="flex items-center flex-col gap-1">
             <div className="badge">
@@ -45,7 +39,7 @@ const ListingCard = ({ data }: { data: Service }) => {
           <div className="space-y-1">
             <Rating />
           </div>
-          <Link to="/services-details">
+          <Link to={`/services-detail/${data.slug}`}>
             <button className="btn btn-sm">View Details</button>
           </Link>
         </div>

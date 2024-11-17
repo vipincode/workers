@@ -11,7 +11,7 @@ import {
   JobDetailApiResponse,
   PartnersApiResponse,
   PolicyApiResponse,
-  ServiceApiResponse,
+  ServiceDetailApiResponse,
   ServicesProps,
   SingleBlogProps,
   SliderProps,
@@ -21,16 +21,16 @@ import {
   fetchBlog,
   fetchCategories,
   fetchHeroCarousel,
+  fetchHomeServices,
   fetchInstantService,
   fetchPermanentService,
-  fetchServices,
+  fetchServiceDetail,
   fetchSingleBlog,
   fetchSubCategories,
   getClients,
   getFaqs,
   getPartners,
   getPolicies,
-  getServices,
   jobs,
   jobsBySlug,
   jobsCategory,
@@ -71,10 +71,19 @@ export function useSubFormCategories(selectedCategoryIds: number[]) {
 export function useServices() {
   return useQuery<ServicesProps, Error>({
     queryKey: ["services"],
-    queryFn: fetchServices,
+    queryFn: fetchHomeServices,
     staleTime: 10 * 1000,
   });
 }
+
+export function useServiceDetail(slug: string) {
+  return useQuery<ServiceDetailApiResponse, Error>({
+    queryKey: ["service-detail", slug],
+    queryFn: () => fetchServiceDetail(slug),
+    staleTime: 10 * 1000,
+  });
+}
+
 export function useInstantServices(serviceId: number) {
   return useQuery<InstantApiResponse, Error>({
     queryKey: ["instant-services", serviceId],
@@ -187,10 +196,10 @@ export function useFetchPolicies(slug: string) {
 }
 
 // Clients
-export function useFetchServices() {
-  return useQuery<ServiceApiResponse, Error>({
-    queryKey: ["services"],
-    queryFn: getServices,
-    staleTime: Infinity,
-  });
-}
+// export function useFetchServices() {
+//   return useQuery<ServiceApiResponse, Error>({
+//     queryKey: ["services"],
+//     queryFn: getServices,
+//     staleTime: Infinity,
+//   });
+// }

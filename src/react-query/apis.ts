@@ -17,6 +17,7 @@ import {
   PolicyApiResponse,
   SearchPostProps,
   ServiceApiResponse,
+  ServiceDetailApiResponse,
   ServicesProps,
   SingleBlogProps,
   SliderProps,
@@ -33,13 +34,6 @@ export const fetchCategories = () => axios.get<CategoriesProps>(`${API_URL}/get-
 
 export const fetchSubCategories = (categoryId: number) =>
   axios.get<SubCategoryProps>(`${API_URL}/get-sub-category/${categoryId}`).then((res) => res.data);
-
-/**
- * @Services
- * Get Services data.
- */
-
-export const fetchServices = () => axios.get<ServicesProps>(`${API_URL}/get-services`).then((res) => res.data);
 
 /**
  * @Blog
@@ -180,7 +174,7 @@ export const getPartners = async () => {
  */
 
 export const getPolicies = async (slug: string) => {
-  const response = await axios.get<PolicyApiResponse>(`${API_URL}/page/${slug}`);
+  const response = await axios.get<PolicyApiResponse>(`${API_URL}/${slug}`);
   return response.data;
 };
 
@@ -188,7 +182,17 @@ export const getPolicies = async (slug: string) => {
  * @Apply Services
  */
 
-export const getServices = async () => {
-  const response = await axios.get<ServiceApiResponse>(`${API_URL}/get-services`);
+/**
+ * @Services
+ * Get Services data.
+ */
+
+export const fetchHomeServices = () => axios.get<ServicesProps>(`${API_URL}/get-services`).then((res) => res.data);
+
+export const fetchServices = async (filters: { category_slug: string; sub_category_slug: string; keyword: string }) => {
+  const response = await axios.post<ServiceApiResponse>(`${API_URL}/get-services`, filters);
   return response.data;
 };
+
+export const fetchServiceDetail = (slug: string) =>
+  axios.get<ServiceDetailApiResponse>(`${API_URL}/get-service-detail/${slug}`).then((res) => res.data);

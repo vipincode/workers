@@ -1,6 +1,19 @@
-import { Landmark, Search } from "lucide-react";
+import { useState } from "react";
+import { Landmark, Search } from "lucide-react"; // Import icons (example from React Icons)
 
-const SearchBox = () => {
+interface SearchBoxProps {
+  setSearchQuery: (value: string) => void; // Function to pass the value back to the parent
+}
+
+const SearchBox = ({ setSearchQuery }: SearchBoxProps) => {
+  const [inputValue, setInputValue] = useState("");
+
+  // Handle input change and pass the value to parent
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(event.target.value);
+    setSearchQuery(event.target.value); // Update parent state
+  };
+
   return (
     <div className="max-w-[800px] mx-auto mt-[-20px] relative z-10">
       <div className="flex gap-2">
@@ -13,7 +26,13 @@ const SearchBox = () => {
               <div className="w-[40px] text-[14px] text-gray-400 font-semibold leading-4">Delhi NCR</div>
             </div>
           </div>
-          <input type="text" className="grow" placeholder="Search for services" />
+          <input
+            type="text"
+            className="grow"
+            placeholder="Search for services"
+            value={inputValue}
+            onChange={handleInputChange}
+          />
           <Search className="text-gray-400" />
         </label>
       </div>

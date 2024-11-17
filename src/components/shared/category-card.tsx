@@ -7,7 +7,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
     <>
       {category && (
         <div className="bg-white rounded-md overflow-hidden">
-          <Link to={`/services-listing?category-id=${category.id}`}>
+          <Link to={`/service/${category.slug}`}>
             <img
               className="h-[140px] w-full object-cover"
               src={`${VITE_IMAGE_PATH_URL}/category/${category.cat_img}`}
@@ -15,7 +15,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
             />
           </Link>
           <div className="p-4">
-            <Link to={`/services-listing`}>
+            <Link to={`/service/${category.slug}`}>
               <h3 className="text-base font-semibold mb-2">{category.name}</h3>
             </Link>
             <p className="text-sm">{category.description}</p>

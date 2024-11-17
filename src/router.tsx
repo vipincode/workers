@@ -6,7 +6,6 @@ import BlogPage from "./pages/blog-page";
 import ContactUsPage from "./pages/contact-page";
 import AboutPage from "./pages/about-page";
 import FaqsPage from "./pages/faqs-page";
-import ListingPage from "./pages/services-listing-page";
 import InstantServices from "./pages/instant-services";
 import PermanentServices from "./pages/permanent-services";
 import ServicesDetailsPage from "./pages/service-detail-page";
@@ -21,8 +20,8 @@ import BlogDetailPage from "./pages/blog-detail-page";
 import ApplyJobPage from "./pages/apply-job-page";
 import PolicyPage from "./pages/policy-page";
 import SignIn from "./pages/sign-in-page";
-import SignUp from "./pages/sign-up-page";
 import ForgotPassword from "./pages/forgot-password-page";
+import ServiceListingPage from "./pages/service-listing-page";
 
 const router = createBrowserRouter([
   {
@@ -55,10 +54,6 @@ const router = createBrowserRouter([
         element: <BlogDetailPage />,
       },
       {
-        path: "/services-listing",
-        element: <ListingPage />,
-      },
-      {
         path: "/instant-services",
         element: <InstantServices />,
       },
@@ -67,7 +62,7 @@ const router = createBrowserRouter([
         element: <PermanentServices />,
       },
       {
-        path: "/services-details",
+        path: "/services-detail/:slug",
         element: <ServicesDetailsPage />,
       },
       {
@@ -79,7 +74,7 @@ const router = createBrowserRouter([
         element: <ServiceLetterPage />,
       },
       {
-        path: "/joinus",
+        path: "/join-us",
         element: <JoinUsPage />,
       },
       {
@@ -103,20 +98,20 @@ const router = createBrowserRouter([
         element: <ApplyJobPage />,
       },
       {
-        path: "/:slug",
-        element: <PolicyPage />,
-      },
-      {
         path: "/sign-in",
         element: <SignIn />,
       },
       {
-        path: "/sign-up",
-        element: <SignUp />,
-      },
-      {
         path: "/forgot-password",
         element: <ForgotPassword />,
+      },
+      {
+        path: "/service/:category_slug/:sub_category_slug?",
+        element: <ServiceListingPage />,
+      },
+      {
+        path: "/:slug",
+        element: <PolicyPage />,
       },
     ],
   },

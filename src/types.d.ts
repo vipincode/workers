@@ -375,12 +375,105 @@ interface PolicyApiResponse {
 
 // Services listing
 interface Service {
+  // id: number;
+  // user_id: number;
+  // category_id: number;
+  // meta_title: string | null;
+  // meta_keyword: string | null;
+  // meta_description: string | null;
+  // title: string;
+  // slug: string;
+  // short_description: string;
+  // description: string;
+  // tags: string;
+  // service_image: string;
+  // image_link: string;
+  // video_link: string;
+  // status: string;
+  // is_instant_service: number;
+  // is_permanent_service: number;
+  // deleted_at: string | null;
+  // created_at: string;
+  // updated_at: string;
   id: number;
   user_id: number;
   category_id: number;
+  meta_title: string;
+  meta_keyword: string;
+  meta_description: string;
+  title: string;
+  slug: string;
+  short_description: string;
+  description: string; // HTML content, so kept as string
+  tags: string;
+  service_image: string;
+  image_link: string;
+  video_link: string;
+  status: string; // Assuming it's a string, e.g., "1" for active; adjust to number if needed
+  is_instant_service: number;
+  is_permanent_service: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// interface ServiceApiResponse {
+//   services: Service[];
+// }
+
+// New Services
+interface ServiceApiResponse {
+  services: Service[];
+  category: Category;
+  sub_categories: SubCategory[];
+}
+
+interface Category {
+  id: number;
+  name: string;
+  hindi_name: string | null;
+  slug: string;
+  parent_id: number;
+  description: string;
+  cat_img: string;
+  image_link: string;
   meta_title: string | null;
   meta_keyword: string | null;
   meta_description: string | null;
+  status: string; // If you expect a string (e.g., "1" for active), else change to number
+  is_join_us: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+interface SubCategory {
+  id: number;
+  name: string;
+  hindi_name: string | null;
+  slug: string;
+  parent_id: number;
+  description: string;
+  cat_img: string;
+  image_link: string;
+  meta_title: string | null;
+  meta_keyword: string | null;
+  meta_description: string | null;
+  status: string; // If you expect a string (e.g., "1" for active), else change to number
+  is_join_us: number;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+// Services detail
+export interface Service {
+  id: number;
+  user_id: number;
+  category_id: number;
+  meta_title: string;
+  meta_keyword: string;
+  meta_description: string;
   title: string;
   slug: string;
   short_description: string;
@@ -397,6 +490,21 @@ interface Service {
   updated_at: string;
 }
 
-interface ServiceApiResponse {
-  services: Service[];
+export interface Slogan {
+  id: number;
+  category_id: number;
+  slogan: string;
+  slogan_image: string;
+  service_type: string;
+  status: string;
+  ref_link: string;
+  slogan_image_link: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface ServiceDetailApiResponse {
+  service: Service;
+  slider_slogans: Slogan[];
 }
