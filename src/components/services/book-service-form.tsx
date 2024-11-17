@@ -81,17 +81,45 @@ const BookServicesForm = () => {
     }
   };
 
+  // const onSubmit = (data: employeeFormData) => {
+  //   const formData = new FormData();
+  //   selectedFiles.forEach((file) => formData.append("upload_photos", file));
+  //   // Add other form fields to formData
+  //   Object.entries(data).forEach(([key, value]) => {
+  //     if (key !== "upload_photos") {
+  //       formData.append(key, value as string);
+  //     }
+  //   });
+  //   // console.log(data);
+  //   mutation.mutate(formData as unknown as employeeFormData);
+  // };
+
   const onSubmit = (data: employeeFormData) => {
     const formData = new FormData();
-    selectedFiles.forEach((file) => formData.append("upload_photos", file));
-    // Add other form fields to formData
+
+    // Append files
+    selectedFiles.forEach((file) => formData.append("upload_photos[]", file));
+
+    // Append other form fields
     Object.entries(data).forEach(([key, value]) => {
-      if (key !== "upload_photos") {
+      if (key === "faculties" && Array.isArray(value)) {
+        // Append each faculty value individually
+        value.forEach((faculty) => formData.append(`${key}[]`, faculty));
+      } else if (typeof value === "boolean" || typeof value === "number") {
+        // Convert booleans and numbers to strings
+        formData.append(key, value.toString());
+      } else if (value !== null && value !== undefined) {
+        // Append other fields
         formData.append(key, value as string);
       }
     });
 
-    // console.log(data);
+    // Debugging: Inspect the FormData
+    for (const pair of formData.entries()) {
+      console.log(pair[0], pair[1]);
+    }
+
+    // Submit the form data
     mutation.mutate(formData as unknown as employeeFormData);
   };
 
