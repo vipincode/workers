@@ -1,8 +1,14 @@
+import React from "react";
 import { useDayRateStore } from "../../../store/day-service-store";
 import { useHourRateStore } from "../../../store/hour-service-store";
 import useModeStore from "../../../store/mode-store";
+import { InstantService } from "../../../types";
 
-const InstantServicesTab = () => {
+interface InstantServiceProps {
+  instantServiceData: InstantService;
+}
+
+const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
   const { mode, setMode } = useModeStore();
 
   const {
@@ -22,7 +28,12 @@ const InstantServicesTab = () => {
     decrementMesonOvertime,
     incrementHelperOvertime,
     decrementHelperOvertime,
-  } = useDayRateStore();
+
+    setMesonDayRate,
+    setHelperDayRate,
+    setMesonOvertimeRate,
+    setHelperOvertimeRate,
+  } = useDayRateStore((state) => state);
 
   const {
     decrementHelperHour,
@@ -33,7 +44,24 @@ const InstantServicesTab = () => {
     mesonHourCount,
     totalHelperHourRate,
     totalMesonHourRate,
-  } = useHourRateStore();
+
+    setMesonRate,
+    setHelperRate,
+  } = useHourRateStore((state) => state);
+
+  React.useEffect(() => {
+    if (instantServiceData) {
+      setMesonRate(instantServiceData.per_hour_meason_rate || 200);
+      setHelperRate(instantServiceData.per_hour_helper_rate || 150);
+      // Day
+
+      setMesonDayRate(instantServiceData.per_day_meason_rate);
+      setHelperDayRate(instantServiceData.per_day_helper_rate);
+      setMesonOvertimeRate(instantServiceData.overtime_meason_rate);
+      setHelperOvertimeRate(instantServiceData.overtime_helper_rate);
+    }
+  }, [instantServiceData, setMesonRate, setHelperRate, setMesonDayRate, setHelperDayRate, setHelperOvertimeRate]);
+
   return (
     <div role="tablist" className="tabs tabs-lifted">
       {/* DAYS RATE */}
@@ -50,7 +78,7 @@ const InstantServicesTab = () => {
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
         <div className="flex justify-between items-center my-6">
           <div className="font-semibold">Meson</div>
-          <div>800/day</div>
+          <div>{instantServiceData.per_day_meason_rate || 800}/day</div>
           <div className="flex items-center w-[180px]">
             <button className="w-[50px] font-semibold" onClick={decrementMesonDay}>
               -
@@ -75,7 +103,7 @@ const InstantServicesTab = () => {
         </div>
         <div className="flex justify-between items-center my-6">
           <div className="font-semibold">Helper</div>
-          <div>600/day</div>
+          <div>{instantServiceData.per_day_helper_rate || 600}/day</div>
           <div className="flex items-center w-[180px]">
             <button className="w-[50px] font-semibold" onClick={decrementHelperDay}>
               -
@@ -106,7 +134,7 @@ const InstantServicesTab = () => {
           </div>
           <div className="flex justify-between items-center my-6">
             <div className="font-semibold">Meson</div>
-            <div>150/day</div>
+            <div>{instantServiceData.overtime_meason_rate || 200}/day</div>
             <div className="flex items-center w-[180px]">
               <button className="w-[50px] font-semibold" onClick={decrementMesonOvertime}>
                 -
@@ -131,7 +159,7 @@ const InstantServicesTab = () => {
           </div>
           <div className="flex justify-between items-center my-6">
             <div className="font-semibold">Helper</div>
-            <div>150/day</div>
+            <div>{instantServiceData.overtime_helper_rate || 150}/day</div>
             <div className="flex items-center w-[180px]">
               <button className="w-[50px] font-semibold" onClick={decrementHelperOvertime}>
                 -
@@ -170,7 +198,7 @@ const InstantServicesTab = () => {
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
         <div className="flex justify-between items-center my-6">
           <div className="font-semibold">Meson</div>
-          <div>250/day</div>
+          <div>{instantServiceData.per_hour_meason_rate || 200}/day</div>
           <div className="flex items-center w-[180px]">
             <button className="w-[50px] font-semibold" onClick={decrementMesonHour}>
               -
@@ -195,7 +223,7 @@ const InstantServicesTab = () => {
         </div>
         <div className="flex justify-between items-center my-6">
           <div className="font-semibold">Helper</div>
-          <div>200/day</div>
+          <div>{instantServiceData.per_hour_helper_rate || 150}/day</div>
           <div className="flex items-center w-[180px]">
             <button className="w-[50px] font-semibold" onClick={decrementHelperHour}>
               -

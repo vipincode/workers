@@ -81,12 +81,12 @@ const ServicesDetailsPage = () => {
             </div>
             <div>
               <div className="flex justify-between mt-[100px]">
-                <Link to="/permanent-services">
+                <Link to={`/permanent-service/${service.id}`}>
                   <button className="btn" disabled={service.is_permanent_service < 1}>
                     Get permanent Service
                   </button>
                 </Link>
-                <Link to="/instant-services">
+                <Link to={`/instant-service/${service.id}`}>
                   <button className="btn" disabled={service.is_instant_service < 1}>
                     Get Instant Service
                   </button>

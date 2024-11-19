@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import BookServicesForm from "../../components/services/book-service-form";
 import Container from "../../components/shared/container";
 import ServicesCarouselCard from "../../components/shared/services-carousel-card";
@@ -6,9 +6,11 @@ import { usePermanentServices } from "../../react-query/hooks";
 import PermanentServiceLoading from "../../components/services/loader/permanent-service-loading";
 
 const PermanentServices = () => {
-  const { data, status } = usePermanentServices(4);
+  const { id } = useParams();
+  const { data, status } = usePermanentServices(parseInt(id));
+
   if (status === "error") {
-    return <p>Something went wrong try again</p>;
+    return <div className="min-h-screen flex justify-center items-center">Something went wrong try again</div>;
   }
 
   if (status === "pending") {
@@ -29,7 +31,10 @@ const PermanentServices = () => {
         <ServicesCarouselCard data={data.slider_slogans} />
         <div className="text-[24px] font-semibold mb-6 mt-6">
           <h2>Book Your Service</h2>
-          <BookServicesForm />
+          <BookServicesForm
+            serviceId={data.permanent_service.service_id}
+            permanentServiceId={data.permanent_service.id}
+          />
         </div>
         <div className="bg-gray-200 p-6 rounded-md mt-10">
           <h2 className="text-[42px] font-semibold text-center">Customercare services</h2>

@@ -2,14 +2,16 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { Controller, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getCities, getStates, postEmployeeData } from "../../react-query/apis";
 import { employeeFormData, employeeSchema } from "../../schema/permanent-service/schema";
 import { useEffect, useState } from "react";
 import { CitiesResponse, StateProps } from "../../types";
 import { X } from "lucide-react";
 
-const BookServicesForm = () => {
+const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number; permanentServiceId: number }) => {
+  const navigation = useNavigate();
+
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -55,6 +57,7 @@ const BookServicesForm = () => {
     onSuccess: (data) => {
       console.log("Data successfully saved:", data);
       toast.success("Form submitted successfully!");
+      navigation("/");
     },
     onError: (error) => {
       console.error("Error saving data:", error);
@@ -81,45 +84,27 @@ const BookServicesForm = () => {
     }
   };
 
-  // const onSubmit = (data: employeeFormData) => {
-  //   const formData = new FormData();
-  //   selectedFiles.forEach((file) => formData.append("upload_photos", file));
-  //   // Add other form fields to formData
-  //   Object.entries(data).forEach(([key, value]) => {
-  //     if (key !== "upload_photos") {
-  //       formData.append(key, value as string);
-  //     }
-  //   });
-  //   // console.log(data);
-  //   mutation.mutate(formData as unknown as employeeFormData);
-  // };
-
   const onSubmit = (data: employeeFormData) => {
     const formData = new FormData();
 
-    // Append files
+    formData.append("service_id", serviceId.toString());
+    formData.append("permanent_service_id", permanentServiceId.toString());
+    // Add photos to an array in FormData
     selectedFiles.forEach((file) => formData.append("upload_photos[]", file));
 
-    // Append other form fields
+    // Add other form fields to FormData
     Object.entries(data).forEach(([key, value]) => {
-      if (key === "faculties" && Array.isArray(value)) {
-        // Append each faculty value individually
-        value.forEach((faculty) => formData.append(`${key}[]`, faculty));
-      } else if (typeof value === "boolean" || typeof value === "number") {
-        // Convert booleans and numbers to strings
-        formData.append(key, value.toString());
-      } else if (value !== null && value !== undefined) {
-        // Append other fields
-        formData.append(key, value as string);
+      if (key !== "upload_photos") {
+        if (Array.isArray(value)) {
+          // Append array fields properly
+          value.forEach((item) => formData.append(`${key}[]`, item));
+        } else {
+          formData.append(key, value as string);
+        }
       }
     });
 
-    // Debugging: Inspect the FormData
-    for (const pair of formData.entries()) {
-      console.log(pair[0], pair[1]);
-    }
-
-    // Submit the form data
+    // Submit the formData using mutation
     mutation.mutate(formData as unknown as employeeFormData);
   };
 

@@ -10,6 +10,7 @@ import {
   JobCategoryApiResponse,
   JobDetailApiResponse,
   PartnersApiResponse,
+  PermanentServiceResponse,
   PolicyApiResponse,
   ServiceDetailApiResponse,
   ServicesProps,
@@ -93,7 +94,7 @@ export function useInstantServices(serviceId: number) {
 }
 
 export function usePermanentServices(serviceId: number) {
-  return useQuery<InstantApiResponse, Error>({
+  return useQuery<PermanentServiceResponse, Error>({
     queryKey: ["permanent-services", serviceId],
     queryFn: async () => fetchPermanentService(serviceId),
     staleTime: 10 * 1000,

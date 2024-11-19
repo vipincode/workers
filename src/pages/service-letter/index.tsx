@@ -17,13 +17,13 @@ function ServiceLetterPage() {
   const mode = useModeStore((state) => state.mode);
 
   //Price values
-  const { totalPrice } = useDayRateStore();
+  const { totalDayPrice } = useDayRateStore();
   const { totalHourPrice } = useHourRateStore();
 
   //Payments
   const price = useMemo(() => {
-    return mode === "day" ? totalPrice : totalHourPrice;
-  }, [mode, totalPrice, totalHourPrice]);
+    return mode === "day" ? totalDayPrice : totalHourPrice;
+  }, [mode, totalDayPrice, totalHourPrice]);
 
   const handlePayment = async () => {
     let final_price = (100 * price).toFixed(2); // Fix final_price calculation

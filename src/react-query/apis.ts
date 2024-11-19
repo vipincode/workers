@@ -14,6 +14,7 @@ import {
   JobCategoryApiResponse,
   JobDetailApiResponse,
   PartnersApiResponse,
+  PermanentServiceResponse,
   PolicyApiResponse,
   SearchPostProps,
   ServiceApiResponse,
@@ -61,7 +62,7 @@ export const fetchInstantService = (serviceId: number) =>
   axios.get<InstantApiResponse>(`${API_URL}/get-instant-service/${serviceId}`).then((res) => res.data);
 
 export const fetchPermanentService = (serviceId: number) =>
-  axios.get<InstantApiResponse>(`${API_URL}/get-permanent-service/${serviceId}`).then((res) => res.data);
+  axios.get<PermanentServiceResponse>(`${API_URL}/get-permanent-service/${serviceId}`).then((res) => res.data);
 
 /**
  * @PermanentService

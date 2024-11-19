@@ -16,12 +16,15 @@ export const employeeSchema = z.object({
   meson: z.number().min(1, { message: "Meson count is required" }),
   helper: z.number().min(1, { message: "Helper count is required" }),
 
+  service_id: z.number().optional(),
+  permanent_service_id: z.number().optional(),
+
   // Faculties as an array of strings (assuming it's a list of facilities offered)
   faculties: z.array(z.string()).optional(),
 
-  year: z.number().min(1, { message: "Year is required" }),
-  month: z.number().min(1, { message: "Month is required" }),
-  day: z.number().min(1, { message: "Day is required" }),
+  year: z.number().min(0, { message: "Year is required" }),
+  month: z.number().min(0, { message: "Month is required" }),
+  day: z.number().min(0, { message: "Day is required" }),
   employee_position: z.string().min(1, { message: "Employee position is required" }),
 
   upload_photos: z

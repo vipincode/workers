@@ -4,7 +4,7 @@ import { useHourRateStore } from "../../store/hour-service-store";
 import { useLocation } from "react-router-dom";
 
 const CartPrices = () => {
-  const { totalMesonDayRate, totalHelperDayRate, totalMesonOvertimeRate, totalHelperOvertimeRate, totalPrice } =
+  const { totalMesonDayRate, totalHelperDayRate, totalMesonOvertimeRate, totalHelperOvertimeRate, totalDayPrice } =
     useDayRateStore();
   const { totalHelperHourRate, totalHourPrice, totalMesonHourRate } = useHourRateStore();
 
@@ -44,7 +44,7 @@ const CartPrices = () => {
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalPrice}
+              <IndianRupee size={14} /> {totalDayPrice}
             </strong>
           </p>
         </div>

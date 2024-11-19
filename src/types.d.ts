@@ -153,6 +153,7 @@ interface SliderProps {
 interface InstantService {
   id: number;
   service_id: number;
+  instant_service_id: number;
   per_day_meason_rate: number;
   per_day_helper_rate: number;
   per_day: number;
@@ -507,4 +508,34 @@ export interface Slogan {
 export interface ServiceDetailApiResponse {
   service: Service;
   slider_slogans: Slogan[];
+}
+
+// Permanet service
+
+interface PermanentServiceResponse {
+  permanent_service: PermanentService;
+  slider_slogans: SliderSlogan[];
+}
+
+interface PermanentService {
+  id: number;
+  service_id: number;
+  includes_instument: string;
+  excludes_instument: string;
+  created_at: string;
+  updated_at: string;
+}
+
+interface SliderSlogan {
+  id: number;
+  category_id: number;
+  slogan: string;
+  slogan_image: string;
+  service_type: string;
+  status: string;
+  ref_link: string;
+  slogan_image_link: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
 }
