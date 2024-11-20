@@ -147,6 +147,8 @@ interface RateState {
 
   totalHourPrice: number;
 
+  tipValue: number;
+
   incrementMesonHour: () => void;
   decrementMesonHour: () => void;
   incrementHelperHour: () => void;
@@ -154,6 +156,8 @@ interface RateState {
 
   setMesonRate: (rate: number) => void;
   setHelperRate: (rate: number) => void;
+
+  setHourTipPrice: (value: number) => void;
 }
 
 export const useHourRateStore = create(
@@ -169,6 +173,17 @@ export const useHourRateStore = create(
       totalHelperHourRate: 200,
 
       totalHourPrice: 450, // Initial total (meson + helper rates)
+
+      tipValue: 0, // Add a state property for tip
+
+      setHourTipPrice: (value: number) =>
+        set((state) => {
+          const newTotalHourPrice = state.totalMesonHourRate + state.totalHelperHourRate + value; // Add tip to the total price
+          return {
+            tipValue: value,
+            totalHourPrice: newTotalHourPrice,
+          };
+        }),
 
       setMesonRate: (rate: number) =>
         set((state) => {

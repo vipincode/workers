@@ -2,14 +2,40 @@ import { IndianRupee } from "lucide-react";
 import Container from "../../components/shared/container";
 import { useLocation, useNavigate } from "react-router-dom";
 import CartPrices from "../../components/shared/cart-prices";
+import { useState } from "react";
+import { useDayRateStore } from "../../store/day-service-store";
+import { useHourRateStore } from "../../store/hour-service-store";
 
 const CartPage = () => {
+  const [tipValue, setTipValue] = useState<number | string>("");
+  const { setTipPrice } = useDayRateStore();
+  const { setHourTipPrice } = useHourRateStore();
+
   const navigation = useNavigate();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   // Get the value of the 'day' parameter
   const day = queryParams.get("day");
+
+  const handleTipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setTipValue(value ? Number(value) : "");
+  };
+
+  const handleDayTipClick = () => {
+    if (tipValue) {
+      setTipPrice(Number(tipValue));
+      setHourTipPrice(Number(tipValue));
+    }
+  };
+  const handleHourTipClick = () => {
+    if (tipValue) {
+      setTipPrice(Number(tipValue));
+      setHourTipPrice(Number(tipValue));
+    }
+  };
+
   return (
     <div className="min-h-[60vh]">
       <Container>
@@ -72,11 +98,18 @@ const CartPage = () => {
 
               <div className="space-x-2">
                 <input
-                  type="text"
+                  value={tipValue}
+                  onChange={handleTipChange}
+                  type="number"
                   placeholder="Add tip"
                   className="input input-xs input-bordered w-full max-w-[100px]"
                 />
-                <button className="btn btn-primary btn-xs">Apply</button>
+                <button
+                  className="btn btn-primary btn-xs"
+                  onClick={day === "day" ? handleDayTipClick : handleHourTipClick}
+                >
+                  Apply
+                </button>
               </div>
             </div>
             <button

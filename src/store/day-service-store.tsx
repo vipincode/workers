@@ -230,6 +230,7 @@ interface RateState {
   totalHelperOvertimeRate: number;
 
   totalDayPrice: number;
+  tipVale: number;
 
   incrementMesonDay: () => void;
   decrementMesonDay: () => void;
@@ -245,6 +246,8 @@ interface RateState {
   setHelperDayRate: (rate: number) => void;
   setMesonOvertimeRate: (rate: number) => void;
   setHelperOvertimeRate: (rate: number) => void;
+
+  setTipPrice: (value: number) => void;
 }
 
 export const useDayRateStore = create(
@@ -268,6 +271,22 @@ export const useDayRateStore = create(
       totalHelperOvertimeRate: 0,
 
       totalDayPrice: 1400, // Initial total price (meson + helper)
+
+      tipVale: 0,
+
+      setTipPrice: (value: number) =>
+        set((state) => {
+          const newTotalDayPrice =
+            state.totalMesonDayRate +
+            state.totalHelperDayRate +
+            state.totalMesonOvertimeRate +
+            state.totalHelperOvertimeRate +
+            value; // Add the tip value to the total price
+          return {
+            tipVale: value,
+            totalDayPrice: newTotalDayPrice,
+          };
+        }),
 
       setMesonDayRate: (rate: number) =>
         set((state) => {
