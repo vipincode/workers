@@ -198,7 +198,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
         <div className="flex justify-between items-center my-6">
           <div className="font-semibold">Meson</div>
-          <div>{instantServiceData.per_hour_meason_rate || 200}/day</div>
+          <div>{instantServiceData.per_hour_meason_rate || 200}/hour</div>
           <div className="flex items-center w-[180px]">
             <button className="w-[50px] font-semibold" onClick={decrementMesonHour}>
               -
@@ -223,7 +223,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
         </div>
         <div className="flex justify-between items-center my-6">
           <div className="font-semibold">Helper</div>
-          <div>{instantServiceData.per_hour_helper_rate || 150}/day</div>
+          <div>{instantServiceData.per_hour_helper_rate || 150}/hour</div>
           <div className="flex items-center w-[180px]">
             <button className="w-[50px] font-semibold" onClick={decrementHelperHour}>
               -

@@ -8,9 +8,16 @@ import { useHourRateStore } from "../../store/hour-service-store";
 import InstantServicesTab from "../../components/services/instant-service-tab.tsx";
 import useModeStore from "../../store/mode-store.tsx";
 import InstantServiceLoading from "../../components/services/loader/instant-service-loading.tsx";
+import { useServiceStore } from "../../store/instant-service-store.ts";
 
 const InstantServices = () => {
   const { id } = useParams();
+  //Need to pass over cart
+
+  const setInstantServiceId = useServiceStore((state) => state.setInstantServiceId);
+  const setServiceId = useServiceStore((state) => state.setServiceId);
+
+  // Save the values to Zustand store
 
   const navigation = useNavigate();
   const mode = useModeStore((state) => state.mode);
@@ -27,6 +34,15 @@ const InstantServices = () => {
   if (status === "pending") {
     return <InstantServiceLoading />;
   }
+
+  // Set Id in local storage
+
+  setInstantServiceId(data.instant_service.id);
+  setServiceId(data.instant_service.service_id);
+  const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
+  const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
+
+  const tip = mode === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
 
   return (
     <div>
@@ -49,15 +65,15 @@ const InstantServices = () => {
             <p className="text-[32px]">Total Price:</p>
             <div className="flex items-center font-medium text-[32px]">
               <IndianRupee size={32} />
-              {mode === "day" && <p>{totalDayPrice}</p>}
-              {mode === "hour" && <p>{totalHourPrice}</p>}
+              {mode === "day" && <p>{tip ? totalDayPrice + tip : totalDayPrice}</p>}
+              {mode === "hour" && <p>{tip ? totalHourPrice + tip : totalHourPrice}</p>}
             </div>
           </div>
         </div>
         <div className="flex justify-end mt-[50px] mb-[100px]">
           <button
             className="btn btn-primary min-w-[300px]"
-            onClick={() => navigation(`/cart/?${mode === "day" ? "day" : "hour"}=service`)}
+            onClick={() => navigation(`/cart/?service=${mode === "day" ? "day" : "hour"}`)}
           >
             View Cart
           </button>

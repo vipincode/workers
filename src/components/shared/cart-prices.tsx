@@ -1,21 +1,26 @@
 import { IndianRupee } from "lucide-react";
 import { useDayRateStore } from "../../store/day-service-store";
 import { useHourRateStore } from "../../store/hour-service-store";
-import { useLocation } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 const CartPrices = () => {
   const { totalMesonDayRate, totalHelperDayRate, totalMesonOvertimeRate, totalHelperOvertimeRate, totalDayPrice } =
     useDayRateStore();
   const { totalHelperHourRate, totalHourPrice, totalMesonHourRate } = useHourRateStore();
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  // Get the value of the 'day' parameter
-  const day = queryParams.get("day");
+  const [searchParams] = useSearchParams();
+  const day = searchParams.get("service");
+
+  // Get tip price from local storage
+  const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
+  const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
+
+  const tip = day === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
+
   return (
     <div>
       <h3 className="font-semibold">Billing Overview</h3>
-      {day ? (
+      {day === "day" ? (
         <div className="text-right divide-y">
           <p className="flex justify-between items-center text-sm gap-4 py-4">
             Meson:
@@ -44,7 +49,7 @@ const CartPrices = () => {
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalDayPrice}
+              <IndianRupee size={14} /> {totalDayPrice + tip}
             </strong>
           </p>
         </div>
@@ -65,7 +70,7 @@ const CartPrices = () => {
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalHourPrice}
+              <IndianRupee size={14} /> {totalHourPrice + tip}
             </strong>
           </p>
         </div>

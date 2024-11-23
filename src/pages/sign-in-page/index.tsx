@@ -63,12 +63,12 @@ export default function SignIn() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
               <label className="label" htmlFor="email">
-                <span className="label-text">Email</span>
+                <span className="label-text">Mobile number</span>
               </label>
               <input
                 type="email"
                 id="email"
-                placeholder="email@example.com"
+                placeholder="+95-90000000"
                 className={`input input-bordered ${errors.email ? "input-error" : ""}`}
                 {...register("email", {
                   required: "Email is required",
@@ -82,12 +82,12 @@ export default function SignIn() {
             </div>
             <div className="form-control">
               <label className="label" htmlFor="password">
-                <span className="label-text">Password</span>
+                <span className="label-text">OTP</span>
               </label>
               <input
                 type="password"
                 id="password"
-                placeholder="Enter your password"
+                placeholder="Enter your otp"
                 className={`input input-bordered ${errors.password ? "input-error" : ""}`}
                 {...register("password", { required: "Password is required" })}
               />
@@ -101,7 +101,7 @@ export default function SignIn() {
             {error && <div className="text-error mt-2">{error}</div>}
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? <span className="loading loading-spinner"></span> : "Sign In"}
+                {loading ? <span className="loading loading-spinner"></span> : "continue"}
               </button>
             </div>
           </form>

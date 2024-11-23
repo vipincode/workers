@@ -90,3 +90,11 @@ body {
 .swiper-button-next {
   @apply !text-secondary;
 }
+
+.rc-time-picker {
+  @apply w-full;
+}
+
+.rc-time-picker-input {
+  @apply h-[48px] w-full pl-4 pr-4 input input-bordered;
+}

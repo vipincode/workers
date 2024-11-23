@@ -1,38 +1,40 @@
 import { IndianRupee } from "lucide-react";
 import Container from "../../components/shared/container";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import CartPrices from "../../components/shared/cart-prices";
 import { useState } from "react";
 import { useDayRateStore } from "../../store/day-service-store";
 import { useHourRateStore } from "../../store/hour-service-store";
 
 const CartPage = () => {
-  const [tipValue, setTipValue] = useState<number | string>("");
+  const [tipDayValue, setDayTipValue] = useState<number | string>("");
+  const [tipHourValue, setHourTipValue] = useState<number | string>("");
   const { setTipPrice } = useDayRateStore();
   const { setHourTipPrice } = useHourRateStore();
 
   const navigation = useNavigate();
 
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  // Get the value of the 'day' parameter
-  const day = queryParams.get("day");
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("service");
 
   const handleTipChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    setTipValue(value ? Number(value) : "");
+    if (mode === "day") {
+      setDayTipValue(value ? Number(value) : "");
+    } else {
+      setHourTipValue(value ? Number(value) : "");
+    }
   };
 
   const handleDayTipClick = () => {
-    if (tipValue) {
-      setTipPrice(Number(tipValue));
-      setHourTipPrice(Number(tipValue));
+    if (tipDayValue) {
+      setTipPrice(Number(tipDayValue));
     }
   };
+
   const handleHourTipClick = () => {
-    if (tipValue) {
-      setTipPrice(Number(tipValue));
-      setHourTipPrice(Number(tipValue));
+    if (tipHourValue) {
+      setHourTipPrice(Number(tipHourValue));
     }
   };
 
@@ -98,7 +100,7 @@ const CartPage = () => {
 
               <div className="space-x-2">
                 <input
-                  value={tipValue}
+                  value={mode === "day" ? tipDayValue : tipHourValue}
                   onChange={handleTipChange}
                   type="number"
                   placeholder="Add tip"
@@ -106,7 +108,7 @@ const CartPage = () => {
                 />
                 <button
                   className="btn btn-primary btn-xs"
-                  onClick={day === "day" ? handleDayTipClick : handleHourTipClick}
+                  onClick={mode === "day" ? handleDayTipClick : handleHourTipClick}
                 >
                   Apply
                 </button>
@@ -114,7 +116,7 @@ const CartPage = () => {
             </div>
             <button
               className="btn btn-primary w-full"
-              onClick={() => navigation(`/service-letter?${day ? "day" : "hour"}=service`)}
+              onClick={() => navigation(`/service-letter?service=${mode === "day" ? "day" : "hour"}`)}
             >
               Proceed Now
             </button>
