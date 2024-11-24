@@ -12,10 +12,10 @@ const CartPrices = () => {
   const day = searchParams.get("service");
 
   // Get tip price from local storage
-  const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
-  const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
+  // const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
+  // const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
 
-  const tip = day === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
+  // const tip = day === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
 
   return (
     <div>
@@ -49,7 +49,7 @@ const CartPrices = () => {
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalDayPrice + tip}
+              <IndianRupee size={14} /> {totalDayPrice}
             </strong>
           </p>
         </div>
@@ -70,7 +70,7 @@ const CartPrices = () => {
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalHourPrice + tip}
+              <IndianRupee size={14} /> {totalHourPrice}
             </strong>
           </p>
         </div>

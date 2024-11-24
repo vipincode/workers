@@ -10,7 +10,53 @@ const ServicesDetailsPage = () => {
   const { data: serviceDetailData, isLoading, isError } = useServiceDetail(slug);
 
   if (isError) return <p>Error</p>;
-  if (isLoading) return <p>Loading...</p>;
+  if (isLoading)
+    return (
+      <div className="space-y-6 mb-10">
+        <div className="skeleton h-[300px] w-full rounded-none" />
+        <div className="space-y-6 container mx-auto px-4">
+          <div className="skeleton h-[32px] w-[30%]" />
+          <div className="skeleton h-[32px] w-[40%]" />
+          <div className="skeleton h-[32px] w-[60%]" />
+          <div className="skeleton h-[32px] w-[70%]" />
+          <div className="skeleton h-[32px] w-full" />
+          <div className="skeleton h-[32px] w-full" />
+          <div className="skeleton h-[32px] w-full" />
+          <div className="skeleton h-[32px] w-full" />
+          <div className="skeleton h-[32px] w-full" />
+        </div>
+        <div className="space-y-6 container mx-auto px-4">
+          <div className="flex items-center gap-4">
+            <div className="skeleton h-16 w-16 shrink-0 rounded-full" />
+            <div className="flex flex-col gap-4 flex-1">
+              <div className="skeleton h-4 w-[60%]" />
+              <div className="skeleton h-4 w-[70%]" />
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="skeleton h-16 w-16 shrink-0 rounded-full" />
+            <div className="flex flex-col gap-4 flex-1">
+              <div className="skeleton h-4 w-[60%]" />
+              <div className="skeleton h-4 w-[70%]" />
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="skeleton h-16 w-16 shrink-0 rounded-full" />
+            <div className="flex flex-col gap-4 flex-1">
+              <div className="skeleton h-4 w-[60%]" />
+              <div className="skeleton h-4 w-[70%]" />
+            </div>
+          </div>
+          <div className="flex items-center gap-4">
+            <div className="skeleton h-16 w-16 shrink-0 rounded-full" />
+            <div className="flex flex-col gap-4 flex-1">
+              <div className="skeleton h-4 w-[60%]" />
+              <div className="skeleton h-4 w-[70%]" />
+            </div>
+          </div>
+        </div>
+      </div>
+    );
 
   const { service } = serviceDetailData;
   return (

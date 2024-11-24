@@ -9,67 +9,25 @@ import { getCities, getStates } from "../../react-query/apis";
 import { RAZORPAY_KEY_ID } from "../../react-query/constants";
 import { useDayRateStore } from "../../store/day-service-store";
 import { useHourRateStore } from "../../store/hour-service-store";
-import useModeStore from "../../store/mode-store";
+// import useModeStore from "../../store/mode-store";
 import { CitiesResponse, StateProps } from "../../types";
 import DayService from "../../components/services/instant-service-tab.tsx/day-service";
 import HourService from "../../components/services/instant-service-tab.tsx/hour-service";
 import toast from "react-hot-toast";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { API_URL } from "../../react-query/constants";
 // import { useSearchParams } from "react-router-dom";
-
-const instantServiceObjSchema = z.object({
-  mesonDayCount: z.number(),
-  helperDayCount: z.number(),
-  mesonRate: z.number(),
-  helperRate: z.number(),
-  mesonOvertimeCount: z.number(),
-  helperOvertimeCount: z.number(),
-  mesonOvertimeRate: z.number(),
-  helperOvertimeRate: z.number(),
-  totalMesonDayRate: z.number(),
-  totalHelperDayRate: z.number(),
-  totalMesonOvertimeRate: z.number(),
-  totalHelperOvertimeRate: z.number(),
-  totalDayPrice: z.number(),
-  tipValue: z.number(),
-});
-
-const formSchema = z.object({
-  state_id: z.string(),
-  city_id: z.string(),
-  book_date: z
-    .string()
-    .refine((date) => !isNaN(Date.parse(date)), {
-      message: "Invalid date format",
-    })
-    .optional(),
-  time_slot: z.string(),
-  pincode: z.string().min(6, "Pincode must be at least 6 digits"),
-  address: z.string().min(1, "Address is required"),
-  user_id: z.number().optional(),
-  service_id: z.number().optional(),
-  instant_service_id: z.number().optional(),
-  mode: z.enum(["day", "hour"]).optional(),
-  pick_and_drop: z.enum(["0", "1"]).optional(),
-  tip: z.number().optional(),
-  coupon_code: z.string().optional(),
-  coupon_discounted: z.number().optional(),
-  instant_service_obj: instantServiceObjSchema.optional(),
-  status: z.enum(["0", "1"]).optional(),
-  transaction_id: z.string().optional(),
-  total_amount: z.number().optional(),
-});
-
-type FormData = z.infer<typeof formSchema>;
 
 function ServiceLetterPage() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   const [active, setActive] = useState(true);
-  const mode = useModeStore((state) => state.mode);
-  // const [searchParams] = useSearchParams();
-  // const mode = searchParams.get("service");
+  const navigate = useNavigate();
+  // const mode = useModeStore((state) => state.mode);
+  const [searchParams] = useSearchParams();
+  const mode = searchParams.get("service");
 
-  const { totalDayPrice } = useDayRateStore();
-  const { totalHourPrice } = useHourRateStore();
+  const { totalDayPrice, resetDayTipPrice } = useDayRateStore();
+  const { totalHourPrice, resetHourTipPrice } = useHourRateStore();
 
   const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
   const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
@@ -99,6 +57,66 @@ function ServiceLetterPage() {
     enabled: !!selectedStateId,
     staleTime: Infinity,
   });
+
+  // Instant Service
+  const instantServiceObjSchema = z.object({
+    mesonDayCount: z.number(),
+    helperDayCount: z.number(),
+    mesonRate: z.number(),
+    helperRate: z.number(),
+    mesonOvertimeCount: z.number(),
+    helperOvertimeCount: z.number(),
+    mesonOvertimeRate: z.number(),
+    helperOvertimeRate: z.number(),
+    totalMesonDayRate: z.number(),
+    totalHelperDayRate: z.number(),
+    totalMesonOvertimeRate: z.number(),
+    totalHelperOvertimeRate: z.number(),
+    totalDayPrice: z.number(),
+    tipValue: z.number(),
+  });
+  const instantHourServiceObjSchema = z.object({
+    mesonHourCount: z.number(),
+    helperHourCount: z.number(),
+
+    mesonRate: z.number(),
+    helperRate: z.number(),
+
+    totalMesonHourRate: z.number(),
+    totalHelperHourRate: z.number(),
+
+    totalHourPrice: z.number(),
+
+    tipValue: z.number(),
+  });
+
+  const formSchema = z.object({
+    state_id: z.string(),
+    city_id: z.string(),
+    book_date: z
+      .string()
+      .refine((date) => !isNaN(Date.parse(date)), {
+        message: "Invalid date format",
+      })
+      .optional(),
+    time_slot: z.string(),
+    pincode: z.string().min(6, "Pincode must be at least 6 digits"),
+    address: z.string().min(1, "Address is required"),
+    user_id: z.number().optional(),
+    service_id: z.number().optional(),
+    instant_service_id: z.number().optional(),
+    mode: z.enum(["day", "hour"]).optional(),
+    pick_and_drop: z.enum(["0", "1"]).optional(),
+    tip: z.number().optional(),
+    coupon_code: z.string().optional(),
+    coupon_discounted: z.number().optional(),
+    instant_service_obj: mode === "day" ? instantServiceObjSchema.optional() : instantHourServiceObjSchema.optional(),
+    status: z.enum(["0", "1"]).optional(),
+    transaction_id: z.string().optional(),
+    total_amount: z.number().optional(),
+  });
+
+  type FormData = z.infer<typeof formSchema>;
 
   const {
     register,
@@ -134,6 +152,8 @@ function ServiceLetterPage() {
       transaction_id: "",
     };
 
+    console.log(extendedData);
+
     const validatedData = formSchema.parse(extendedData);
     await handlePayment(validatedData);
   };
@@ -148,7 +168,7 @@ function ServiceLetterPage() {
       currency: "INR",
       name: "Dehatwala",
       description: "Provide service for labor",
-      image: "https://dehatwala.com/storage/category/1728384957images - 2024-10-08T162501.156.jpeg",
+      image: `${API_URL}/storage/category/1728384957images - 2024-10-08T162501.156.jpeg`,
       handler: async function (response: { razorpay_payment_id: string }) {
         if (response.razorpay_payment_id) {
           validatedData.transaction_id = response.razorpay_payment_id;
@@ -159,20 +179,24 @@ function ServiceLetterPage() {
           });
 
           try {
-            const APIURL = "https://dehatwala.com/api/save-book-service";
+            const APIURL = `${API_URL}/save-book-service`;
             const result = await fetch(APIURL, {
               method: "POST",
               body: formData,
             });
 
             if (result.ok) {
-              const responseData = await result.json();
-              console.log("Booking saved successfully:", responseData);
+              await result.json();
 
               localStorage.removeItem("day-rate-store");
               localStorage.removeItem("hour-rate-store");
               localStorage.removeItem("service-store");
               toast.success("Booking saved successfully!");
+
+              setTimeout(() => {
+                mode === "day" ? resetDayTipPrice(tip) : resetHourTipPrice(tip);
+                navigate("/");
+              }, 400);
             } else {
               console.error("Failed to save booking:", result.status, result.statusText);
               toast.error("Failed to save booking.");

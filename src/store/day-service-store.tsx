@@ -248,6 +248,7 @@ interface RateState {
   setHelperOvertimeRate: (rate: number) => void;
 
   setTipPrice: (value: number) => void;
+  resetDayTipPrice: (value: number) => void;
 }
 
 export const useDayRateStore = create(
@@ -284,6 +285,19 @@ export const useDayRateStore = create(
             value; // Add the tip value to the total price
           return {
             tipValue: value,
+            totalDayPrice: newTotalDayPrice,
+          };
+        }),
+
+      resetDayTipPrice: () =>
+        set((state) => {
+          const newTotalDayPrice =
+            state.totalMesonDayRate +
+            state.totalHelperDayRate +
+            state.totalMesonOvertimeRate +
+            state.totalHelperOvertimeRate; // Exclude the tip value
+          return {
+            tipValue: 0, // Reset the tip value to 0
             totalDayPrice: newTotalDayPrice,
           };
         }),

@@ -158,6 +158,7 @@ interface RateState {
   setHelperRate: (rate: number) => void;
 
   setHourTipPrice: (value: number) => void;
+  resetHourTipPrice: (value: number) => void;
 }
 
 export const useHourRateStore = create(
@@ -181,6 +182,15 @@ export const useHourRateStore = create(
           const newTotalHourPrice = state.totalMesonHourRate + state.totalHelperHourRate + value; // Add tip to the total price
           return {
             tipValue: value,
+            totalHourPrice: newTotalHourPrice,
+          };
+        }),
+
+      resetHourTipPrice: () =>
+        set((state) => {
+          const newTotalHourPrice = state.totalMesonHourRate + state.totalHelperHourRate; // Remove tip from the total price
+          return {
+            tipValue: 0, // Reset tip value
             totalHourPrice: newTotalHourPrice,
           };
         }),
