@@ -4,8 +4,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
 
 type SignInInputs = {
-  email: string;
-  password: string;
+  phone: string;
+  otp: string;
 };
 
 const useApi = () => {
@@ -44,13 +44,12 @@ export default function SignIn() {
     handleSubmit,
     formState: { errors },
   } = useForm<SignInInputs>();
-  const { postData, loading, error } = useApi();
+  const { postData, loading } = useApi();
   const router = useNavigate();
 
   const onSubmit: SubmitHandler<SignInInputs> = async (data) => {
-    const result = await postData(`${API_URL}/login`, data);
+    const result = await postData(`${API_URL}/request-otp`, data);
     if (result) {
-      // Successful sign-in, redirect to dashboard
       router("/");
     }
   };
@@ -62,55 +61,40 @@ export default function SignIn() {
           <h2 className="text-center text-2xl font-bold">Sign In</h2>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="form-control">
-              <label className="label" htmlFor="email">
+              <label className="label" htmlFor="phone">
                 <span className="label-text">Mobile number</span>
               </label>
               <input
-                type="email"
-                id="email"
+                type="text"
+                id="phone"
                 placeholder="+95-90000000"
-                className={`input input-bordered ${errors.email ? "input-error" : ""}`}
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /\S+@\S+\.\S+/,
-                    message: "Invalid email address",
-                  },
+                className={`input input-bordered ${errors.phone ? "input-error" : ""}`}
+                {...register("phone", {
+                  required: "phone is required",
                 })}
               />
-              {errors.email && <span className="text-error text-sm mt-1">{errors.email.message}</span>}
             </div>
             <div className="form-control">
-              <label className="label" htmlFor="password">
+              <label className="label" htmlFor="otp">
                 <span className="label-text">OTP</span>
               </label>
               <input
-                type="password"
-                id="password"
-                placeholder="Enter your otp"
-                className={`input input-bordered ${errors.password ? "input-error" : ""}`}
-                {...register("password", { required: "Password is required" })}
+                type="text"
+                id="otp"
+                placeholder="Type your otp here"
+                className={`input input-bordered ${errors.otp ? "input-error" : ""}`}
+                {...register("otp", {
+                  required: "otp is required",
+                })}
               />
-              {errors.password && <span className="text-error text-sm mt-1">{errors.password.message}</span>}
-              <label className="label">
-                <Link to="/forgot-password" className="label-text-alt link link-hover">
-                  Forgot password?
-                </Link>
-              </label>
             </div>
-            {error && <div className="text-error mt-2">{error}</div>}
+
             <div className="form-control mt-6">
               <button type="submit" className="btn btn-primary" disabled={loading}>
                 {loading ? <span className="loading loading-spinner"></span> : "continue"}
               </button>
             </div>
           </form>
-          {/* <div className="divider">OR</div>
-          <div className="form-control">
-            <button className="btn btn-outline btn-primary">
-              <FcGoogle size={24} /> <span>Continue with Google</span>
-            </button>
-          </div> */}
           <p className="text-center mt-4">
             Don't have an account?{" "}
             <Link to="/join-us" className="link link-primary">

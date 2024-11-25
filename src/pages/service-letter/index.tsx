@@ -16,7 +16,6 @@ import HourService from "../../components/services/instant-service-tab.tsx/hour-
 import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
-// import { useSearchParams } from "react-router-dom";
 
 function ServiceLetterPage() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
@@ -26,8 +25,8 @@ function ServiceLetterPage() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("service");
 
-  const { totalDayPrice, resetDayTipPrice } = useDayRateStore();
-  const { totalHourPrice, resetHourTipPrice } = useHourRateStore();
+  const { totalDayPrice, resetDayState } = useDayRateStore();
+  const { totalHourPrice, resetHourState } = useHourRateStore();
 
   const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
   const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
@@ -154,8 +153,28 @@ function ServiceLetterPage() {
 
     console.log(extendedData);
 
-    const validatedData = formSchema.parse(extendedData);
-    await handlePayment(validatedData);
+    try {
+      const validatedData = formSchema.parse(extendedData);
+
+      await handlePayment(validatedData).then(() => {
+        if (mode === "day") {
+          resetDayState();
+        } else {
+          resetHourState();
+        }
+      });
+    } catch (error) {
+      console.error("Error in onSubmit:", error);
+    }
+
+    // const validatedData = formSchema.parse(extendedData);
+    // await handlePayment(validatedData).then(() => {
+    //   mode === "day" ? resetDayState() : resetHourState();
+
+    //   setTimeout(() => {
+    //     navigate("/");
+    //   }, 400);
+    // });
   };
 
   const handlePayment = async (extendedData: FormData) => {
@@ -187,14 +206,8 @@ function ServiceLetterPage() {
 
             if (result.ok) {
               await result.json();
-
-              localStorage.removeItem("day-rate-store");
-              localStorage.removeItem("hour-rate-store");
-              localStorage.removeItem("service-store");
               toast.success("Booking saved successfully!");
-
               setTimeout(() => {
-                mode === "day" ? resetDayTipPrice(tip) : resetHourTipPrice(tip);
                 navigate("/");
               }, 400);
             } else {
