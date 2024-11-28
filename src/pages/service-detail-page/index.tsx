@@ -58,7 +58,7 @@ const ServicesDetailsPage = () => {
       </div>
     );
 
-  const { service } = serviceDetailData;
+  const { service, slider_slogans } = serviceDetailData;
   return (
     <div>
       <div className="px-6 space-y-6 mb-10">
@@ -75,7 +75,7 @@ const ServicesDetailsPage = () => {
         </div>
         <h2 className="text-2xl font-semibold">{service.title}</h2>
       </div>
-      <ServiceDetailsCarousel bgImage={service.service_image} />
+      <ServiceDetailsCarousel data={slider_slogans} />
       <Container className="my-[80px]">
         <div className="flex gap-6">
           <div className="flex-1 px-6 space-y-6">
@@ -116,10 +116,9 @@ const ServicesDetailsPage = () => {
               <h2 className="font-semibold text-lg mb-6 mt-[60px]">Customer Reviews</h2>
               <hr className="mb-6" />
               <div className="space-y-6">
-                <UserRatingCard />
-                <UserRatingCard />
-                <UserRatingCard />
-                <UserRatingCard />
+                {service.reviews?.map((review) => (
+                  <UserRatingCard review={review} />
+                ))}
               </div>
               <div className="my-[60px] flex justify-center items-center">
                 <button className="btn btn-link">View all Reviews</button>

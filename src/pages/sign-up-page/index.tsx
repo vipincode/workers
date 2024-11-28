@@ -2,14 +2,26 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
-import { FcGoogle } from "react-icons/fc";
+import { z } from "zod";
+import toast from "react-hot-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useAuthStore } from "../../store/auth-store";
 
-type SignUpInputs = {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-};
+const formSchemaStep1 = z.object({
+  // mobile_no: z.string().min(10, "Mobile number is required."),
+  mobile_no: z
+    .string()
+    .length(10, "Mobile number must be exactly 10 digits.")
+    .regex(/^\d+$/, "Mobile number must contain only numbers."),
+});
+
+const formSchemaStep2 = z.object({
+  name: z.string().optional(),
+  otp: z.string().min(4, "OTP is required."),
+});
+
+export type FormDataStep1 = z.infer<typeof formSchemaStep1>;
+export type FormDataStep2 = z.infer<typeof formSchemaStep2>;
 
 const useApi = () => {
   const [loading, setLoading] = useState(false);
@@ -27,7 +39,15 @@ const useApi = () => {
         body: JSON.stringify(data),
       });
       if (!response.ok) {
-        throw new Error("Sign up failed");
+        if (response.status === 404) {
+          throw new Error("Data format not good");
+        } else if (response.status === 401) {
+          throw new Error("Invalid or expired OTP");
+        } else if (response.status === 500) {
+          throw new Error("Server error");
+        } else {
+          throw new Error("Request failed");
+        }
       }
       return await response.json();
     } catch (err) {
@@ -42,20 +62,42 @@ const useApi = () => {
 };
 
 export default function SignUp() {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    watch,
-  } = useForm<SignUpInputs>();
+  const [step, setStep] = useState(1); // Tracks the current step
+  const [mobileNumber, setMobileNumber] = useState(""); // Store the mobile number after Step 1
   const { postData, loading, error } = useApi();
-  const router = useNavigate();
+  const navigate = useNavigate();
 
-  const onSubmit: SubmitHandler<SignUpInputs> = async (data) => {
-    const result = await postData(`${API_URL}/signup`, data);
+  // Form handlers for Step 1 and Step 2
+  const {
+    register: registerStep1,
+    handleSubmit: handleSubmitStep1,
+    formState: { errors: errorsStep1 },
+  } = useForm<FormDataStep1>({
+    resolver: zodResolver(formSchemaStep1),
+  });
+
+  const {
+    register: registerStep2,
+    handleSubmit: handleSubmitStep2,
+    formState: { errors: errorsStep2 },
+  } = useForm<FormDataStep2>();
+
+  const handleMobileSubmit: SubmitHandler<FormDataStep1> = async (data) => {
+    const result = await postData(`${API_URL}/register-otp`, data);
     if (result) {
-      // Successful sign-up, redirect to dashboard or login page
-      router("/sign-in");
+      setMobileNumber(data.mobile_no);
+      setStep(2);
+    }
+  };
+
+  const handleOtpSubmit: SubmitHandler<FormDataStep2> = async (data) => {
+    const result = await postData(`${API_URL}/register`, { name: data.name, mobile_no: mobileNumber, otp: data.otp });
+    if (result) {
+      const { token, user } = result;
+      useAuthStore.getState().setUserData(user, token);
+
+      toast.success("Register successful");
+      navigate("/sign-in");
     }
   };
 
@@ -64,94 +106,73 @@ export default function SignUp() {
       <div className="card w-full max-w-sm shadow-2xl bg-base-100">
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold">Create an Account</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control">
-              <label className="label" htmlFor="name">
-                <span className="label-text">Full Name</span>
-              </label>
-              <input
-                type="text"
-                id="name"
-                placeholder="John Doe"
-                className={`input input-bordered ${errors.name ? "input-error" : ""}`}
-                {...register("name", { required: "Full name is required" })}
-              />
-              {errors.name && <span className="text-error text-sm mt-1">{errors.name.message}</span>}
-            </div>
-            <div className="form-control">
-              <label className="label" htmlFor="email">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                id="email"
-                placeholder="email@example.com"
-                className={`input input-bordered ${errors.email ? "input-error" : ""}`}
-                {...register("email", {
-                  required: "Email is required",
-                  pattern: {
-                    value: /\S+@\S+\.\S+/,
-                    message: "Invalid email address",
-                  },
-                })}
-              />
-              {errors.email && <span className="text-error text-sm mt-1">{errors.email.message}</span>}
-            </div>
-            <div className="form-control">
-              <label className="label" htmlFor="password">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                id="password"
-                placeholder="Enter your password"
-                className={`input input-bordered ${errors.password ? "input-error" : ""}`}
-                {...register("password", {
-                  required: "Password is required",
-                  minLength: {
-                    value: 8,
-                    message: "Password must be at least 8 characters long",
-                  },
-                })}
-              />
-              {errors.password && <span className="text-error text-sm mt-1">{errors.password.message}</span>}
-            </div>
-            <div className="form-control">
-              <label className="label" htmlFor="confirm-password">
-                <span className="label-text">Confirm Password</span>
-              </label>
-              <input
-                type="password"
-                id="confirm-password"
-                placeholder="Confirm your password"
-                className={`input input-bordered ${errors.confirmPassword ? "input-error" : ""}`}
-                {...register("confirmPassword", {
-                  required: "Please confirm your password",
-                  validate: (val: string) => {
-                    if (watch("password") != val) {
-                      return "Your passwords do not match";
-                    }
-                  },
-                })}
-              />
-              {errors.confirmPassword && (
-                <span className="text-error text-sm mt-1">{errors.confirmPassword.message}</span>
-              )}
-            </div>
-            {error && <div className="text-error mt-2">{error}</div>}
-            <div className="form-control mt-6">
-              <button type="submit" className="btn btn-primary" disabled={loading}>
-                {loading ? <span className="loading loading-spinner"></span> : "Sign Up"}
-              </button>
-            </div>
-          </form>
-          <div className="divider">OR</div>
-          <div className="form-control">
-            <button className="btn btn-outline btn-primary">
-              <FcGoogle size={24} />
-              <span>Sign up with Google</span>
-            </button>
-          </div>
+          {step === 1 && (
+            <form onSubmit={handleSubmitStep1(handleMobileSubmit)}>
+              <div className="form-control">
+                <label className="label" htmlFor="mobile">
+                  <span className="label-text">Mobile number</span>
+                </label>
+                <input
+                  type="text"
+                  id="mobile"
+                  placeholder="+91-9000000000"
+                  className={`input input-bordered ${errorsStep1.mobile_no ? "input-error" : ""}`}
+                  {...registerStep1("mobile_no", {
+                    required: "Mobile number is required",
+                  })}
+                />
+                {errorsStep1.mobile_no && (
+                  <span className="text-error text-sm mt-1">{errorsStep1.mobile_no.message}</span>
+                )}
+              </div>
+              {error && <div className="text-error mt-2">{error}</div>}
+              <div className="form-control mt-6">
+                <button type="submit" className="btn btn-primary">
+                  Next
+                </button>
+              </div>
+            </form>
+          )}
+
+          {step === 2 && (
+            <form onSubmit={handleSubmitStep2(handleOtpSubmit)}>
+              <div className="form-control">
+                <label className="label" htmlFor="otp">
+                  <span className="label-text">OTP</span>
+                </label>
+                <input
+                  type="text"
+                  id="otp"
+                  placeholder="Your otp"
+                  className={`input input-bordered ${errorsStep2.otp ? "input-error" : ""}`}
+                  {...registerStep2("otp", {
+                    required: "OTP is required",
+                  })}
+                />
+                {errorsStep2.otp && <span className="text-error text-sm mt-1">{errorsStep2.otp.message}</span>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="name">
+                  <span className="label-text">Full Name (optional)</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="John Doe"
+                  className={`input input-bordered ${errorsStep2.name ? "input-error" : ""}`}
+                  {...registerStep2("name", { required: "Full name is required" })}
+                />
+                {errorsStep2.name && <span className="text-error text-sm mt-1">{errorsStep2.name.message}</span>}
+              </div>
+              {error && <div className="text-error mt-2">{error}</div>}
+              <div className="form-control mt-6">
+                <button type="submit" className="btn btn-primary" disabled={loading}>
+                  {loading ? <span className="loading loading-spinner"></span> : "Sign Up"}
+                </button>
+              </div>
+            </form>
+          )}
+
           <p className="text-center mt-4">
             Already have an account?{" "}
             <Link to="/sign-in" className="link link-primary">

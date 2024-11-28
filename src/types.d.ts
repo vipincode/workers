@@ -489,6 +489,8 @@ export interface Service {
   deleted_at: string | null;
   created_at: string;
   updated_at: string;
+  rating: number;
+  reviews: Review[];
 }
 
 export interface Slogan {
@@ -503,6 +505,12 @@ export interface Slogan {
   deleted_at: string | null;
   created_at: string;
   updated_at: string;
+}
+
+export interface Review {
+  name: string;
+  rating: number;
+  review_comments: string;
 }
 
 export interface ServiceDetailApiResponse {

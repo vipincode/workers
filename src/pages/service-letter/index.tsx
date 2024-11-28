@@ -16,11 +16,16 @@ import HourService from "../../components/services/instant-service-tab.tsx/hour-
 import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
+import { useAuthStore } from "../../store/auth-store";
 
 function ServiceLetterPage() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   const [active, setActive] = useState(true);
   const navigate = useNavigate();
+  // const location = useLocation(); // Access current location
+  // Get user and token
+  const { token, user } = useAuthStore();
+
   // const mode = useModeStore((state) => state.mode);
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("service");
@@ -31,6 +36,17 @@ function ServiceLetterPage() {
   const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
   const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
   const instantServiceStoreData = JSON.parse(localStorage.getItem("service-store") || "{}");
+
+  // If user not have token go to sign-in page
+
+  useEffect(() => {
+    console.log(token, "token");
+    if (!token) {
+      toast.success("Please log in to complete this process.");
+      // navigate("/sign-in", { state: { from: location.pathname } });
+      navigate("/sign-in", { state: { from: window.location.pathname } });
+    }
+  }, []);
 
   const price = useMemo(() => {
     return mode === "day" ? totalDayPrice : totalHourPrice;
@@ -137,7 +153,7 @@ function ServiceLetterPage() {
   const onSubmit = async (data: FormData) => {
     const extendedData: FormData = {
       ...data,
-      user_id: 1,
+      user_id: user.id,
       service_id: instantServiceStoreData.state.serviceId,
       instant_service_id: instantServiceStoreData.state.instantServiceId,
       mode: mode as "day" | "hour",
@@ -150,8 +166,6 @@ function ServiceLetterPage() {
       status: "1" as "0" | "1",
       transaction_id: "",
     };
-
-    console.log(extendedData);
 
     try {
       const validatedData = formSchema.parse(extendedData);

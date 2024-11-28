@@ -37,7 +37,7 @@ const ListingCard = ({ data }: { data: Service }) => {
         </div>
         <div className="card-actions justify-between items-center">
           <div className="space-y-1">
-            <Rating />
+            <Rating rating={data.rating} />
           </div>
           <Link to={`/services-detail/${data.slug}`}>
             <button className="btn btn-sm">View Details</button>

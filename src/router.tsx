@@ -22,6 +22,8 @@ import PolicyPage from "./pages/policy-page";
 import SignIn from "./pages/sign-in-page";
 import ForgotPassword from "./pages/forgot-password-page";
 import ServiceListingPage from "./pages/service-listing-page";
+import SignUp from "./pages/sign-up-page";
+import ProtectedRoute from "./protected-route";
 
 const router = createBrowserRouter([
   {
@@ -99,11 +101,27 @@ const router = createBrowserRouter([
       },
       {
         path: "/sign-in",
-        element: <SignIn />,
+        element: (
+          <ProtectedRoute redirectTo="/">
+            <SignIn />
+          </ProtectedRoute>
+        ),
+      },
+      {
+        path: "/sign-up",
+        element: (
+          <ProtectedRoute redirectTo="/">
+            <SignUp />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/forgot-password",
-        element: <ForgotPassword />,
+        element: (
+          <ProtectedRoute redirectTo="/">
+            <ForgotPassword />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "/service/:category_slug/:sub_category_slug?",
