@@ -1,8 +1,8 @@
 import { Calendar, MapPin } from "lucide-react";
-import Rating from "../shared/ratings";
 import { Link } from "react-router-dom";
 import { Service } from "../../types";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
+import ServiceRating from "../shared/service-rating";
 
 const ListingCard = ({ data }: { data: Service }) => {
   return (
@@ -37,7 +37,7 @@ const ListingCard = ({ data }: { data: Service }) => {
         </div>
         <div className="card-actions justify-between items-center">
           <div className="space-y-1">
-            <Rating rating={data.rating} />
+            <ServiceRating reviews={data.reviews} rating={data.rating} />
           </div>
           <Link to={`/services-detail/${data.slug}`}>
             <button className="btn btn-sm">View Details</button>

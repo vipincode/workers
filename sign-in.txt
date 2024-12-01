@@ -1,10 +1,11 @@
+
 import { FC, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import { API_URL, BASE_URL } from "../../react-query/constants";
+import { API_URL } from "../../react-query/constants";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../store/auth-store";
 
@@ -13,7 +14,6 @@ const formSchemaStep1 = z.object({
 });
 
 const formSchemaStep2 = z.object({
-  mobile_no: z.string().min(10, "Mobile number is required."),
   otp: z.string().min(4, "OTP is required."),
 });
 
@@ -63,8 +63,6 @@ interface SignInProps {
 }
 const SignIn: FC<SignInProps> = ({ className }) => {
   const navigate = useNavigate();
-  const searchParams = new URLSearchParams(location.search);
-  const redirectPath = searchParams.get("path") ? decodeURIComponent(searchParams.get("path")) : "/";
   // const location = useLocation();
 
   const [step, setStep] = useState(1); // Tracks the current step
@@ -93,33 +91,49 @@ const SignIn: FC<SignInProps> = ({ className }) => {
   };
 
   const mutation = useMutation({
-    mutationFn: async (data: FormDataStep2) => {
+    mutationFn: async () => {
       const result = await postData(`${API_URL}/login`, { mobile_no: mobileNumber, otp: data.otp });
       if (result) {
         const { token, user } = result;
-        useAuthStore.getState().setUserData(user, token);
-      } else {
-        throw new Error("Login failed");
+        useAuthStore.getState().setUserData(user, token); // Store token and user in state
       }
     },
     onSuccess: () => {
       toast.success("Login successful");
-      // Extract redirect path from the query parameters
-      navigate(redirectPath, { replace: true });
+      // Extract redirect path
+      const searchParams = new URLSearchParams(location.search);
+      const redirectPath = searchParams.get("path") ? decodeURIComponent(searchParams.get("path")) : "/";
+      // Perform redirection
       // window.location.href = `${BASE_URL}${redirectPath}`;
+      // navigate(redirectPath, { replace: true });
+      navigate("/service-letter?service=day");
     },
     onError: (error) => {
       console.error("Error saving data:", error);
-      toast.error(error.message || "Error submitting form. Please try again.");
+      toast.error("Error submitting form. Please try again.");
     },
   });
 
-  const handleOtpSubmit: SubmitHandler<FormDataStep2> = (data) => {
-    if (!mobileNumber) {
-      toast.error("Mobile number is required");
-      return;
-    }
-    mutation.mutate({ mobile_no: mobileNumber, otp: data.otp });
+  const handleOtpSubmit: SubmitHandler<FormDataStep2> = async (data) => {
+    mutation.mutate({ mobile_no: mobileNumber, otp: data.otp })
+    // try {
+    //   const result = await postData(`${API_URL}/login`, { mobile_no: mobileNumber, otp: data.otp });
+    //   if (result) {
+    //     const { token, user } = result;
+    //     useAuthStore.getState().setUserData(user, token); // Store token and user in state
+    //     toast.success("Login successful");
+    //     // Extract redirect path
+    //     const searchParams = new URLSearchParams(location.search);
+    //     const redirectPath = searchParams.get("path") ? decodeURIComponent(searchParams.get("path")) : "/";
+    //     // Perform redirection
+    //     // window.location.href = `${BASE_URL}${redirectPath}`;
+    //     // navigate(redirectPath, { replace: true });
+    //     navigate("/service-letter?service=day");
+    //   }
+    // } catch (error) {
+    //   console.error("Error during OTP submission:", error);
+    //   toast.error("Failed to login. Please try again.");
+    // }
   };
 
   return (

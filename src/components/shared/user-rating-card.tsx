@@ -1,6 +1,5 @@
 import { Review } from "../../types";
 import Rating from "./ratings";
-import { FaCircleUser } from "react-icons/fa6";
 
 interface UserRatingCardProp {
   review: Review;
@@ -9,10 +8,8 @@ interface UserRatingCardProp {
 const UserRatingCard = ({ review }: UserRatingCardProp) => {
   return (
     <div className="flex gap-3">
-      <div className="avatar">
-        <div className="w-16 h-16">
-          <FaCircleUser size={52} />
-        </div>
+      <div className="w-10 h-10 bg-black text-white rounded-full flex justify-center items-center text-lg font-medium uppercase">
+        {review.name.slice(0, 1)}
       </div>
       <div>
         <div className="flex gap-5 items-center mb-3">

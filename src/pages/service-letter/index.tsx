@@ -17,14 +17,17 @@ import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
 import { useAuthStore } from "../../store/auth-store";
+// import SignInModal from "../../components/auth/signin-modal";
 
 function ServiceLetterPage() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   const [active, setActive] = useState(true);
   const navigate = useNavigate();
+
   // const location = useLocation(); // Access current location
   // Get user and token
   const { token, user } = useAuthStore();
+  // const { openModal } = useModalStore();
 
   // const mode = useModeStore((state) => state.mode);
   const [searchParams] = useSearchParams();
@@ -36,17 +39,6 @@ function ServiceLetterPage() {
   const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
   const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
   const instantServiceStoreData = JSON.parse(localStorage.getItem("service-store") || "{}");
-
-  // If user not have token go to sign-in page
-
-  useEffect(() => {
-    console.log(token, "token");
-    if (!token) {
-      toast.success("Please log in to complete this process.");
-      // navigate("/sign-in", { state: { from: location.pathname } });
-      navigate("/sign-in", { state: { from: window.location.pathname } });
-    }
-  }, []);
 
   const price = useMemo(() => {
     return mode === "day" ? totalDayPrice : totalHourPrice;
@@ -150,6 +142,15 @@ function ServiceLetterPage() {
   const tip = mode === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
   const totalPrice = mode === "day" ? dayRateStoreData.state.totalDayPrice : hourRateStoreData.state.totalHourPrice;
 
+  useEffect(() => {
+    const currentPath = window.location.pathname + window.location.search;
+
+    if (!token && !currentPath.startsWith("/sign-in")) {
+      toast.success("Please log in to complete this process.");
+      navigate(`/sign-in?path=${encodeURIComponent(currentPath)}`);
+    }
+  }, [token, navigate]);
+
   const onSubmit = async (data: FormData) => {
     const extendedData: FormData = {
       ...data,
@@ -180,15 +181,6 @@ function ServiceLetterPage() {
     } catch (error) {
       console.error("Error in onSubmit:", error);
     }
-
-    // const validatedData = formSchema.parse(extendedData);
-    // await handlePayment(validatedData).then(() => {
-    //   mode === "day" ? resetDayState() : resetHourState();
-
-    //   setTimeout(() => {
-    //     navigate("/");
-    //   }, 400);
-    // });
   };
 
   const handlePayment = async (extendedData: FormData) => {
@@ -255,6 +247,8 @@ function ServiceLetterPage() {
 
   return (
     <div className="min-h-[60vh] mb-[100px] ">
+      {/* User Not have token Signin */}
+      {/* <SignInModal />; */}
       <Container className="min-h-[60vh] mb-[100px] max-w-[60%] ">
         <div className="mt-7">
           <form onSubmit={handleSubmit(onSubmit)}>
