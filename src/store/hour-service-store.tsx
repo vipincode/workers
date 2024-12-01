@@ -96,7 +96,7 @@ export const useHourRateStore = create(
           return {
             mesonRate: rate,
             totalMesonHourRate: newTotalMesonHourRate,
-            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate,
+            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -106,7 +106,7 @@ export const useHourRateStore = create(
           return {
             helperRate: rate,
             totalHelperHourRate: newTotalHelperHourRate,
-            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate,
+            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -117,7 +117,7 @@ export const useHourRateStore = create(
           return {
             mesonHourCount: newMesonHourCount,
             totalMesonHourRate: newTotalMesonHourRate,
-            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate,
+            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -128,7 +128,7 @@ export const useHourRateStore = create(
           return {
             mesonHourCount: newMesonHourCount,
             totalMesonHourRate: newTotalMesonHourRate,
-            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate,
+            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -139,7 +139,7 @@ export const useHourRateStore = create(
           return {
             helperHourCount: newHelperHourCount,
             totalHelperHourRate: newTotalHelperHourRate,
-            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate,
+            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -150,7 +150,7 @@ export const useHourRateStore = create(
           return {
             helperHourCount: newHelperHourCount,
             totalHelperHourRate: newTotalHelperHourRate,
-            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate,
+            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate + state.tipValue,
           };
         }),
       resetHourState: () =>

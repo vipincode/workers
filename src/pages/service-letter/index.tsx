@@ -106,7 +106,9 @@ function ServiceLetterPage() {
         message: "Invalid date format",
       })
       .optional(),
-    time_slot: z.string(),
+    time_slot: z.string().regex(/^([0-1][0-9]|2[0-3]):([0-5][0-9])$/, {
+      message: "Invalid time format. Please use HH:MM (24-hour format).",
+    }),
     pincode: z.string().min(6, "Pincode must be at least 6 digits"),
     address: z.string().min(1, "Address is required"),
     user_id: z.number().optional(),
@@ -247,8 +249,6 @@ function ServiceLetterPage() {
 
   return (
     <div className="min-h-[60vh] mb-[100px] ">
-      {/* User Not have token Signin */}
-      {/* <SignInModal />; */}
       <Container className="min-h-[60vh] mb-[100px] max-w-[60%] ">
         <div className="mt-7">
           <form onSubmit={handleSubmit(onSubmit)}>
@@ -357,21 +357,23 @@ function ServiceLetterPage() {
                 {errors.pincode && <span className="text-error text-sm mt-1">{errors.pincode.message}</span>}
               </div>
             </div>
-            <div className="relative pt-10 mb-8">
-              <button
-                className="btn btn-primary btn-xs mt-10 absolute right-0 -top-2"
-                onClick={() => setActive(!active)}
-              >
-                {active ? "Edit" : "Save"}
-              </button>
-              {active && <CartPrices />}
-              {!active && mode === "day" && <DayService />}
-              {!active && mode === "hour" && <HourService />}
-            </div>
-            <button type="submit" disabled={!active} className="btn btn-primary w-full mt-4">
-              Proceed to pay
-            </button>
           </form>
+          <div className="relative pt-10 mb-8">
+            <button className="btn btn-primary btn-xs mt-10 absolute right-0 -top-2" onClick={() => setActive(!active)}>
+              {active ? "Edit" : "Save"}
+            </button>
+            {active && <CartPrices />}
+            {!active && mode === "day" && <DayService />}
+            {!active && mode === "hour" && <HourService />}
+          </div>
+          <button
+            onClick={handleSubmit(onSubmit)}
+            type="submit"
+            disabled={!active}
+            className="btn btn-primary w-full mt-4"
+          >
+            Proceed to pay
+          </button>
         </div>
       </Container>
     </div>

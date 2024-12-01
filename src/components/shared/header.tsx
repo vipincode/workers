@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { useAuthStore } from "../../store/auth-store";
 import { twMerge } from "tailwind-merge";
 import { LuUser2 } from "react-icons/lu";
+import LogoutButton from "../auth/logout";
 
 const Header = () => {
   const { user } = useAuthStore();
@@ -40,10 +41,28 @@ const Header = () => {
             )}
           </ul>
         </div>
-        <div className={twMerge("avatar placeholder", user ? "pl-6" : "pl-0")}>
-          <div className="bg-black text-white w-8 rounded-full">
+        <div className={twMerge("dropdown dropdown-end", user ? "pl-6" : "pl-0")}>
+          <div
+            tabIndex={0}
+            role="button"
+            className="btn btn-ghost btn-circle avatar bg-black text-white hover:bg-black/90"
+          >
             {user ? <span className="text-xs uppercase">{user.name.slice(0, 1)}</span> : <LuUser2 size={18} />}
           </div>
+          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
+            <li>
+              <a className="justify-between">
+                {user ? user.name : "Welcome"}
+                <span className="badge">New</span>
+              </a>
+            </li>
+            <li>
+              <a>Settings</a>
+            </li>
+            <li className="mt-2">
+              <LogoutButton />
+            </li>
+          </ul>
         </div>
       </div>
     </div>

@@ -39,10 +39,7 @@ const InstantServices = () => {
 
   setInstantServiceId(data.instant_service.id);
   setServiceId(data.instant_service.service_id);
-  const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
-  const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
-
-  const tip = mode === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
+  localStorage.setItem("day-prices", JSON.stringify(data.instant_service));
 
   return (
     <div>
@@ -65,8 +62,8 @@ const InstantServices = () => {
             <p className="text-[32px]">Total Price:</p>
             <div className="flex items-center font-medium text-[32px]">
               <IndianRupee size={32} />
-              {mode === "day" && <p>{tip ? totalDayPrice + tip : totalDayPrice}</p>}
-              {mode === "hour" && <p>{tip ? totalHourPrice + tip : totalHourPrice}</p>}
+              {mode === "day" && <p>{totalDayPrice}</p>}
+              {mode === "hour" && <p>{totalHourPrice}</p>}
             </div>
           </div>
         </div>

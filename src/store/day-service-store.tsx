@@ -119,7 +119,8 @@ export const useDayRateStore = create(
               newTotalMesonDayRate +
               state.totalHelperDayRate +
               state.totalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -133,7 +134,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               newTotalHelperDayRate +
               state.totalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -147,7 +149,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               state.totalHelperDayRate +
               newTotalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -161,7 +164,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               state.totalHelperDayRate +
               state.totalMesonOvertimeRate +
-              newTotalHelperOvertimeRate,
+              newTotalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -176,7 +180,8 @@ export const useDayRateStore = create(
               newTotalMesonDayRate +
               state.totalHelperDayRate +
               state.totalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -191,7 +196,8 @@ export const useDayRateStore = create(
               newTotalMesonDayRate +
               state.totalHelperDayRate +
               state.totalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -206,7 +212,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               newTotalHelperDayRate +
               state.totalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -221,7 +228,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               newTotalHelperDayRate +
               state.totalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -236,7 +244,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               state.totalHelperDayRate +
               newTotalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -251,7 +260,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               state.totalHelperDayRate +
               newTotalMesonOvertimeRate +
-              state.totalHelperOvertimeRate,
+              state.totalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -266,7 +276,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               state.totalHelperDayRate +
               state.totalMesonOvertimeRate +
-              newTotalHelperOvertimeRate,
+              newTotalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
@@ -281,7 +292,8 @@ export const useDayRateStore = create(
               state.totalMesonDayRate +
               state.totalHelperDayRate +
               state.totalMesonOvertimeRate +
-              newTotalHelperOvertimeRate,
+              newTotalHelperOvertimeRate +
+              state.tipValue,
           };
         }),
 
