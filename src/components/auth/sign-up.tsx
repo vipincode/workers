@@ -1,14 +1,14 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
 import { z } from "zod";
 import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthStore } from "../../store/auth-store";
+import { useMutation } from "@tanstack/react-query";
 
 const formSchemaStep1 = z.object({
-  // mobile_no: z.string().min(10, "Mobile number is required."),
   mobile_no: z
     .string()
     .length(10, "Mobile number must be exactly 10 digits.")
@@ -16,8 +16,10 @@ const formSchemaStep1 = z.object({
 });
 
 const formSchemaStep2 = z.object({
-  name: z.string().optional(),
+  name: z.string().min(3, "Name is required"),
   otp: z.string().min(4, "OTP is required."),
+  email: z.string().optional(),
+  mobile_no: z.string().min(10, "Mobile number is required."),
 });
 
 export type FormDataStep1 = z.infer<typeof formSchemaStep1>;
@@ -66,6 +68,12 @@ export default function SignUp() {
   const [mobileNumber, setMobileNumber] = useState(""); // Store the mobile number after Step 1
   const { postData, loading, error } = useApi();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  // Parse the query string
+  const searchParams = new URLSearchParams(location.search);
+  // Get the value of the `path` query parameter
+  const redirectPath = searchParams.get("path") || "/";
 
   // Form handlers for Step 1 and Step 2
   const {
@@ -80,7 +88,9 @@ export default function SignUp() {
     register: registerStep2,
     handleSubmit: handleSubmitStep2,
     formState: { errors: errorsStep2 },
-  } = useForm<FormDataStep2>();
+  } = useForm<FormDataStep2>({
+    mode: "onSubmit",
+  });
 
   const handleMobileSubmit: SubmitHandler<FormDataStep1> = async (data) => {
     const result = await postData(`${API_URL}/register-otp`, data);
@@ -90,15 +100,38 @@ export default function SignUp() {
     }
   };
 
-  const handleOtpSubmit: SubmitHandler<FormDataStep2> = async (data) => {
-    const result = await postData(`${API_URL}/register`, { name: data.name, mobile_no: mobileNumber, otp: data.otp });
-    if (result) {
-      const { token, user } = result;
-      useAuthStore.getState().setUserData(user, token);
+  const mutation = useMutation({
+    mutationFn: async (data: FormDataStep2) => {
+      const result = await postData(`${API_URL}/register`, {
+        name: data.name,
+        email: data.email,
+        mobile_no: mobileNumber,
+        otp: data.otp,
+      });
+      if (result) {
+        const { token, user } = result;
+        useAuthStore.getState().setUserData(user, token);
+      } else {
+        throw new Error("Registration failed");
+      }
+    },
+    onSuccess: () => {
+      toast.success("You are register & login successful");
+      // Extract redirect path from the query parameters
+      navigate(redirectPath, { replace: true });
+    },
+    onError: (error) => {
+      console.error("Error saving data:", error);
+      toast.error(error.message || "Error submitting form. Please try again.");
+    },
+  });
 
-      toast.success("Register successful");
-      navigate("/sign-in");
+  const handleOtpSubmit: SubmitHandler<FormDataStep2> = async (data) => {
+    if (!mobileNumber) {
+      toast.error("Mobile number is required");
+      return;
     }
+    mutation.mutate({ name: data.name, email: data.email, mobile_no: mobileNumber, otp: data.otp });
   };
 
   return (
@@ -153,7 +186,7 @@ export default function SignUp() {
               </div>
               <div className="form-control">
                 <label className="label" htmlFor="name">
-                  <span className="label-text">Full Name (optional)</span>
+                  <span className="label-text">Full Name</span>
                 </label>
                 <input
                   type="text"
@@ -163,6 +196,18 @@ export default function SignUp() {
                   {...registerStep2("name", { required: "Full name is required" })}
                 />
                 {errorsStep2.name && <span className="text-error text-sm mt-1">{errorsStep2.name.message}</span>}
+              </div>
+              <div className="form-control">
+                <label className="label" htmlFor="email">
+                  <span className="label-text">Email (optional)</span>
+                </label>
+                <input
+                  type="text"
+                  id="name"
+                  placeholder="John Doe"
+                  className="input input-bordered"
+                  {...registerStep2("email")}
+                />
               </div>
               {error && <div className="text-error mt-2">{error}</div>}
               <div className="form-control mt-6">

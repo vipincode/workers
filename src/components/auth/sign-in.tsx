@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
 import { twMerge } from "tailwind-merge";
 import { z } from "zod";
-import { API_URL, BASE_URL } from "../../react-query/constants";
+import { API_URL } from "../../react-query/constants";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../store/auth-store";
 
@@ -106,7 +106,6 @@ const SignIn: FC<SignInProps> = ({ className }) => {
       toast.success("Login successful");
       // Extract redirect path from the query parameters
       navigate(redirectPath, { replace: true });
-      // window.location.href = `${BASE_URL}${redirectPath}`;
     },
     onError: (error) => {
       console.error("Error saving data:", error);
@@ -187,7 +186,7 @@ const SignIn: FC<SignInProps> = ({ className }) => {
 
         <p className="text-center mt-4">
           Don't have an account?{" "}
-          <Link to="/sign-up" className="link link-primary">
+          <Link to={redirectPath ? `/sign-up?path=${redirectPath}` : "/sign-up"} className="link link-primary">
             Sign up
           </Link>
         </p>
