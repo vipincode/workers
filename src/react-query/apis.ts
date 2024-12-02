@@ -125,7 +125,7 @@ export const jobsBySlug = async (slug: string) => {
  */
 
 export const applyJob = async (data: FormInputs) => {
-  const response = await axios.post(`${API_URL}/get-job-detail/save-apply-job`, data);
+  const response = await axios.post(`${API_URL}/save-apply-job`, data);
   return response.data;
 };
 

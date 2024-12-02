@@ -1,22 +1,58 @@
-"use client";
-
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FormInputs } from "../../types";
-import { useMutation } from "@tanstack/react-query";
-import { applyJob } from "../../react-query/apis";
+import { CitiesResponse, FormInputs, StateProps } from "../../types";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { applyJob, getCities, getStates } from "../../react-query/apis";
 import toast from "react-hot-toast";
+import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 export default function ApplyJobForm() {
+  const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
+  const { id } = useParams();
   const {
     register,
     handleSubmit,
+    watch,
+    reset,
     formState: { errors },
   } = useForm<FormInputs>();
+
+  const {
+    data: states,
+    isLoading: isLoadingStates,
+    isError: isErrorStates,
+  } = useQuery<StateProps, Error>({
+    queryKey: ["states"],
+    queryFn: getStates,
+    staleTime: Infinity,
+  });
+
+  const {
+    data: cities,
+    isLoading: isLoadingCities,
+    isError: isErrorCities,
+  } = useQuery<CitiesResponse, Error>({
+    queryKey: ["cities", selectedStateId],
+    queryFn: () => getCities(selectedStateId),
+    enabled: !!selectedStateId,
+    staleTime: Infinity,
+  });
+
+  const stateValue = watch("state_id");
+  useEffect(() => {
+    setSelectedStateId(Number(stateValue));
+    console.log(selectedStateId);
+  }, [stateValue]);
+
+  if (!id) {
+    toast.error("Job id required!");
+  }
 
   const mutation = useMutation({
     mutationFn: applyJob,
     onSuccess: () => {
       toast.success("Apply job successfully!");
+      reset();
     },
     onError: (error) => {
       console.error("Error saving data:", error);
@@ -24,7 +60,11 @@ export default function ApplyJobForm() {
     },
   });
   const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    mutation.mutate(data);
+    const newData = {
+      ...data, // Spread the existing form data
+      job_id: parseInt(id),
+    };
+    mutation.mutate(newData);
   };
 
   return (
@@ -56,30 +96,61 @@ export default function ApplyJobForm() {
           {errors.email && <p className="text-error mt-1">{errors.email.message}</p>}
         </div>
 
-        <div>
-          <label htmlFor="city" className="label">
-            <span className="label-text">City</span>
-          </label>
-          <input
-            id="city"
-            type="text"
-            {...register("city", { required: "City is required" })}
-            className="input input-bordered w-full"
-          />
-          {errors.city && <p className="text-error mt-1">{errors.city.message}</p>}
-        </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          {isErrorStates && <div className="text-xs font-normal">State is not loading</div>}
+          {isErrorCities && <div className="text-xs font-normal">City is not loading</div>}
+          {isLoadingStates ? (
+            <div className="space-y-3">
+              <div className="skeleton h-5 w-16" />
+              <div className="skeleton h-8 w-full" />
+            </div>
+          ) : (
+            <div className="form-control">
+              <label className="label" htmlFor="state_id">
+                <span className="label-text">State</span>
+              </label>
+              <select
+                id="state_id"
+                {...register("state_id", { required: "State is required" })}
+                className={`select select-bordered w-full ${errors.state_id ? "select-error" : ""}`}
+              >
+                <option value="">Select a state</option>
+                {states?.states.map((state) => (
+                  <option key={state.id} value={state.id}>
+                    {state.name}
+                  </option>
+                ))}
+              </select>
+              {errors.state_id && <span className="text-error text-sm mt-1">{errors.state_id.message}</span>}
+            </div>
+          )}
 
-        <div>
-          <label htmlFor="state" className="label">
-            <span className="label-text">State</span>
-          </label>
-          <input
-            id="state"
-            type="text"
-            {...register("state", { required: "State is required" })}
-            className="input input-bordered w-full"
-          />
-          {errors.state && <p className="text-error mt-1">{errors.state.message}</p>}
+          {isLoadingCities ? (
+            <div className="space-y-3">
+              <div className="skeleton h-5 w-16" />
+              <div className="skeleton h-8 w-full" />
+            </div>
+          ) : (
+            <div className="form-control">
+              <label className="label" htmlFor="city_id">
+                <span className="label-text">City</span>
+              </label>
+              <select
+                id="city_id"
+                {...register("city_id", { required: "City is required" })}
+                className={`select select-bordered w-full ${errors.city_id ? "select-error" : ""}`}
+                disabled={!selectedStateId || isLoadingCities}
+              >
+                <option value="">Select a city</option>
+                {(cities?.cites || []).map((city) => (
+                  <option key={city.id} value={city.id}>
+                    {city.name}
+                  </option>
+                ))}
+              </select>
+              {errors.city_id && <span className="text-error text-sm mt-1">{errors.city_id.message}</span>}
+            </div>
+          )}
         </div>
 
         <div>
@@ -89,23 +160,23 @@ export default function ApplyJobForm() {
           <input
             id="skills"
             type="text"
-            {...register("skills", { required: "Skills are required" })}
+            {...register("skill", { required: "Skills are required" })}
             className="input input-bordered w-full"
           />
-          {errors.skills && <p className="text-error mt-1">{errors.skills.message}</p>}
+          {errors.skill && <p className="text-error mt-1">{errors.skill.message}</p>}
         </div>
 
         <div>
           <label htmlFor="phone" className="label">
-            <span className="label-text">Phone</span>
+            <span className="label-text">Mobile No.</span>
           </label>
           <input
             id="phone"
             type="tel"
-            {...register("phone", { required: "Phone is required" })}
+            {...register("mobile_number", { required: "Phone is required" })}
             className="input input-bordered w-full"
           />
-          {errors.phone && <p className="text-error mt-1">{errors.phone.message}</p>}
+          {errors.mobile_number && <p className="text-error mt-1">{errors.mobile_number.message}</p>}
         </div>
 
         <div>
@@ -121,7 +192,7 @@ export default function ApplyJobForm() {
         </div>
 
         <button type="submit" className="btn btn-primary w-full">
-          Submit
+          {mutation.isPending ? "Submitting..." : " Submit"}
         </button>
       </form>
     </div>

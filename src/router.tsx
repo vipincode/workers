@@ -96,7 +96,7 @@ const router = createBrowserRouter([
         element: <JobDetailedViewPage />,
       },
       {
-        path: "/apply-job",
+        path: "/job-detail/:slug/:id",
         element: <ApplyJobPage />,
       },
       {

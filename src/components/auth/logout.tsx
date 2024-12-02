@@ -1,28 +1,48 @@
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/auth-store";
-// Update this path to your auth store
+import axios from "axios";
+import { API_URL } from "../../react-query/constants";
+import { useState } from "react";
 
 const LogoutButton = () => {
-  const navigate = useNavigate(); // React Router's navigation hook
-  const clearUserData = useAuthStore((state) => state.clearUserData); // Clear user data from Zustand store
+  const navigate = useNavigate();
+  const clearUserData = useAuthStore((state) => state.clearUserData);
+  const [isLoading, setIsLoading] = useState(false);
+  const { token } = useAuthStore();
 
-  const handleLogout = () => {
-    // Clear user data from Zustand store
-    clearUserData();
+  const handleLogout = async () => {
+    setIsLoading(true);
+    try {
+      await axios.post(
+        `${API_URL}/logout`,
+        {},
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      clearUserData();
+      localStorage.removeItem("auth-storage");
 
-    // Remove persisted data from local storage
-    localStorage.removeItem("auth-storage");
-
-    // Redirect the user to the login page
-    navigate("/sign-in");
+      navigate("/sign-in");
+    } catch (error) {
+      console.error("Logout failed:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
     <button
       onClick={handleLogout}
-      className="px-4 py-2 text-center bg-red-500 text-white rounded-md hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-300"
+      disabled={isLoading}
+      className={`px-4 py-2 text-center text-white rounded-md focus:outline-none focus:ring-2 ${
+        isLoading ? "bg-gray-400 cursor-not-allowed" : "bg-red-500 hover:bg-red-600 focus:ring-red-300"
+      }`}
     >
-      Logout
+      {isLoading ? "Logging out..." : "Logout"}
     </button>
   );
 };

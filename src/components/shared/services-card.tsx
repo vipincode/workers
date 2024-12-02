@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
 import { ServicesCardProps } from "../../types";
+import ServiceRating from "./service-rating";
 
 const ServicesCard: React.FC<ServicesCardProps> = ({ data }) => {
   return (
@@ -20,11 +21,14 @@ const ServicesCard: React.FC<ServicesCardProps> = ({ data }) => {
               <h5 className="mb-2 text-[18px] leading-7 font-bold tracking-tight text-gray-900 ">{data.title}</h5>
             </Link>
             <p className="mb-3 font-normal text-gray-700 ">{data.short_description}</p>
+            <div className="my-6">
+              <ServiceRating rating={data.rating} reviews={data.reviews} />
+            </div>
             <Link
-              to="#"
+              to={`/service/${data.slug}`}
               className="inline-flex items-center py-2 text-sm font-medium text-center  text-secondary rounded-md"
             >
-              Book now
+              Service detail
               <svg
                 className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                 aria-hidden="true"

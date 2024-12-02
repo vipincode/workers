@@ -17,11 +17,11 @@ const ServiceRating = ({ rating, reviews }: ServiceRatingProps) => {
             type="radio"
             name="rating-2"
             readOnly
-            className={`mask mask-star-2 rating-xs ${reviews.length > index ? "bg-orange-400" : "bg-gray-300"}`} // Active stars are orange, others are gray
+            className={`mask mask-star-2 rating-xs ${rating > index ? "bg-orange-400" : "bg-gray-300"}`} // Active stars are orange, others are gray
           />
         ))}
       </div>
-      <p>({rating})</p>
+      <p>({reviews.length})</p>
     </div>
   );
 };

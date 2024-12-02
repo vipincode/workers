@@ -19,7 +19,7 @@ export default function JobDetailedViewPage() {
   const job = data?.job;
 
   const handleClick = () => {
-    navigate("/apply-job");
+    navigate(`/job-detail/${slug}/${data.job.id}`);
   };
 
   return (

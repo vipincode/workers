@@ -78,6 +78,8 @@ interface Services {
   deleted_at: string | null;
   created_at: string;
   updated_at: string;
+  rating: number;
+  reviews: Review[];
 }
 
 interface ServicesProps {
@@ -256,10 +258,11 @@ interface JobCategoryApiResponse {
 export type FormInputs = {
   name: string;
   email: string;
-  city: string;
-  state: string;
-  skills: string;
-  phone: string;
+  city_id: string;
+  state_id: string;
+  job_id: number;
+  skill: string;
+  mobile_number: string;
   aboutYourself?: string;
 };
 
@@ -376,26 +379,6 @@ interface PolicyApiResponse {
 
 // Services listing
 interface Service {
-  // id: number;
-  // user_id: number;
-  // category_id: number;
-  // meta_title: string | null;
-  // meta_keyword: string | null;
-  // meta_description: string | null;
-  // title: string;
-  // slug: string;
-  // short_description: string;
-  // description: string;
-  // tags: string;
-  // service_image: string;
-  // image_link: string;
-  // video_link: string;
-  // status: string;
-  // is_instant_service: number;
-  // is_permanent_service: number;
-  // deleted_at: string | null;
-  // created_at: string;
-  // updated_at: string;
   id: number;
   user_id: number;
   category_id: number;
@@ -417,10 +400,6 @@ interface Service {
   created_at: string;
   updated_at: string;
 }
-
-// interface ServiceApiResponse {
-//   services: Service[];
-// }
 
 // New Services
 interface ServiceApiResponse {
