@@ -41,29 +41,37 @@ const Header = () => {
             )}
           </ul>
         </div>
-        <div className={twMerge("dropdown dropdown-end", user ? "pl-6" : "pl-0")}>
-          <div
-            tabIndex={0}
-            role="button"
-            className="btn btn-ghost btn-circle avatar bg-black text-white hover:bg-black/90"
-          >
-            {user ? <span className="text-xs uppercase">{user.name.slice(0, 1)}</span> : <LuUser2 size={18} />}
+        {user && (
+          <div className={twMerge("dropdown dropdown-end", user ? "pl-6" : "pl-0")}>
+            <div
+              tabIndex={0}
+              role="button"
+              className="btn btn-ghost btn-circle avatar bg-black text-white hover:bg-black/90"
+            >
+              {user ? <span className="text-xs uppercase">{user.name.slice(0, 1)}</span> : <LuUser2 size={18} />}
+            </div>
+            <ul
+              tabIndex={0}
+              className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+            >
+              <li>
+                <a className="justify-between">
+                  {user ? user.name : "Welcome"}
+                  <span className="badge">New</span>
+                </a>
+              </li>
+              <li>
+                <Link to={`/booked-services`}>Booked service</Link>
+              </li>
+              <li>
+                <Link to={`/service-reviews`}>Service review</Link>
+              </li>
+              <li className="mt-2">
+                <LogoutButton />
+              </li>
+            </ul>
           </div>
-          <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            <li>
-              <a className="justify-between">
-                {user ? user.name : "Welcome"}
-                <span className="badge">New</span>
-              </a>
-            </li>
-            <li>
-              <a>Settings</a>
-            </li>
-            <li className="mt-2">
-              <LogoutButton />
-            </li>
-          </ul>
-        </div>
+        )}
       </div>
     </div>
   );

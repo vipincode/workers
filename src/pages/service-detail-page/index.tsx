@@ -1,4 +1,4 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import ServiceDetailsCarousel from "../../components/services/details/service-details-carousel";
 import Container from "../../components/shared/container";
 import UserRatingCard from "../../components/shared/user-rating-card";
@@ -7,6 +7,7 @@ import { useServiceDetail } from "../../react-query/hooks";
 
 const ServicesDetailsPage = () => {
   const { slug } = useParams();
+  const redirect = useNavigate();
   const { data: serviceDetailData, isLoading, isError } = useServiceDetail(slug);
 
   if (isError) return <p>Error</p>;
@@ -68,7 +69,7 @@ const ServicesDetailsPage = () => {
               <Link to="/">Home</Link>
             </li>
             <li>
-              <Link to="/service-listing">Listings</Link>
+              <Link to={`/service/${slug}`}>Listings</Link>
             </li>
             <li>Service detail</li>
           </ul>
@@ -126,16 +127,20 @@ const ServicesDetailsPage = () => {
             </div>
             <div>
               <div className="flex justify-between mt-[100px]">
-                <Link to={`/permanent-service/${service.id}`}>
-                  <button className="btn" disabled={service.is_permanent_service < 1}>
-                    Get permanent Service
-                  </button>
-                </Link>
-                <Link to={`/instant-service/${service.id}`}>
-                  <button className="btn" disabled={service.is_instant_service < 1}>
-                    Get Instant Service
-                  </button>
-                </Link>
+                <button
+                  onClick={() => redirect(`/permanent-service/${service.id}`)}
+                  className="btn"
+                  disabled={service.is_permanent_service < 1}
+                >
+                  Get permanent Service
+                </button>
+                <button
+                  onClick={() => redirect(`/instant-service/${service.id}`)}
+                  className="btn"
+                  disabled={service.is_instant_service < 1}
+                >
+                  Get Instant Service
+                </button>
               </div>
             </div>
           </div>

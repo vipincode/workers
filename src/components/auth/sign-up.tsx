@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthStore } from "../../store/auth-store";
 import { useMutation } from "@tanstack/react-query";
+import { twMerge } from "tailwind-merge";
 
 const formSchemaStep1 = z.object({
   mobile_no: z
@@ -63,7 +64,11 @@ const useApi = () => {
   return { postData, loading, error };
 };
 
-export default function SignUp() {
+interface SignUpProps {
+  className?: string;
+}
+
+export default function SignUp({ className }: SignUpProps) {
   const [step, setStep] = useState(1); // Tracks the current step
   const [mobileNumber, setMobileNumber] = useState(""); // Store the mobile number after Step 1
   const { postData, loading, error } = useApi();
@@ -135,7 +140,7 @@ export default function SignUp() {
   };
 
   return (
-    <div className="min-h-screen bg-base-200 flex items-center justify-center">
+    <div className={twMerge("card w-full max-w-sm shadow-2xl bg-base-100", className)}>
       <div className="card w-full max-w-sm shadow-2xl bg-base-100">
         <div className="card-body">
           <h2 className="text-center text-2xl font-bold">Create an Account</h2>

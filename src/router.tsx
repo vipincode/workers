@@ -24,6 +24,9 @@ import ForgotPassword from "./pages/forgot-password-page";
 import ServiceListingPage from "./pages/service-listing-page";
 import SignUp from "./pages/sign-up-page";
 import ProtectedRoute from "./protected-route";
+import BookedServicePage from "./pages/booked-service-page";
+import ServiceReviewPage from "./pages/service-review-page";
+import AddReviewsPage from "./pages/add-reviews-page";
 
 const router = createBrowserRouter([
   {
@@ -66,6 +69,18 @@ const router = createBrowserRouter([
       {
         path: "/services-detail/:slug",
         element: <ServicesDetailsPage />,
+      },
+      {
+        path: "/booked-services",
+        element: <BookedServicePage />,
+      },
+      {
+        path: "/service-reviews",
+        element: <ServiceReviewPage />,
+      },
+      {
+        path: "/add-reviews/:id",
+        element: <AddReviewsPage />,
       },
       {
         path: "/cart",
