@@ -3,7 +3,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/auth-store";
@@ -18,13 +18,31 @@ interface ReviewFormData {
   user_id: number;
 }
 
-export default function ReviewForm() {
+export default function InstantServiceReviewForm() {
+  const [selectedRating, setSelectedRating] = useState(0);
+
   const navigate = useNavigate();
   const { token, user } = useAuthStore();
-  const { id } = useParams();
 
-  const serviceId = parseInt(id);
+  // Select service_id from url
+  const { serviceId: instantServiceId } = useParams();
+  const serviceId = parseInt(atob(instantServiceId), 10);
+
   const userId = user?.id;
+  const userName = user?.name;
+  const mobileNumber = user?.mobile_no;
+
+  useEffect(() => {
+    if (!token || !userId || !serviceId) {
+      toast.error("Access denied. Please log in to continue.");
+      navigate("/"); // Redirect to home page
+    }
+  }, [token, userId, serviceId, navigate]);
+
+  // Check if user exist or not
+  if (!user?.id && !user?.name && user?.mobile_no) {
+    toast.error("user id, user name and mobile not required");
+  }
 
   const {
     register,
@@ -37,13 +55,6 @@ export default function ReviewForm() {
       status: 1,
     },
   });
-
-  useEffect(() => {
-    if (!token || !userId || !id) {
-      toast.error("Access denied. Please log in to continue.");
-      navigate("/"); // Redirect to home page
-    }
-  }, [token, userId, id, navigate]);
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: ReviewFormData) => {
@@ -73,53 +84,13 @@ export default function ReviewForm() {
   });
 
   const onSubmit = (data: ReviewFormData) => {
-    mutate({ ...data, user_id: userId });
+    mutate({ ...data, name: userName, mobile_no: mobileNumber, user_id: userId, rating: Number(data.rating) });
   };
 
   return (
     <div className="max-w-md mx-auto p-6 mt-4 mb-[100px]">
       <h2 className="text-2xl font-semibold mb-4">Add Reviews</h2>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Name</span>
-          </label>
-          <input
-            type="text"
-            {...register("name", { required: "Name is required" })}
-            className="input input-bordered w-full"
-            placeholder="Enter your name"
-          />
-          {errors.name && (
-            <label className="label">
-              <span className="label-text-alt text-error">{errors.name.message}</span>
-            </label>
-          )}
-        </div>
-
-        <div className="form-control">
-          <label className="label">
-            <span className="label-text">Mobile Number</span>
-          </label>
-          <input
-            type="tel"
-            {...register("mobile_no", {
-              required: "Mobile number is required",
-              pattern: {
-                value: /^\d{10}$/,
-                message: "Please enter a valid 10-digit mobile number",
-              },
-            })}
-            className="input input-bordered w-full"
-            placeholder="Enter your mobile number"
-          />
-          {errors.mobile_no && (
-            <label className="label">
-              <span className="label-text-alt text-error">{errors.mobile_no.message}</span>
-            </label>
-          )}
-        </div>
-
         <div className="form-control">
           <label className="label">
             <span className="label-text">Rating</span>
@@ -129,9 +100,13 @@ export default function ReviewForm() {
               <input
                 key={value}
                 type="radio"
-                {...register("rating", { required: "Please select a rating" })}
                 value={value}
-                className="mask mask-star-2 bg-orange-400"
+                {...register("rating", {
+                  required: "Please select a rating",
+                  valueAsNumber: true,
+                })}
+                onChange={() => setSelectedRating(value)} // Update selected rating
+                className={`mask mask-star-2 ${value <= selectedRating ? "bg-orange-400" : "bg-orange-200"}`}
               />
             ))}
           </div>

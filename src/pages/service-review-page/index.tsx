@@ -4,6 +4,7 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useServiceReview } from "../../react-query/auth-service-review-api";
 import Container from "../../components/shared/container";
+import ReviewTable from "../../components/table/review-table";
 
 const ServiceReviewPage = () => {
   const navigate = useNavigate();
@@ -44,11 +45,18 @@ const ServiceReviewPage = () => {
     );
   if (error instanceof Error) return <p>Error: {error.message}</p>;
 
+  // Table
+  const headers = ["#ID", "Service Detail", "Rating", "Review and comments"];
+  const rows =
+    data?.service_reviews.map((review) => ({
+      rowData: [review.id, review.service_name, review.rating, review.review_comments],
+    })) || [];
+
   return (
     <div className="mt-10 mb-[100px] min-h-[50vh]">
       <Container>
-        <h1>Service Review</h1>
-        <pre>{JSON.stringify(data, null, 2)}</pre>
+        <h2 className="text-2xl font-semibold mb-10">Service Review</h2>
+        <ReviewTable headers={headers} rows={rows} />
       </Container>
     </div>
   );

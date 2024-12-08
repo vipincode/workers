@@ -25,8 +25,8 @@ import ServiceListingPage from "./pages/service-listing-page";
 import SignUp from "./pages/sign-up-page";
 import ProtectedRoute from "./protected-route";
 import BookedServicePage from "./pages/booked-service-page";
-import ServiceReviewPage from "./pages/service-review-page";
-import AddReviewsPage from "./pages/add-reviews-page";
+import InstantServiceReviewsPage from "./pages/service-review-page";
+import AddReviewsPage from "./pages/instant-service-reviews-page";
 
 const router = createBrowserRouter([
   {
@@ -76,10 +76,10 @@ const router = createBrowserRouter([
       },
       {
         path: "/service-reviews",
-        element: <ServiceReviewPage />,
+        element: <InstantServiceReviewsPage />,
       },
       {
-        path: "/add-reviews/:id",
+        path: "/service-reviews/:bookedServiceId?/:serviceId?",
         element: <AddReviewsPage />,
       },
       {
