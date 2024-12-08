@@ -117,12 +117,10 @@ const ServicesDetailsPage = () => {
               <h2 className="font-semibold text-lg mb-6 mt-[60px]">Customer Reviews</h2>
               <hr className="mb-6" />
               <div className="space-y-6">
-                {service.reviews?.map((review) => (
+                <UserRatingCard reviews={service.reviews} />
+                {/* {service.reviews?.map((review) => (
                   <UserRatingCard review={review} />
-                ))}
-              </div>
-              <div className="my-[60px] flex justify-center items-center">
-                <button className="btn btn-link">View all Reviews</button>
+                ))} */}
               </div>
             </div>
             <div>
