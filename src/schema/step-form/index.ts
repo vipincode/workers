@@ -3,7 +3,7 @@ import { z } from "zod";
 export const FormJoinUsSchema = z.object({
   first_name: z.string().min(1, "First name is required"),
   last_name: z.string().min(1, "Last name is required"),
-  email: z.string().email().min(3, "Email is required"),
+  email: z.string().email("Invalid email address").nonempty("Email is required"),
   state_id: z.string().min(1, "State is required"),
   city_id: z.string().min(1, "City is required"),
   work_experience: z.number().optional(),

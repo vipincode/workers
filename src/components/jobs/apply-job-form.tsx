@@ -1,14 +1,16 @@
 import { useForm, SubmitHandler } from "react-hook-form";
-import { CitiesResponse, FormInputs, StateProps } from "../../types";
+import { ApiErrorResponse, CitiesResponse, FormInputs, StateProps } from "../../types";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { applyJob, getCities, getStates } from "../../react-query/apis";
 import toast from "react-hot-toast";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import axios, { AxiosError } from "axios";
 
 export default function ApplyJobForm() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   const { id } = useParams();
+  const redirect = useNavigate();
   const {
     register,
     handleSubmit,
@@ -53,10 +55,15 @@ export default function ApplyJobForm() {
     onSuccess: () => {
       toast.success("Apply job successfully!");
       reset();
+      redirect("/jobs");
     },
     onError: (error) => {
-      console.error("Error saving data:", error);
-      toast.error("Error submitting form. Please try again.");
+      if (axios.isAxiosError(error)) {
+        const apiError = error as AxiosError<ApiErrorResponse>;
+        toast.error(apiError.response?.data.message || "An unexpected error occurred");
+      } else {
+        toast.error("An unknown error occurred");
+      }
     },
   });
   const onSubmit: SubmitHandler<FormInputs> = (data) => {

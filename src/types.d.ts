@@ -526,3 +526,8 @@ interface SliderSlogan {
   created_at: string;
   updated_at: string;
 }
+
+// API RESPONSE ERROR
+interface ApiErrorResponse {
+  message: string;
+}

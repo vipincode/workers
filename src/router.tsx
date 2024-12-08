@@ -91,7 +91,7 @@ const router = createBrowserRouter([
         element: <ServiceLetterPage />,
       },
       {
-        path: "/join-us",
+        path: "/become-a-part-of-dehatwala",
         element: <JoinUsPage />,
       },
       {

@@ -8,6 +8,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useAuthStore } from "../../store/auth-store";
 import { useMutation } from "@tanstack/react-query";
 import { twMerge } from "tailwind-merge";
+import axios, { AxiosError } from "axios";
+import { ApiErrorResponse } from "../../types";
 
 const formSchemaStep1 = z.object({
   mobile_no: z
@@ -125,9 +127,14 @@ export default function SignUp({ className }: SignUpProps) {
       // Extract redirect path from the query parameters
       navigate(redirectPath, { replace: true });
     },
-    onError: (error) => {
-      console.error("Error saving data:", error);
-      toast.error(error.message || "Error submitting form. Please try again.");
+    onError: (error: unknown) => {
+      // Check if the error is an AxiosError and has a response
+      if (axios.isAxiosError(error)) {
+        const apiError = error as AxiosError<ApiErrorResponse>;
+        toast.error(apiError.response?.data.message || "An unexpected error occurred");
+      } else {
+        toast.error("An unknown error occurred");
+      }
     },
   });
 

@@ -7,6 +7,8 @@ import { z } from "zod";
 import { API_URL } from "../../react-query/constants";
 import { useMutation } from "@tanstack/react-query";
 import { useAuthStore } from "../../store/auth-store";
+import axios, { AxiosError } from "axios";
+import { ApiErrorResponse } from "../../types";
 
 const formSchemaStep1 = z.object({
   mobile_no: z.string().min(10, "Mobile number is required."),
@@ -107,9 +109,14 @@ const SignIn: FC<SignInProps> = ({ className }) => {
       // Extract redirect path from the query parameters
       navigate(redirectPath, { replace: true });
     },
-    onError: (error) => {
-      console.error("Error saving data:", error);
-      toast.error(error.message || "Error submitting form. Please try again.");
+    onError: (error: unknown) => {
+      // Check if the error is an AxiosError and has a response
+      if (axios.isAxiosError(error)) {
+        const apiError = error as AxiosError<ApiErrorResponse>;
+        toast.error(apiError.response?.data.message || "An unexpected error occurred");
+      } else {
+        toast.error("An unknown error occurred");
+      }
     },
   });
 

@@ -6,8 +6,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { getCities, getStates, postEmployeeData } from "../../react-query/apis";
 import { employeeFormData, employeeSchema } from "../../schema/permanent-service/schema";
 import { useEffect, useState } from "react";
-import { CitiesResponse, StateProps } from "../../types";
+import { ApiErrorResponse, CitiesResponse, StateProps } from "../../types";
 import { X } from "lucide-react";
+import axios, { AxiosError } from "axios";
 
 const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number; permanentServiceId: number }) => {
   const navigation = useNavigate();
@@ -59,9 +60,14 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
       toast.success("Form submitted successfully!");
       navigation("/");
     },
-    onError: (error) => {
-      console.error("Error saving data:", error);
-      toast.error("Error submitting form. Please try again.");
+    onError: (error: unknown) => {
+      // Check if the error is an AxiosError and has a response
+      if (axios.isAxiosError(error)) {
+        const apiError = error as AxiosError<ApiErrorResponse>;
+        toast.error(apiError.response?.data.message || "An unexpected error occurred");
+      } else {
+        toast.error("An unknown error occurred");
+      }
     },
   });
 

@@ -1,14 +1,12 @@
-"use client";
-
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { Controller, useFieldArray, useForm } from "react-hook-form";
 import { getCities, getStates, stepFormeData } from "../../react-query/apis";
 import { useCategories, useSubFormCategories } from "../../react-query/hooks";
-import { CitiesResponse, StateProps } from "../../types";
+import { ApiErrorResponse, CitiesResponse, StateProps } from "../../types";
 import { FormJoinUsType } from "../../schema/step-form";
 import toast from "react-hot-toast";
-import { AxiosError } from "axios";
+import axios, { AxiosError } from "axios";
 
 export default function StepForm() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
@@ -84,7 +82,6 @@ export default function StepForm() {
   const stateValue = watch("state_id");
   useEffect(() => {
     setSelectedStateId(Number(stateValue));
-    console.log(selectedStateId);
   }, [stateValue]);
 
   // Handle category check and uncheck
@@ -132,18 +129,13 @@ export default function StepForm() {
       toast.success("Data added successfully!");
       reset();
     },
-    onError: (error: AxiosError<{ success: boolean; message: string }>) => {
-      if (error.response?.status === 500 && error.response.data?.message) {
-        const errorMessage = error.response.data.message;
-
-        if (errorMessage.includes("email has already been taken")) {
-          toast.error("This email is already registered. Please use a different email.");
-        } else {
-          toast.error("Error submitting form. Please try again.");
-        }
+    onError: (error: unknown) => {
+      // Check if the error is an AxiosError and has a response
+      if (axios.isAxiosError(error)) {
+        const apiError = error as AxiosError<ApiErrorResponse>;
+        toast.error(apiError.response?.data.message || "An unexpected error occurred");
       } else {
-        console.error("Error saving data:", error);
-        toast.error("An unexpected error occurred. Please try again.");
+        toast.error("An unknown error occurred");
       }
     },
   });
@@ -159,7 +151,7 @@ export default function StepForm() {
     let fieldsToValidate: (keyof FormJoinUsType)[] = [];
 
     if (currentStep === 1) {
-      fieldsToValidate = ["first_name", "last_name", "state_id", "city_id"];
+      fieldsToValidate = ["first_name", "last_name", "email", "state_id", "city_id"];
     } else if (currentStep === 2) {
       fieldsToValidate = ["skills"];
     } else if (currentStep === 3) {
@@ -232,9 +224,9 @@ export default function StepForm() {
                   <span className="label-text">Email</span>
                 </label>
                 <input
-                  type="text"
+                  type="email"
                   id="email"
-                  {...register("email", { required: "Last name is required" })}
+                  {...register("email", { required: "Email is required" })}
                   placeholder="Your email"
                   className={`input input-bordered ${errors.email ? "input-error" : ""}`}
                 />
@@ -429,7 +421,7 @@ export default function StepForm() {
                 <input
                   type="number"
                   id="work_experience"
-                  {...register("work_experience", { required: "Work experience is required", min: 0 })}
+                  {...register("work_experience", { required: "Work experience is required", min: 1 })}
                   className={`input input-bordered ${errors.work_experience ? "input-error" : ""}`}
                 />
                 {errors.work_experience && (

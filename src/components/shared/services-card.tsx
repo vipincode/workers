@@ -28,7 +28,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({ data }) => {
               to={`/service/${data.slug}`}
               className="inline-flex items-center py-2 text-sm font-medium text-center  text-secondary rounded-md"
             >
-              Service detail
+              View detail
               <svg
                 className="rtl:rotate-180 w-3.5 h-3.5 ms-2"
                 aria-hidden="true"

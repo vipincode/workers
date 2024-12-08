@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../store/auth-store";
+import axios, { AxiosError } from "axios";
+import { ApiErrorResponse } from "../../types";
 
 interface ReviewFormData {
   service_id: number;
@@ -77,9 +79,14 @@ export default function InstantServiceReviewForm() {
       reset();
       toast.success("Review submitted successfully!");
     },
-    onError: (error) => {
-      console.error("Error submitting review:", error);
-      toast.error("Failed to submit review. Please try again.");
+    onError: (error: unknown) => {
+      // Check if the error is an AxiosError and has a response
+      if (axios.isAxiosError(error)) {
+        const apiError = error as AxiosError<ApiErrorResponse>;
+        toast.error(apiError.response?.data.message || "An unexpected error occurred");
+      } else {
+        toast.error("An unknown error occurred");
+      }
     },
   });
 

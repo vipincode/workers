@@ -148,7 +148,6 @@ function ServiceLetterPage() {
     const currentPath = window.location.pathname + window.location.search;
 
     if (!token && !currentPath.startsWith("/sign-in")) {
-      toast.success("Please log in to complete this process.");
       navigate(`/sign-in?path=${encodeURIComponent(currentPath)}`);
     }
   }, [token, navigate]);
@@ -219,8 +218,12 @@ function ServiceLetterPage() {
                 navigate("/");
               }, 400);
             } else {
+              // console.error("Failed to save booking:", result.status, result.statusText);
+              // toast.error("Failed to save booking.",);
+              const errorData = await result.json(); // Parse error response
+              const errorMessage = errorData?.message || result.statusText; // Default to statusText if message is not available
               console.error("Failed to save booking:", result.status, result.statusText);
-              toast.error("Failed to save booking.");
+              toast.error(`Failed to save booking: ${errorMessage}`);
             }
           } catch (error) {
             console.error("Error while saving booking:", error);
@@ -262,12 +265,13 @@ function ServiceLetterPage() {
                   {...register("book_date")}
                   placeholder="Type here"
                   className="input input-bordered w-full"
+                  min={new Date().toISOString().split("T")[0]}
                 />
                 {errors.book_date && <span className="text-error text-sm mt-1">{errors.book_date.message}</span>}
               </div>
               <div>
                 <label className="label" htmlFor="time_slot">
-                  <span className="label-text">Time</span>
+                  <span className="label-text">Time slot</span>
                 </label>
                 <input
                   type="time"
