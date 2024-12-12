@@ -3,16 +3,18 @@ import Category from "../../components/home/category";
 import Hero from "../../components/home/hero";
 import HomeServices from "../../components/home/home-services";
 import RecentJobs from "../../components/home/recents-jobs";
+import SearchServices from "../../components/search-services";
 import Container from "../../components/shared/container";
 import Partners from "../../components/shared/partners";
-import SearchBox from "../../components/shared/search-box";
+// import SearchBox from "../../components/shared/search-box";
 import Testimonials from "../../components/shared/testimonials";
 
 const HomePage = () => {
   return (
     <section>
       <Hero />
-      <SearchBox setSearchQuery={() => {}} />
+      {/* <SearchBox setSearchQuery={() => {}} /> */}
+      <SearchServices />
       <Container>
         <HomeServices />
       </Container>

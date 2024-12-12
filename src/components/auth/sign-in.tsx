@@ -64,6 +64,7 @@ interface SignInProps {
   className?: string;
 }
 const SignIn: FC<SignInProps> = ({ className }) => {
+  const [otp, setOtp] = useState(null);
   const navigate = useNavigate();
   const searchParams = new URLSearchParams(location.search);
   const redirectPath = searchParams.get("path") ? decodeURIComponent(searchParams.get("path")) : "/";
@@ -83,15 +84,21 @@ const SignIn: FC<SignInProps> = ({ className }) => {
   const {
     register: registerStep2,
     handleSubmit: handleSubmitStep2,
+    setValue,
     formState: { errors: errorsStep2 },
   } = useForm<FormDataStep2>();
 
   const handleMobileSubmit: SubmitHandler<FormDataStep1> = async (data) => {
     const result = await postData(`${API_URL}/request-otp`, data);
     if (result) {
+      setOtp(result.otp);
       setMobileNumber(data.mobile_no);
       setStep(2);
+
+      // Programmatically set the OTP value in the input field
+      setValue("otp", result.otp.toString());
     }
+    console.log(otp);
   };
 
   const mutation = useMutation({
@@ -178,6 +185,15 @@ const SignIn: FC<SignInProps> = ({ className }) => {
                   required: "OTP is required",
                 })}
               />
+              {/* <input
+                type="text"
+                id="otp"
+                placeholder="Your OTP"
+                className={`input input-bordered ${errorsStep2.otp ? "input-error" : ""}`}
+                {...registerStep2("otp", {
+                  required: "OTP is required",
+                })}
+              /> */}
               {errorsStep2.otp && <span className="text-error text-sm mt-1">{errorsStep2.otp.message}</span>}
             </div>
 
