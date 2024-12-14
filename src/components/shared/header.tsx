@@ -3,8 +3,10 @@ import { useAuthStore } from "../../store/auth-store";
 import { twMerge } from "tailwind-merge";
 import { LuUser2 } from "react-icons/lu";
 import LogoutButton from "../auth/logout";
-import { FaChevronDown } from "react-icons/fa";
 import { useCategories } from "../../react-query/hooks";
+import NavigationMenu from "../menu";
+import MobileNavigationMenu from "../menu/mobile-menu";
+import { IoMdMenu } from "react-icons/io";
 
 const Header = () => {
   const { user } = useAuthStore();
@@ -25,7 +27,7 @@ const Header = () => {
         </Link>
       </div>
       <div className="flex-none gap-2">
-        <div className="form-control">
+        {/* <div className="form-control hidden lg:block">
           <ul className="flex items-center gap-6">
             <li>
               <Link className="font-medium text-sm" to="/">
@@ -80,9 +82,35 @@ const Header = () => {
               </li>
             )}
           </ul>
+        </div> */}
+        <div className="hidden lg:block">
+          <NavigationMenu categories={categories} isLoading={isLoading} isError={isError} error={error} user={user} />
+        </div>
+        <div className="lg:hidden">
+          <div className="drawer">
+            <input id="my-drawer" type="checkbox" className="drawer-toggle" />
+            <div className="drawer-content">
+              {/* Page content here */}
+              <label htmlFor="my-drawer" className="btn btn-ghost drawer-button">
+                <IoMdMenu size={28} />
+              </label>
+            </div>
+            <div className="drawer-side">
+              <label htmlFor="my-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+              <div className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                <MobileNavigationMenu
+                  categories={categories}
+                  isLoading={isLoading}
+                  isError={isError}
+                  error={error}
+                  user={user}
+                />
+              </div>
+            </div>
+          </div>
         </div>
         {user && (
-          <div className={twMerge("dropdown dropdown-end", user ? "pl-6" : "pl-0")}>
+          <div className={twMerge("dropdown dropdown-end", user ? "lg:pl-6" : "pl-0")}>
             <div
               tabIndex={0}
               role="button"

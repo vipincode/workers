@@ -25,7 +25,7 @@ const ServicesCard: React.FC<ServicesCardProps> = ({ data }) => {
               <ServiceRating rating={data.rating} reviews={data.reviews} />
             </div>
             <Link
-              to={`/service/${data.slug}`}
+              to={`/services-detail/${data.slug}`}
               className="inline-flex items-center py-2 text-sm font-medium text-center  text-secondary rounded-md"
             >
               View detail

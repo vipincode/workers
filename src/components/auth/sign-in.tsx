@@ -196,6 +196,11 @@ const SignIn: FC<SignInProps> = ({ className }) => {
               /> */}
               {errorsStep2.otp && <span className="text-error text-sm mt-1">{errorsStep2.otp.message}</span>}
             </div>
+            <div>
+              <button className="btn btn-link" onClick={handleSubmitStep1(handleMobileSubmit)}>
+                Resend OTP
+              </button>
+            </div>
 
             {error && <div className="text-error mt-2">{error}</div>}
 

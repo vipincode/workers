@@ -24,7 +24,7 @@ const RecentJobs = () => {
         <HeadingPrimary className="mb-10">Recent Jobs</HeadingPrimary>
       </div>
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           {data.jobs.slice(0, 4).map((job) => (
             <JobCard key={job.id} job={job} expandedJob={expandedJob} setExpandedJob={setExpandedJob} />
           ))}

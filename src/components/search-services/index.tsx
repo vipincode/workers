@@ -4,7 +4,7 @@ import axios from "axios";
 import { Service } from "../../types";
 import { useCategories } from "../../react-query/hooks";
 import ServicesCard from "../shared/services-card";
-import HeadingPrimary from "../typography/heading-primary";
+import { IoIosSearch } from "react-icons/io";
 
 interface SearchData {
   category_id: number;
@@ -13,7 +13,7 @@ interface SearchData {
 
 interface ServiceResponse {
   message: string;
-  data: Service[];
+  services: Service[];
 }
 
 const SearchServices = () => {
@@ -31,7 +31,7 @@ const SearchServices = () => {
   const { mutate, isPending, isError, isSuccess } = useMutation({
     mutationFn: searchServices,
     onSuccess: (data: ServiceResponse) => {
-      setResults(data.data || []);
+      setResults(data.services || []);
     },
     onError: (error: Error) => {
       console.error("Error searching services:", error);
@@ -70,7 +70,7 @@ const SearchServices = () => {
     <div className="bg-gray-100 p-3 rounded">
       <div className="flex justify-center items-center">
         <form onSubmit={handleSearch}>
-          <div className="flex items-center border rounded-md px-2 py-1 bg-white">
+          <div className="md:flex md:items-center border rounded-md px-2 py-1 bg-white">
             <div>
               <select
                 className="py-3 px-6 outline-none"
@@ -79,7 +79,9 @@ const SearchServices = () => {
                 onChange={(e) => setCategoryId(e.target.value)}
                 required
               >
-                <option value="">Select a category</option>
+                <option value="" disabled>
+                  Select a category
+                </option>
                 {data.categories.map((service) => (
                   <option key={service.id} value={service.id}>
                     {service.name}
@@ -87,20 +89,19 @@ const SearchServices = () => {
                 ))}
               </select>
             </div>
-            <div>
+            <div className="flex">
               <input
                 type="text"
                 id="kyword"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Enter keyword"
-                required
                 className="w-full min-w-[300px] py-3 px-6 outline-none"
               />
+              <button type="submit" disabled={isPending} className="btn ">
+                <IoIosSearch size={24} />
+              </button>
             </div>
-            <button type="submit" disabled={isPending} className="bg-black text-white px-3 py-2 rounded">
-              {isPending ? "Searching..." : "Search"}
-            </button>
           </div>
         </form>
       </div>
@@ -110,14 +111,17 @@ const SearchServices = () => {
       {isSuccess && (
         <div className="container mx-auto px-4">
           <div className="pb-[100px]">
-            <HeadingPrimary className="mb-6 mt-6 text-center">Search Results:</HeadingPrimary>
-            <div className="grid grid-cols-4 gap-4">
-              {results.length > 0 ? (
-                results.map((service) => <ServicesCard key={service.id} data={service} />)
-              ) : (
-                <p className="text-center">No results found.</p>
-              )}
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
+              {results.length > 0 && results.map((service) => <ServicesCard key={service.id} data={service} />)}
             </div>
+            {!results.length && (
+              <div className="flex justify-center items-center min-h-[200px]">
+                <div className="text-center">
+                  <h3 className="text-xl font-medium">No services are available at the moment. </h3>
+                  <p className="font-lg">Please check back later!</p>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       )}

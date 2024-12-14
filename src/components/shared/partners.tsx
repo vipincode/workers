@@ -11,7 +11,7 @@ const Partners = () => {
   if (isLoading) {
     return (
       <Container className="mb-[100px]">
-        <div className="grid grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
           {Array.from({ length: 4 }).map((_, index) => (
             <div key={index} className="flex w-52 flex-col gap-4">
               <div className="flex items-center gap-4" key={index}>
@@ -30,7 +30,7 @@ const Partners = () => {
   return (
     <Container className="mb-[100px]">
       <HeadingPrimary className="mb-10 text-center">Our partners</HeadingPrimary>
-      <div className="grid grid-cols-4 gap-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
         {data.partners.map((partner) => (
           <div key={partner.id} className="w-full border flex justify-center items-center gap-5 py-6">
             <img

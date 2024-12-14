@@ -23,7 +23,7 @@ const HomeServices = () => {
         <HeadingPrimary className="mb-6 mt-6">Our Services</HeadingPrimary>
       </div>
       <div className="pb-[100px]">
-        <div className="grid grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {services.map((service) => (
             <ServicesCard key={service.id} data={service} />
           ))}
