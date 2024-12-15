@@ -24,6 +24,8 @@ interface BookedService {
   address: string;
   city_id: number;
   state_id: number;
+  city_name?: string;
+  state_name?: string;
   pincode: number;
   meta_title: string | null;
   meta_keyword: string | null;
@@ -33,10 +35,11 @@ interface BookedService {
   time_slot: string; // Time in HH:mm format
   pick_and_drop: number; // 0 or 1
   tip: number;
+  transaction_id?: string;
   total_amount: number;
   coupon_code: string | null;
   coupon_discounted: number;
-  instant_service_obj: string; // JSON string containing InstantServiceObj
+  instant_service_obj: InstantServiceObj; // JSON string containing InstantServiceObj
   status: number;
   deleted_at: string | null;
   created_at: string; // ISO date format
@@ -45,6 +48,5 @@ interface BookedService {
 
 // Type for the entire API response
 interface BookedServicesResponse {
-  success: boolean;
   booked_services: BookedService[];
 }

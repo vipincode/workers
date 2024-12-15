@@ -201,6 +201,14 @@ export default function SignUp({ className }: SignUpProps) {
                     required: "OTP is required",
                   })}
                 />
+                <div className="flex justify-between items-center">
+                  <button className="btn btn-link" onClick={() => setStep(1)}>
+                    Back
+                  </button>
+                  <button className="btn btn-link" onClick={handleSubmitStep1(handleMobileSubmit)}>
+                    Resend OTP
+                  </button>
+                </div>
                 {errorsStep2.otp && <span className="text-error text-sm mt-1">{errorsStep2.otp.message}</span>}
               </div>
               <div className="form-control">

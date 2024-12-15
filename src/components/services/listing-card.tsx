@@ -22,6 +22,11 @@ const ListingCard = ({ data }: { data: Service }) => {
             <Link to="/services-detail">
               <h2 className="card-title">{data.title}</h2>
             </Link>
+            <div className="mb-2 flex justify-between items-center">
+              <span className="text-xs bg-gray-100 py-[2px] leading-4 px-2 rounded-md text-gray-400">
+                {data.category_name}
+              </span>
+            </div>
             <p>{data.short_description}</p>
           </div>
           <div className="flex items-center flex-col gap-1">

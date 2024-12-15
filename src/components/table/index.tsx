@@ -5,7 +5,9 @@ import NoDataFound from "../no-data-found";
 interface TableRow {
   serviceId: number;
   bookedServiceId: number;
+  instantService: InstantServiceObj;
   rowData: (string | number)[];
+  // rowData: (string | number | InstantServiceObj)[];
 }
 
 interface TableProps {
@@ -40,14 +42,13 @@ const Table: React.FC<TableProps> = ({ headers, rows }) => {
         </div>
       ) : (
         <>
-          <table className="table min-w-[1280px] lg:min-w-full">
+          <table className="table min-w-[1280px] lg:min-w-[2100px]">
             {/* Table Head */}
             <thead>
               <tr>
                 {headers.map((header, index) => (
                   <th key={index}>{header}</th>
                 ))}
-                <th>Actions</th>
               </tr>
             </thead>
             {/* Table Body */}
@@ -57,9 +58,10 @@ const Table: React.FC<TableProps> = ({ headers, rows }) => {
                   {row.rowData.map((cell, cellIndex) => (
                     <td key={cellIndex}>{cell}</td>
                   ))}
+
                   <td>
                     <button
-                      className="btn btn-xs btn-primary"
+                      className="btn btn-xs btn-primary min-w-[100px]"
                       onClick={() =>
                         redirect(
                           `/service-reviews/${btoa(row.bookedServiceId.toString())}/${btoa(row.serviceId.toString())}`
@@ -68,6 +70,25 @@ const Table: React.FC<TableProps> = ({ headers, rows }) => {
                     >
                       Add Reviews
                     </button>
+                  </td>
+                  <td className="max-w-[300px]">
+                    {JSON.stringify(row.instantService)}
+                    {/* <ul>
+                      <li>Meson Day Count: {row.instantService.mesonDayCount}</li>
+                      <li>Helper Day Count: {row.instantService.helperDayCount}</li>
+                      <li>Meson Rate: {row.instantService.mesonRate}</li>
+                      <li>Helper Rate: {row.instantService.helperRate}</li>
+                      <li>Meson Overtime Count: {row.instantService.mesonOvertimeCount}</li>
+                      <li>Helper Overtime Count: {row.instantService.helperOvertimeCount}</li>
+                      <li>Meson Overtime Rate: {row.instantService.mesonOvertimeRate}</li>
+                      <li>Helper Overtime Rate: {row.instantService.helperOvertimeRate}</li>
+                      <li>Total Meson Day Rate: {row.instantService.totalMesonDayRate}</li>
+                      <li>Total Helper Day Rate: {row.instantService.totalHelperDayRate}</li>
+                      <li>Total Meson Overtime Rate: {row.instantService.totalMesonOvertimeRate}</li>
+                      <li>Total Helper Overtime Rate: {row.instantService.totalHelperOvertimeRate}</li>
+                      <li>Total Day Price: {row.instantService.totalDayPrice}</li>
+                      <li>Tip Value: {row.instantService.tipValue}</li>
+                    </ul> */}
                   </td>
                 </tr>
               ))}
@@ -108,6 +129,7 @@ const Table: React.FC<TableProps> = ({ headers, rows }) => {
 
 export default Table;
 
+//--- OLD code --------------
 // import React, { useState } from "react";
 // import { useNavigate } from "react-router-dom";
 

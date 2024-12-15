@@ -5,6 +5,7 @@ import { Service } from "../../types";
 import { useCategories } from "../../react-query/hooks";
 import ServicesCard from "../shared/services-card";
 import { IoIosSearch } from "react-icons/io";
+import HeadingPrimary from "../typography/heading-primary";
 
 interface SearchData {
   category_id: number;
@@ -111,6 +112,7 @@ const SearchServices = () => {
       {isSuccess && (
         <div className="container mx-auto px-4">
           <div className="pb-[100px]">
+            {results.length ? <HeadingPrimary className="mb-6 mt-6 text-center">Search Results</HeadingPrimary> : null}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
               {results.length > 0 && results.map((service) => <ServicesCard key={service.id} data={service} />)}
             </div>

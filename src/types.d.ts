@@ -79,6 +79,7 @@ interface Services {
   created_at: string;
   updated_at: string;
   rating: number;
+  category_name?: string;
   reviews: Review[];
 }
 
@@ -399,6 +400,7 @@ interface Service {
   deleted_at: string | null;
   created_at: string;
   updated_at: string;
+  category_name?: string;
 }
 
 // New Services
