@@ -1,4 +1,4 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import ServiceDetailsCarousel from "../../components/services/details/service-details-carousel";
 import Container from "../../components/shared/container";
 import UserRatingCard from "../../components/shared/user-rating-card";
@@ -59,11 +59,12 @@ const ServicesDetailsPage = () => {
       </div>
     );
 
-  const { service, slider_slogans } = serviceDetailData;
+  const { service } = serviceDetailData;
+
   return (
     <div>
-      <div className="px-6 space-y-6 mb-10">
-        <div className="breadcrumbs text-sm">
+      <div className="px-6 space-y-6 mb-6">
+        {/* <div className="breadcrumbs text-sm">
           <ul>
             <li>
               <Link to="/">Home</Link>
@@ -73,11 +74,30 @@ const ServicesDetailsPage = () => {
             </li>
             <li>Service detail</li>
           </ul>
+        </div> */}
+        <div className="mt-8">
+          <h2 className="text-2xl font-semibold">{service.title}</h2>
+          <p className="mt-2">{service.short_description}</p>
         </div>
-        <h2 className="text-2xl font-semibold">{service.title}</h2>
       </div>
-      <ServiceDetailsCarousel data={slider_slogans} />
-      <Container className="my-[80px]">
+      {service.slider_image.length > 0 ? (
+        <ServiceDetailsCarousel data={service.slider_image} />
+      ) : (
+        <div className="!bg-gray-200 bg-no-repeat bg-cover bg-center h-[300px] flex justify-center items-center">
+          <h3 className="text-2xl font-bold">Service Details</h3>
+        </div>
+      )}
+      <Container className="mb-[80px]">
+        <div className="my-8 flex gap-8 px-6">
+          <div>
+            <strong>Category:</strong>
+            <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md ml-2">{service.category_name}</span>
+          </div>
+          <div>
+            <strong>Tags:</strong>
+            <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md ml-2">{service.tags}</span>
+          </div>
+        </div>
         <div className="flex gap-6">
           <div className="flex-1 px-6 space-y-6">
             <div>
@@ -90,37 +110,13 @@ const ServicesDetailsPage = () => {
               />
             </div>
             <div>
-              {/* <h2 className="font-semibold text-lg mb-3 mt-10">Notes:</h2> */}
               <hr className="mb-6" />
-              {/* <div className="space-y-5">
-                <div>
-                  <h3 className="text-base font-semibold">Note title</h3>
-                  <p className="text-sm leading-6">
-                    Notes description lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold">Note title</h3>
-                  <p className="text-sm leading-6">
-                    Notes description lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </p>
-                </div>
-                <div>
-                  <h3 className="text-base font-semibold">Note title</h3>
-                  <p className="text-sm leading-6">
-                    Notes description lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  </p>
-                </div>
-              </div> */}
             </div>
             <div>
               <h2 className="font-semibold text-lg mb-6 mt-[60px]">Customer Reviews</h2>
               <hr className="mb-6" />
               <div className="space-y-6">
                 <UserRatingCard reviews={service.reviews} />
-                {/* {service.reviews?.map((review) => (
-                  <UserRatingCard review={review} />
-                ))} */}
               </div>
             </div>
             <div>

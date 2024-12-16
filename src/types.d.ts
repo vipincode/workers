@@ -472,6 +472,9 @@ export interface Service {
   updated_at: string;
   rating: number;
   reviews: Review[];
+  slider_image: string[];
+  category_name: string;
+  tags: string;
 }
 
 export interface Slogan {

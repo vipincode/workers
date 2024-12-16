@@ -1,22 +1,18 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import { VITE_IMAGE_PATH_URL } from "../../../react-query/constants";
-import { Slogan } from "../../../types";
 
-interface ServiceDetailsCarouselProps {
-  data: Slogan[];
-}
-
-const ServiceDetailsCarousel = ({ data }: ServiceDetailsCarouselProps) => {
+const ServiceDetailsCarousel = ({ data }) => {
   return (
     <Swiper navigation={true} modules={[Navigation]} className="serviceDetailCarousel">
-      {data.map((item) => (
+      {data.map((item: string) => (
         <SwiperSlide
-          className="!bg-green-500 bg-no-repeat bg-cover bg-center"
-          style={{ backgroundImage: `url(${VITE_IMAGE_PATH_URL}/sloganwithslider/${item.slogan_image})` }}
-        >
-          {item.slogan}
-        </SwiperSlide>
+          key={item}
+          className="!bg-gray-200 bg-no-repeat bg-cover bg-center h-[350px]"
+          style={{
+            backgroundImage: `url(${VITE_IMAGE_PATH_URL}/service/${encodeURIComponent(item)})`,
+          }}
+        />
       ))}
     </Swiper>
   );
