@@ -44,23 +44,23 @@ export default function JobListingsPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 p-4">
-      <div className="flex justify-center items-center py-6 bg-gray-200 mb-10 rounded-md">
+      <div className="flex justify-center items-center py-6 bg-accent/40 mb-10 rounded-md">
         <div className="space-y-4">
           <div className="text-center">
-            <h2 className="text-lg font-bold">Find Your Ideal Jobs</h2>
+            <h2 className="text-2xl font-medium">Find Your Ideal Jobs</h2>
             <p>Search by Location, Industry, Experience, and Salary</p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="py-4 relative w-full">
+            <div className="pt-4 relative w-full">
               <input
                 {...register("location")}
                 type="text"
                 placeholder="Search by location, name..."
-                className="input input-bordered w-full input-lg"
+                className="input input-bordered w-full input-md"
               />
-              <SearchIcon className="absolute right-5 top-9" />
+              <SearchIcon className="absolute right-5 top-7" />
             </div>
-            <div className="flex items-center gap-4">
+            <div className="md:flex md:items-center md:gap-4  space-y-4 md:space-y-0">
               {categoryLoading ? (
                 "Loading..."
               ) : (
@@ -68,7 +68,7 @@ export default function JobListingsPage() {
                   <label htmlFor="category" className="font-medium block text-sm mb-1">
                     Category
                   </label>
-                  <select {...register("category")} defaultValue="" className="select select-bordered w-full max-w-xs">
+                  <select {...register("category")} defaultValue="" className="select select-bordered w-full">
                     <option value="" disabled>
                       Select category
                     </option>
@@ -84,7 +84,7 @@ export default function JobListingsPage() {
                 <label htmlFor="experience" className="font-medium block text-sm mb-1">
                   Experience
                 </label>
-                <select {...register("experience")} defaultValue="" className="select select-bordered w-full max-w-xs">
+                <select {...register("experience")} defaultValue="" className="select select-bordered w-full">
                   <option value="" disabled>
                     Select experience
                   </option>
@@ -104,7 +104,7 @@ export default function JobListingsPage() {
                 <label htmlFor="salary" className="font-medium block text-sm mb-1">
                   Salary
                 </label>
-                <select {...register("salary")} defaultValue="" className="select select-bordered w-full max-w-xs">
+                <select {...register("salary")} defaultValue="" className="select select-bordered w-full">
                   <option value="" disabled>
                     Select salary
                   </option>
@@ -130,9 +130,9 @@ export default function JobListingsPage() {
         </div>
       </div>
 
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto md:px-4 mb-[100px]">
         {jobs.length > 0 ? (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {jobs.map((job) => (
               <JobCard key={job.id} job={job} expandedJob={expandedJob} setExpandedJob={setExpandedJob} />
             ))}
@@ -142,7 +142,7 @@ export default function JobListingsPage() {
         )}
 
         <div className="mt-6 text-center">
-          <Link to="/more-jobs" className="btn btn-secondary">
+          <Link to="/more-jobs" className="btn btn-secondary btn-link btn-sm">
             View more Jobs
           </Link>
         </div>

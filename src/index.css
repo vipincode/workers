@@ -3,14 +3,13 @@
 @tailwind utilities;
 
 :root {
-  --primary-color: #0d0106;
-  --secondary-color: #3626a7;
-  --secondary-color: #3626a7;
-  --accent-color: #657ed4;
+  --primary-color: #477d33;
+  --secondary-color: #6ab04c;
+  --accent-color: #e0f0d7;
   --neutral-color: #fdf0d5;
   --base-100-color: #fbfbff;
   --info-color: #0092d8;
-  --success-color: #25ff6b;
+  --success-color: #6ab04c;
   --warning-color: #fca200;
   --error-color: #c1121f;
   --white: #ffffff;
@@ -97,4 +96,15 @@ body {
 
 .rc-time-picker-input {
   @apply h-[48px] w-full pl-4 pr-4 input input-bordered;
+}
+
+/* JOB CARD */
+
+.font-job {
+  p,
+  span,
+  div {
+    font-size: 13px !important;
+    font-weight: 300 !important;
+  }
 }

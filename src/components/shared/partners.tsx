@@ -28,21 +28,26 @@ const Partners = () => {
     );
   }
   return (
-    <Container className="mb-[100px]">
-      <HeadingPrimary className="mb-10 text-center">Our partners</HeadingPrimary>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-        {data.partners.map((partner) => (
-          <div key={partner.id} className="w-full border flex justify-center items-center gap-5 py-6">
-            <img
-              className="w-[62px] h-[48px] object-cover rounded-md"
-              src={`${VITE_IMAGE_PATH_URL}/partner/${partner.logo}`}
-              alt=""
-            />
-            <h3>{partner.name}</h3>
-          </div>
-        ))}
-      </div>
-    </Container>
+    <div className="bg-accent py-8 mb-[100px]">
+      <Container className="mb-[100px]">
+        <HeadingPrimary className="mb-10 text-center">Our partners</HeadingPrimary>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+          {data.partners.map((partner) => (
+            <div
+              key={partner.id}
+              className="w-full border bg-white rounded-lg flex justify-center items-center gap-5 py-6"
+            >
+              <img
+                className="w-[62px] h-[48px] object-cover rounded-md"
+                src={`${VITE_IMAGE_PATH_URL}/partner/${partner.logo}`}
+                alt=""
+              />
+              <h3>{partner.name}</h3>
+            </div>
+          ))}
+        </div>
+      </Container>
+    </div>
   );
 };
 

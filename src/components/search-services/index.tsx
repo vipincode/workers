@@ -68,13 +68,13 @@ const SearchServices = () => {
   }
 
   return (
-    <div className="bg-gray-100 p-3 rounded">
+    <div className="bg-accent p-3">
       <div className="flex justify-center items-center">
         <form onSubmit={handleSearch}>
-          <div className="md:flex md:items-center border rounded-md px-2 py-1 bg-white">
+          <div className="md:flex md:items-center border rounded-full px-2 py-1 bg-white overflow-hidden">
             <div>
               <select
-                className="py-3 px-6 outline-none"
+                className="py-4 px-6 outline-none"
                 id="category_id"
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
@@ -90,17 +90,17 @@ const SearchServices = () => {
                 ))}
               </select>
             </div>
-            <div className="flex">
+            <div className="flex items-center">
               <input
                 type="text"
                 id="kyword"
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Enter keyword"
-                className="w-full min-w-[300px] py-3 px-6 outline-none"
+                className="w-full min-w-[300px] py-4 px-6 outline-none border-l border-accent"
               />
-              <button type="submit" disabled={isPending} className="btn ">
-                <IoIosSearch size={24} />
+              <button type="submit" disabled={isPending} className="btn btn-secondary text-white rounded-full">
+                <IoIosSearch size={28} />
               </button>
             </div>
           </div>

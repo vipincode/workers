@@ -29,24 +29,26 @@ const Testimonials = () => {
     );
   }
   return (
-    <Container className="my-[200px]">
-      <HeadingPrimary className="text-center mb-[50px]">What our client says</HeadingPrimary>
-      <div className="max-w-[500px] mx-auto">
-        <Swiper
-          pagination={{
-            dynamicBullets: true,
-          }}
-          modules={[Pagination]}
-          className="testimonialsCarousel"
-        >
-          {data.clients.map((client) => (
-            <SwiperSlide key={client.id}>
-              <ClientCard data={client} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </div>
-    </Container>
+    <div className="bg-white py-[60px] border-t border-accent">
+      <Container>
+        <HeadingPrimary className="text-center mb-[50px]">What our client says</HeadingPrimary>
+        <div className="max-w-[500px] mx-auto">
+          <Swiper
+            pagination={{
+              dynamicBullets: true,
+            }}
+            modules={[Pagination]}
+            className="testimonialsCarousel"
+          >
+            {data.clients.map((client) => (
+              <SwiperSlide key={client.id}>
+                <ClientCard data={client} />
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+      </Container>
+    </div>
   );
 };
 

@@ -11,27 +11,27 @@ const ServicesCard: React.FC<ServicesCardProps> = ({ data }) => {
         <div className="max-w-sm bg-white border border-gray-200 rounded-lg cursor-pointer">
           <Link to={`/services-detail/${data.slug}`}>
             <img
-              className="rounded-t-lg h-[100px] w-full object-cover"
+              className="rounded-t-lg h-[140px] w-full object-cover"
               src={`${VITE_IMAGE_PATH_URL}/service/${data?.service_image}`}
               alt={data.slug}
             />
           </Link>
           <div className="p-5">
             <Link to={`/services-detail/${data.slug}`}>
-              <h5 className="mb-0 text-[18px] leading-7 font-bold tracking-tight text-gray-900">{data.title}</h5>
+              <h5 className="mb-0 text-[14px] leading-7 font-semibold tracking-tight text-gray-900">{data.title}</h5>
             </Link>
             <div className="mb-2 flex justify-between items-center">
-              <span className="text-xs bg-gray-100 py-[2px] leading-4 px-2 rounded-md text-gray-400">
+              <span className="text-xs bg-accent py-[2px] leading-4 px-2 rounded-md text-primary">
                 {data.category_name}
               </span>
             </div>
-            <p className="mb-3 font-normal text-gray-700 ">{data.short_description}</p>
-            <div className="my-6">
+            <p className="mb-3 text-[13px] font-normal text-gray-700 ">{data.short_description}</p>
+            <div className="my-2">
               <ServiceRating rating={data.rating} reviews={data.reviews} />
             </div>
             <Link
               to={`/services-detail/${data.slug}`}
-              className="inline-flex items-center py-2 text-sm font-medium text-center  text-secondary rounded-md"
+              className="inline-flex items-center py-2 text-xs font-medium text-center uppercase  text-primary rounded-md"
             >
               View detail
               <svg

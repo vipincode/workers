@@ -10,11 +10,11 @@ const ClientCard = ({ data }: { data: Client }) => {
         className="w-[120px] h-[120px] rounded-full block mb-5"
       />
       <article className="mb-10">
-        <h3 className="text-base leading-5 font-semibold text-gray-400 mt-3">{data.name}</h3>
-        <small className="text-xs font-semibold text-gray-400 block mb-3">
+        <h3 className="text-base leading-5 font-semibold text-primary mt-3">{data.name}</h3>
+        <small className="text-xs font-base text-gray-400 block mb-3">
           {data.company}, {data.designation}
         </small>
-        <p className="text-sm font-normal">{data.content}</p>
+        <p className="text-xs font-normal">{data.content}</p>
       </article>
     </div>
   );

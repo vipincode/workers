@@ -16,9 +16,9 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
           </Link>
           <div className="p-4">
             <Link to={`/service/${category.slug}`}>
-              <h3 className="text-base font-semibold mb-2">{category.name}</h3>
+              <h3 className="mb-0 text-[14px] leading-7 font-semibold tracking-tight text-gray-900">{category.name}</h3>
             </Link>
-            <p className="text-sm">{category.description}</p>
+            <p className="mb-3 text-[13px] font-normal text-gray-700 ">{category.description}</p>
           </div>
         </div>
       )}
@@ -27,50 +27,3 @@ const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
 };
 
 export default CategoryCard;
-
-// ---------- OLD CODE ----------------------------
-
-// import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
-// import ServicesModal from "./modals";
-// import React, { useRef, useState } from "react";
-// import ServicesListingCard from "../services/servies-listing-card";
-// import { CategoryCardProps } from "../../types";
-
-// const CategoryCard: React.FC<CategoryCardProps> = ({ category }) => {
-//   const modalRef = useRef<HTMLDialogElement>(null);
-
-//   const [selectedCategoryId, setSelectedCategoryId] = useState<number | null>(null);
-
-//   const handleActiveModal = (categoryId: number) => {
-//     setSelectedCategoryId(categoryId);
-//     modalRef.current?.showModal();
-//   };
-
-//   return (
-//     <>
-//       {category && (
-//         <div
-//           className="bg-white rounded-md overflow-hidden  cursor-pointer"
-//           onClick={() => handleActiveModal(category.parent_id)}
-//         >
-//           <img
-//             className="h-[140px] w-full object-cover"
-//             src={`${VITE_IMAGE_PATH_URL}/category/${category.cat_img}`}
-//             alt={category.slug}
-//           />
-//           <div className="p-4">
-//             <h3 className="text-base font-semibold mb-2">{category.name}</h3>
-//             <p className="text-sm">{category.description}</p>
-//           </div>
-//         </div>
-//       )}
-
-//       {/* Modals */}
-//       <ServicesModal ref={modalRef} title="Sub Category Popup!">
-//         {selectedCategoryId !== null && <ServicesListingCard categoryId={selectedCategoryId} />}
-//       </ServicesModal>
-//     </>
-//   );
-// };
-
-// export default CategoryCard;

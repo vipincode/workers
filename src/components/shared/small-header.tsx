@@ -5,7 +5,7 @@ import { IoLogoYoutube } from "react-icons/io5";
 
 const SmallHeader = () => {
   return (
-    <div className="px-5 bg-primary text-white py-2 min-h-[30px]">
+    <div className="px-5 bg-secondary text-white py-2 min-h-[30px]">
       <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center ">
         <div className="text-xs tracking-wide flex  space-x-2">
           <PhoneCall size={18} /> <span className="cursor-pointer">+91-8600999922</span>

@@ -21,9 +21,9 @@ const Header = () => {
   const { categories } = data;
   return (
     <div className="navbar bg-base-100 sticky top-0 z-10 shadow-sm">
-      <div className="flex-1">
-        <Link to="/" className="btn btn-ghost text-xl">
-          Dehatwala™
+      <div className="flex-1 px-4 lg:px-8">
+        <Link to="/" className="text-2xl font-bold text-black">
+          Dehatwala<sup className="text-secondary">™</sup>
         </Link>
       </div>
       <div className="flex-none gap-2">
@@ -114,7 +114,7 @@ const Header = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar bg-black text-white hover:bg-black/90"
+              className="btn btn-sm btn-ghost btn-circle avatar bg-secondary text-white hover:bg-secondary/90"
             >
               {user ? <span className="text-xs uppercase">{user.name.slice(0, 1)}</span> : <LuUser2 size={18} />}
             </div>
