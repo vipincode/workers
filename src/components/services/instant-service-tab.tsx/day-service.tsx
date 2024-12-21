@@ -43,7 +43,7 @@ const DayService = () => {
   return (
     <div className="mt-8 border p-4 rounded-md">
       {/* Meson Section */}
-      <div className="flex justify-between items-center my-6">
+      <div className="flex flex-col md:flex-row gap-2 justify-between items-center my-6">
         <div className="font-semibold">Meson</div>
         <div>{instantService.per_day_meason_rate || 800}/day</div>
         <div className="flex items-center w-[180px]">
@@ -71,7 +71,7 @@ const DayService = () => {
       </div>
 
       {/* Helper Section */}
-      <div className="flex justify-between items-center my-6">
+      <div className="flex flex-col md:flex-row gap-2 justify-between items-center my-6">
         <div className="font-semibold">Helper</div>
         <div>{instantService.per_day_helper_rate || 600}/day</div>
         <div className="flex items-center w-[180px]">
@@ -101,11 +101,11 @@ const DayService = () => {
       {/* Overtime Section */}
       <hr className="my-10" />
       <div>
-        <h3 className="font-semibold">Over Time</h3>
-        <p>After 5 PM, overtime charges will apply per hour.</p>
+        <h3 className="text-sm md:font-base font-semibold">Over Time</h3>
+        <p className="text-sm md:text-base">After 5 PM, overtime charges will apply per hour.</p>
 
         {/* Meson Overtime */}
-        <div className="flex justify-between items-center my-6">
+        <div className="flex flex-col md:flex-row gap-2 justify-between items-center my-6">
           <div className="font-semibold">Meson</div>
           <div>{instantService.overtime_meason_rate || 200}/hour</div>
           <div className="flex items-center w-[180px]">
@@ -133,7 +133,7 @@ const DayService = () => {
         </div>
 
         {/* Helper Overtime */}
-        <div className="flex justify-between items-center my-6">
+        <div className="flex flex-col md:flex-row gap-2 justify-between items-center my-6">
           <div className="font-semibold">Helper</div>
           <div>{instantService.overtime_helper_rate || 150}/hour</div>
           <div className="flex items-center w-[180px]">

@@ -41,8 +41,8 @@ const CartPage = () => {
   return (
     <div className="min-h-[60vh]">
       <Container>
-        <div className="rounded-md grid grid-cols-2 mb-[100px]">
-          <div className="bg-white py-6 px-10">
+        <div className="rounded-md grid grid-cols-1 md:grid-cols-2 mb-[100px]">
+          <div className="bg-white py-6 px-5 md:px-10 hidden md:block">
             <h2 className="text-[20px] font-medium">Services detail</h2>
             <div className="mt-[50px] space-y-4">
               <div>
@@ -87,9 +87,9 @@ const CartPage = () => {
               </p>
             </div>
           </div>
-          <div className="py-6 px-10">
+          <div className="py-6 px-1 md:px-10">
             <CartPrices />
-            <div className="mb-[60px]">
+            <div className="mb-6 md:mb-[60px]">
               <label htmlFor="" className="font-medium text-xs">
                 Add tip
               </label>
@@ -116,6 +116,55 @@ const CartPage = () => {
             </div>
             <button
               className="btn btn-primary w-full"
+              onClick={() => navigation(`/service-letter?service=${mode === "day" ? "day" : "hour"}`)}
+            >
+              Proceed Now
+            </button>
+          </div>
+          <div className="bg-white py-2 px-4 md:px-10 md:hidden">
+            <h2 className="text-base font-semibold">Services detail</h2>
+            <div className="mt-4 space-y-2">
+              <div>
+                <strong className="text-sm font-semibold">Detail 1</strong>
+                <p className="text-xs leading-4">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit. Voluptatem laboriosam vel tempore.
+                </p>
+              </div>
+              <div>
+                <strong>Detail 2</strong>
+                <p className="text-xs leading-4">
+                  Lorem ipsum, dolor sit amet consectetur adipisicing elit Voluptatem laboriosam vel tempore.
+                </p>
+              </div>
+            </div>
+            <div className="mt-2">
+              <h3 className="text-sm font-medium">Payment offer</h3>
+              <div className="space-y-2 mt-2">
+                <p className="text-xs font-normal">Offer text</p>
+                <p className="text-xs font-normal">Offer text</p>
+                <p className="text-xs font-normal">Offer text</p>
+              </div>
+            </div>
+            <div className="mt-6 flex items-center gap-2">
+              <input type="checkbox" defaultChecked className="checkbox" />
+              <p className="flex items-center text-xs gap-2">
+                Pick & drop services free
+                <s className="flex items-center text-sm italic">
+                  <IndianRupee size={12} />
+                  500
+                </s>
+              </p>
+            </div>
+
+            <div className="mt-6">
+              <h3 className="text-[17px] font-medium">Note</h3>
+              <p className="text-xs leading-5 font-normal">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. In fugit aut aliquid voluptates placeat
+                praesentium veritatis obcaecati, sunt illum! Facilis, veritatis.
+              </p>
+            </div>
+            <button
+              className="btn btn-primary w-full my-8"
               onClick={() => navigation(`/service-letter?service=${mode === "day" ? "day" : "hour"}`)}
             >
               Proceed Now

@@ -123,7 +123,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
   return (
     <div>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {/* Left Content */}
           <div className="space-y-2">
             <div>
@@ -257,7 +257,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             </div>
             <div>
               <h3 className="text-[16px] font-medium">How many workers do you need?</h3>
-              <div className="grid grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                 <div>
                   <label htmlFor="" className="font-medium text-sm">
                     Meson
@@ -288,7 +288,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             </div>
             <div>
               <h3 className="text-[16px] font-medium mt-4">What faculties do you provide to workers?</h3>
-              <div className="flex gap-6 mt-4">
+              <div className="flex flex-wrap gap-6 mt-4">
                 {["food", "stay", "over_time", "medical_insurance"].map((facility) => (
                   <label key={facility} className="font-medium text-sm flex items-center gap-2">
                     <input type="checkbox" value={facility} onChange={handleCheckboxChange} className="checkbox" />
@@ -299,10 +299,10 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             </div>
           </div>
           {/* Right Content */}
-          <div className="space-y-6 mt-6">
+          <div className="md:space-y-6 md:mt-6">
             <div>
               <h3 className="text-[16px] font-medium mt-4">For how long do you need the workers? </h3>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <div>
                   <label htmlFor="" className="font-medium text-sm">
                     Day{" "}
@@ -383,21 +383,9 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
                 <p className="text-xs text-red-600 font-normal mt-2">{errors.mobile_number.message}</p>
               )}
             </div>
-            <div>
-              <label htmlFor="" className="font-medium text-sm">
-                Upload Photos
-              </label>
-              {/* <Controller
-                name="upload_photos"
-                control={control}
-                render={({ field }) => (
-                  <input type="file" multiple onChange={(e) => field.onChange([...e.target.files])} />
-                )}
-              /> */}
-            </div>
             <>
               <div>
-                <label htmlFor="upload_photos" className="block text-sm font-medium text-gray-700">
+                <label htmlFor="upload_photos" className="block text-sm font-medium mt-3">
                   Upload Photos
                 </label>
                 <Controller
@@ -478,7 +466,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
         <div className="mt-10">
           <div className="flex items-center gap-2 my-4">
             <input type="checkbox" {...register("term_and_conditions")} className="checkbox" />
-            <label htmlFor="" className="font-medium text-sm">
+            <label htmlFor="" className="font-medium text-xs md:text-sm">
               Do you accept our terms and conditions?{" "}
               <Link to="#" title="Terms & Condition" className="text-blue-700">
                 Terms
@@ -488,7 +476,11 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
           {errors.term_and_conditions && (
             <p className="text-xs text-red-600 font-normal mb-8">{errors.term_and_conditions.message}</p>
           )}
-          <button type="submit" className="btn btn-primary min-w-[120px]" disabled={mutation.isPending}>
+          <button
+            type="submit"
+            className="btn btn-primary w-full md:w-auto min-w-[120px]"
+            disabled={mutation.isPending}
+          >
             {mutation.isPending ? "Submitting..." : "Get OTP"}
           </button>
         </div>

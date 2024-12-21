@@ -52,16 +52,16 @@ const InstantServices = () => {
             <li>Instant Services</li>
           </ul>
         </div>
-        <h2 className="text-[24px] font-semibold mb-6 mt-6">Instant Services</h2>
+        <h2 className="text-xl md:text-[24px] font-semibold mb-6 mt-6">Instant Services</h2>
         <ServicesCarouselCard data={data.slider_slogans} />
         <div className="mt-10">
           <InstantServicesTab instantServiceData={data.instant_service} />
         </div>
-        <div className="flex justify-end mt-[50px] bg-gray-200 p-[50px] rounded-md">
+        <div className="flex justify-end mt-[50px] bg-accent p-[50px] rounded-md">
           <div className="flex items-center gap-4">
-            <p className="text-[32px]">Total Price:</p>
-            <div className="flex items-center font-medium text-[32px]">
-              <IndianRupee size={32} />
+            <p className="text-base md:text-[32px]">Total Price:</p>
+            <div className="flex items-center font-medium text-lg md:text-[32px]">
+              <IndianRupee className="w-4 h-4 md:w-8 md:h-8" />
               {mode === "day" && <p>{totalDayPrice}</p>}
               {mode === "hour" && <p>{totalHourPrice}</p>}
             </div>

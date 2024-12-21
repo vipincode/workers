@@ -37,15 +37,15 @@ const ListingSideBar = ({ subCategories }: SubCategoryProps) => {
   const { categories } = CategoryData;
 
   return (
-    <div className="border-r min-h-[600px] max-h-[800px] overflow-y-auto space-y-3">
+    <div className="border-r border-accent h-full min-h-[600px] overflow-y-auto space-y-3">
       <div>
-        <h2 className="text-lg font-semibold mb-4">Category</h2>
+        <h2 className="text-base font-semibold mb-4">Category</h2>
         <ul className="space-y-3">
           {categories.map((category) => (
             <li
               key={category.id}
               className={twMerge(
-                "text-sm font-normal text-gray-500",
+                "text-xs font-medium text-gray-500",
                 category.slug === category_slug ? "font-medium text-black" : ""
               )}
             >
@@ -55,13 +55,13 @@ const ListingSideBar = ({ subCategories }: SubCategoryProps) => {
         </ul>
       </div>
       <div>
-        <h2 className="text-lg font-semibold mb-4">Sub Category</h2>
+        <h2 className="text-base font-semibold mb-4 mt-6">Sub Category</h2>
         <ul className="space-y-3">
           {subCategories.map((subCategory) => (
             <li
               key={subCategory.id}
               className={twMerge(
-                "text-sm font-normal text-gray-500",
+                "text-xs font-medium text-gray-500",
                 subCategory.slug === sub_category_slug ? "font-medium text-black" : ""
               )}
             >

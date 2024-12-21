@@ -71,10 +71,10 @@ const SearchServices = () => {
     <div className="bg-accent p-3">
       <div className="flex justify-center items-center">
         <form onSubmit={handleSearch}>
-          <div className="md:flex md:items-center border rounded-full px-2 py-1 bg-white overflow-hidden">
+          <div className="md:flex md:items-center md:border rounded-md md:rounded-full px-2 py-1 bg-white overflow-hidden">
             <div>
               <select
-                className="py-4 px-6 outline-none"
+                className="w-full md:min-w-[300px] py-4 px-6 outline-none"
                 id="category_id"
                 value={categoryId}
                 onChange={(e) => setCategoryId(e.target.value)}
@@ -97,7 +97,7 @@ const SearchServices = () => {
                 value={keyword}
                 onChange={(e) => setKeyword(e.target.value)}
                 placeholder="Enter keyword"
-                className="w-full min-w-[300px] py-4 px-6 outline-none border-l border-accent"
+                className="w-full md:min-w-[300px] py-4 px-6 outline-none md:border-l md:border-accent"
               />
               <button type="submit" disabled={isPending} className="btn btn-secondary text-white rounded-full">
                 <IoIosSearch size={28} />
@@ -110,7 +110,7 @@ const SearchServices = () => {
       {isError && <p>Error fetching services.</p>}
 
       {isSuccess && (
-        <div className="container mx-auto px-4">
+        <div className="container mx-auto px-0 md:px-4">
           <div className="pb-[100px]">
             {results.length ? <HeadingPrimary className="mb-6 mt-6 text-center">Search Results</HeadingPrimary> : null}
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-8">

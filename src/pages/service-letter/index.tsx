@@ -252,10 +252,10 @@ function ServiceLetterPage() {
 
   return (
     <div className="min-h-[60vh] mb-[100px] ">
-      <Container className="min-h-[60vh] mb-[100px] max-w-[60%] ">
+      <Container className="min-h-[60vh] mb-[100px] lg:max-w-[60%] ">
         <div className="mt-7">
           <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
               <div>
                 <label className="label" htmlFor="book_date">
                   <span className="label-text">Date</span>
@@ -269,7 +269,7 @@ function ServiceLetterPage() {
                 />
                 {errors.book_date && <span className="text-error text-sm mt-1">{errors.book_date.message}</span>}
               </div>
-              <div>
+              <div className="mb-2 md:mb-0">
                 <label className="label" htmlFor="time_slot">
                   <span className="label-text">Time slot</span>
                 </label>

@@ -10,8 +10,8 @@ const ContactUsPage = () => {
         content="Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order."
       />
       <Container className="my-10">
-        <div className="flex gap-10 max-w-[800px] mx-auto mb-[100px]">
-          <div className="w-[70%]">
+        <div className="flex flex-col md:flex-row gap-10 max-w-[800px] mx-auto mb-[100px]">
+          <div className="w-full md:w-[70%]">
             <div className="mb-6">
               <h2 className="text-2xl font-semibold">Drop us a line</h2>
             </div>
@@ -40,15 +40,15 @@ const ContactUsPage = () => {
                 </label>
                 <textarea className="textarea textarea-bordered w-full"></textarea>
               </div>
-              <button className="btn">Submit</button>
+              <button className="btn btn-primary w-full md:w-auto">Submit</button>
             </form>
           </div>
-          <div className="w-[30%]">
+          <div className="w-full md:w-[30%]">
             <div className="mb-6">
-              <h2 className="text-2xl font-semibold">Find our offices</h2>
-              <address className="space-y-5">
+              <h2 className="text-lg md:text-2xl font-semibold">Find our offices</h2>
+              <address className="space-y-5 text-sm md:font-base">
                 <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
-                <ul className="space-y-4">
+                <ul className="text-sm md:font-base space-y-4">
                   <li>
                     <b>Line 1:</b> Your address
                   </li>

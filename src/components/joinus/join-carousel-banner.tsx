@@ -24,6 +24,24 @@ const JoinCarouselBanner = ({ data }: DataProp) => {
         disableOnInteraction: false,
       }}
       modules={[Autoplay]}
+      breakpoints={{
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 10,
+        },
+        640: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 30,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 40,
+        },
+      }}
       className="SvrclCard"
     >
       {data.map((item) => (
@@ -34,7 +52,7 @@ const JoinCarouselBanner = ({ data }: DataProp) => {
           }}
           className="rounded-md overflow-hidden bg-cover bg-center relative"
         >
-          <div className="absolute inset-0 bg-black/55" />
+          <div className="absolute inset-0 bg-primary text-accent" />
           <ClBoxCard>{item.slogan}</ClBoxCard>
         </SwiperSlide>
       ))}

@@ -8,8 +8,8 @@ const Footer = () => {
       <div className="mx-auto w-full max-w-screen-xl">
         <div className="grid grid-cols-2 gap-8 px-4 py-6 lg:py-8 md:grid-cols-4">
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase">Company</h2>
-            <ul className="text-gray-500 dark:text-gray-400 font-normal">
+            <h2 className="mb-6 text-sm font-semibold text-primary/90 uppercase">Company</h2>
+            <ul className="text-primary/60 font-normal">
               <li className="mb-4">
                 <Link to="/about" className=" hover:underline">
                   About
@@ -28,8 +28,8 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">Help center</h2>
-            <ul className="text-gray-500 dark:text-gray-400">
+            <h2 className="mb-6 text-sm font-semibold text-primary/90 uppercase">Help center</h2>
+            <ul className="text-primary/60">
               <li className="mb-4">
                 <Link to="#" className="hover:underline">
                   Twitter
@@ -48,8 +48,8 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">Legal</h2>
-            <ul className="text-gray-500 dark:text-gray-400">
+            <h2 className="mb-6 text-sm font-semibold text-primary/90 uppercase">Legal</h2>
+            <ul className="text-primary/60">
               <li className="mb-4">
                 <Link to="/privacy-policy" className="hover:underline">
                   Privacy Policy
@@ -73,8 +73,8 @@ const Footer = () => {
             </ul>
           </div>
           <div>
-            <h2 className="mb-6 text-sm font-semibold text-gray-900 uppercase ">Careers</h2>
-            <ul className="text-gray-500 dark:text-gray-400">
+            <h2 className="mb-6 text-sm font-semibold text-primary/90 uppercase">Careers</h2>
+            <ul className="text-primary/60">
               <li className="mb-4">
                 <Link to="/jobs" className="hover:underline">
                   Jobs

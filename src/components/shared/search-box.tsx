@@ -17,23 +17,23 @@ const SearchBox = ({ setSearchQuery }: SearchBoxProps) => {
   return (
     <div className="max-w-[800px] mx-auto mt-[-20px] relative z-10">
       <div className="flex gap-2">
-        <label className="flex-1 input input-bordered input-lg flex items-center gap-2">
+        <label className="flex-1 rounded-lg border border-secondary input-md md:input-lg flex items-center gap-2">
           <div className="bg-white items-center px-2">
             <div className="flex items-center">
               <div className="flex-1">
-                <Landmark size={30} className="text-gray-400" />
+                <Landmark size={30} className="text-secondary" />
               </div>
               <div className="w-[40px] text-[14px] text-gray-400 font-semibold leading-4">Delhi NCR</div>
             </div>
           </div>
           <input
             type="text"
-            className="grow"
-            placeholder="Search for services"
+            className="grow outline-none w-full text-sm md-text-base"
+            placeholder="Search for services "
             value={inputValue}
             onChange={handleInputChange}
           />
-          <Search className="text-gray-400" />
+          <Search size={32} className="text-secondary" />
         </label>
       </div>
     </div>

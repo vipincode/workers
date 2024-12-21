@@ -7,6 +7,7 @@ import Container from "../../components/shared/container";
 import SearchBox from "../../components/shared/search-box";
 import ListingCard from "../../components/services/listing-card";
 import { useEffect, useState } from "react";
+import { IoMdMenu } from "react-icons/io";
 
 const ServiceListingPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -43,8 +44,8 @@ const ServiceListingPage = () => {
         <ListingBanner />
       </div>
       <Container className="my-[80px]">
-        <div className="flex">
-          <div className="w-[300px] sticky top-0">
+        <div className="md:flex">
+          <div className="hidden md:block w-[300px] sticky top-0">
             {subCategories && <ListingSideBar subCategories={subCategories} />}
             {!subCategories && (
               <div className="min-h-[80vh] flex flex-col gap-6">
@@ -63,7 +64,7 @@ const ServiceListingPage = () => {
               </div>
             )}
           </div>
-          <div className="flex-1 px-6 space-y-5">
+          <div className="md:flex-1 md:px-6 space-y-5">
             <div>
               <SearchBox setSearchQuery={setSearchQuery} />
             </div>
@@ -78,11 +79,44 @@ const ServiceListingPage = () => {
               )}
               {mutation.isError && <p>Error: {mutation.error?.message || "Something went wrong"}</p>}
             </div>
+            <>
+              <div className="drawer">
+                <input id="category-drawer" type="checkbox" className="drawer-toggle" />
+                <div className="drawer-content flex justify-between items-center w-full md:hidden">
+                  <div className="font-semibold">All Category List:</div>
+                  <label htmlFor="category-drawer" className="btn btn-link">
+                    <IoMdMenu size={27} />
+                  </label>
+                </div>
+                <div className="drawer-side z-20">
+                  <label htmlFor="category-drawer" aria-label="close sidebar" className="drawer-overlay"></label>
+                  <div className="menu bg-base-200 text-base-content min-h-full w-80 p-4">
+                    {subCategories && <ListingSideBar subCategories={subCategories} />}
+                    {!subCategories && (
+                      <div className="min-h-[80vh] flex flex-col gap-6">
+                        <div className="space-y-2">
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                          <div className="skeleton h-6 w-full rounded-md"></div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </div>
+            </>
             {mutation.data?.services?.map((service) => (
               <ListingCard key={service.id} data={service} />
             ))}
           </div>
-          <div className="w-[200px] px-6">Adds area</div>
+          <div className="md:w-[200px] mt-6 md:mt-0 px-6">{/* <p>Adds area</p> */}</div>
         </div>
       </Container>
     </div>

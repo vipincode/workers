@@ -10,32 +10,34 @@ const ListingCard = ({ data }: { data: Service }) => {
       <figure>
         <Link to="/services-detail">
           <img
-            className="max-h-[200px] w-[150px] h-full object-cover"
+            className="w-[150px] h-full object-cover"
             src={`${VITE_IMAGE_PATH_URL}/service/${data.service_image}`}
             alt="Movie"
           />
         </Link>
       </figure>
-      <div className="card-body space-y-6">
+      <div className="card-body p-4 space-y-4">
         <div className="flex flex-wrap justify-between">
           <div>
             <Link to="/services-detail">
-              <h2 className="card-title">{data.title}</h2>
+              <h2 className="card-title text-sm md:text-base font-bold">{data.title}</h2>
             </Link>
             <div className="mb-2 flex justify-between items-center">
-              <span className="text-xs bg-gray-100 py-[2px] leading-4 px-2 rounded-md text-gray-400">
+              <span className="text-xs bg-accent text-primary py-[2px] leading-4 px-2 rounded-md">
                 {data.category_name}
               </span>
             </div>
-            <p>{data.short_description}</p>
+            <p className="text-xs md:text-sm">{data.short_description}</p>
           </div>
-          <div className="flex items-center flex-col gap-1">
+          <div className="flex items-center md:flex-col gap-1 mt-2 lg:mt-0">
             <div className="badge">
-              <Calendar size={12} /> <span className="pl-2">12-09-2024</span>
+              <Calendar size={12} className="text-primary" />{" "}
+              <span className="pl-2 text-[10px] md:text-xs">12-09-2024</span>
             </div>
             <div className="badge">
-              <p className="text-xs flex items-center gap-1">
-                <MapPin size={12} /> <span>45, Street Delhi</span>
+              <p className="flex items-center gap-1">
+                <MapPin size={12} className="text-primary" />{" "}
+                <span className="text-[10px] md:text-xs">45, Street Delhi</span>
               </p>
             </div>
           </div>
@@ -45,7 +47,7 @@ const ListingCard = ({ data }: { data: Service }) => {
             <ServiceRating reviews={data.reviews} rating={data.rating} />
           </div>
           <Link to={`/services-detail/${data.slug}`}>
-            <button className="btn btn-sm">View Details</button>
+            <button className="btn btn-sm btn-primary font-medium">View Details</button>
           </Link>
         </div>
       </div>

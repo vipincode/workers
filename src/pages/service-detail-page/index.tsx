@@ -83,27 +83,27 @@ const ServicesDetailsPage = () => {
       {service.slider_image.length > 0 ? (
         <ServiceDetailsCarousel data={service.slider_image} />
       ) : (
-        <div className="!bg-gray-200 bg-no-repeat bg-cover bg-center h-[300px] flex justify-center items-center">
+        <div className="!bg-accent bg-no-repeat bg-cover bg-center h-[300px] flex justify-center items-center">
           <h3 className="text-2xl font-bold">Service Details</h3>
         </div>
       )}
       <Container className="mb-[80px]">
-        <div className="my-8 flex gap-8 px-6">
+        <div className="my-8 md:flex md:gap-8 px-0 md:px-6 space-y-4 md:space-y-0">
           <div>
-            <strong>Category:</strong>
-            <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md ml-2">{service.category_name}</span>
+            <strong className="text-sm">Category:</strong>
+            <span className="bg-accent text-primary text-xs px-3 py-1 rounded-md ml-2">{service.category_name}</span>
           </div>
           <div>
-            <strong>Tags:</strong>
-            <span className="bg-gray-200 text-gray-600 px-3 py-1 rounded-md ml-2">{service.tags}</span>
+            <strong className="text-sm">Tags:</strong>
+            <span className="bg-accent text-primary text-xs px-3 py-1 rounded-md ml-2">{service.tags}</span>
           </div>
         </div>
-        <div className="flex gap-6">
-          <div className="flex-1 px-6 space-y-6">
+        <div className="md:flex md:gap-6">
+          <div className="flex-1 px-0 md:px-6 space-y-6">
             <div>
               <h2 className="font-semibold text-lg">Description</h2>
               <div
-                className="mt-10"
+                className="mt-4 md:mt-10"
                 dangerouslySetInnerHTML={{
                   __html: service.description ? DOMPurify.sanitize(service.description) : "<p>No content available</p>",
                 }}
@@ -120,17 +120,17 @@ const ServicesDetailsPage = () => {
               </div>
             </div>
             <div>
-              <div className="flex justify-between mt-[100px]">
+              <div className="md:flex md:justify-between mt-[100px] space-y-6 md:space-y-0">
                 <button
                   onClick={() => redirect(`/permanent-service/${service.id}`)}
-                  className="btn"
+                  className="btn btn-primary w-full md:w-auto capitalize"
                   disabled={service.is_permanent_service < 1}
                 >
                   Get permanent Service
                 </button>
                 <button
                   onClick={() => redirect(`/instant-service/${service.id}`)}
-                  className="btn"
+                  className="btn btn-primary w-full md:w-auto capitalize"
                   disabled={service.is_instant_service < 1}
                 >
                   Get Instant Service
@@ -138,7 +138,7 @@ const ServicesDetailsPage = () => {
               </div>
             </div>
           </div>
-          <div className="w-[210px]">Ads Area</div>
+          <div className="w-[210px] p-6 md:p-0">{/* <p>Ads Area</p> */}</div>
         </div>
       </Container>
     </div>

@@ -27,28 +27,27 @@ const PermanentServices = () => {
             <li>Permanent Services</li>
           </ul>
         </div>
-        <h2 className="text-[24px] font-semibold mb-6 mt-6">Permanent Services</h2>
+        <h2 className="text-[24px] font-semibold mt-4">Permanent Services</h2>
         <ServicesCarouselCard data={data.slider_slogans} />
-        <div className="text-[24px] font-semibold mb-6 mt-6">
-          <h2>Book Your Service</h2>
+        <div className="text-[24px] font-semibold mb-6">
           <BookServicesForm
             serviceId={data.permanent_service.service_id}
             permanentServiceId={data.permanent_service.id}
           />
         </div>
-        <div className="bg-gray-200 p-6 rounded-md mt-10">
-          <h2 className="text-[42px] font-semibold text-center">Customercare services</h2>
-          <h2 className="text-[18px] font-medium text-center">+00-8676767676767</h2>
-          <div className="flex justify-center gap-5 mt-10">
-            <div>
+        <div className="bg-accent p-6 rounded-md mt-10">
+          <h2 className="text-xl md:text-[38px] font-semibold text-center mb-6">Customercare services</h2>
+          <h2 className="text-base md:text-[24px] font-medium text-center">+00-8676767676767</h2>
+          <div className="md:flex md:justify-center md:gap-5 space-y-3 md:space-y-0 mt-10">
+            <div className="text-center md:text-left">
               <p className="italic text-sm font-semibold text-blue-600">WhatsApp</p>
               <p className="text-xs font-medium">+91-898989898999</p>
             </div>
-            <div>
+            <div className="text-center md:text-left">
               <p className="italic text-sm font-semibold text-blue-600">Email</p>
               <p className="text-xs font-medium">+91-898989898999</p>
             </div>
-            <div>
+            <div className="text-center md:text-left">
               <p className="italic text-sm font-semibold text-blue-600">Office</p>
               <p className="text-xs font-medium">+91-898989898999</p>
             </div>

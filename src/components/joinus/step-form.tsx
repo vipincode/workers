@@ -188,7 +188,7 @@ export default function StepForm() {
   };
   return (
     <div className="container mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Join Us</h1>
+      <h1 className="text-xl md:text-2xl font-bold mb-4">Join Us</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         {currentStep === 1 && (
           <div className="space-y-6 border-b pb-4">
@@ -276,7 +276,9 @@ export default function StepForm() {
                     className={`select select-bordered w-full ${errors.city_id ? "select-error" : ""}`}
                     disabled={!selectedStateId || isLoadingCities}
                   >
-                    <option value="">Select a city</option>
+                    <option value="" disabled>
+                      Select a city
+                    </option>
                     {(cities?.cites || []).map((city) => (
                       <option key={city.id} value={city.id}>
                         {city.name}
@@ -292,7 +294,7 @@ export default function StepForm() {
 
         {currentStep === 2 && (
           <div>
-            <h3 className="text-[20px] font-semibold my-6">Select Category</h3>
+            <h3 className="text-base md:text-[20px] font-semibold my-6">Select Category</h3>
             {categoryLoading ? (
               <div className="flex flex-wrap gap-4">
                 {Array.from({ length: 10 }).map((_, index) => (
@@ -303,7 +305,7 @@ export default function StepForm() {
               <div className="flex flex-wrap gap-4">
                 {categories?.categories.map((category) => (
                   <div key={category.id} className="form-control">
-                    <label className="cursor-pointer label bg-base-200 px-4 py-3 rounded-md flex items-center gap-3">
+                    <label className="cursor-pointer label bg-primary/20 text-primary capitalize px-4 py-3 rounded-md flex items-center gap-3">
                       <span className="label-text">{category.name}</span>
                       <input
                         type="checkbox"
@@ -318,7 +320,7 @@ export default function StepForm() {
               </div>
             )}
             {selectedCategoryIds.length > 0 && (
-              <h3 className="text-lg font-semibold my-6">Select Skill Type and Sub Categories</h3>
+              <h3 className="text-base md:text-lg font-semibold my-6">Select Skill Type and Sub Categories</h3>
             )}
             {subCategoryLoading ? (
               <div className="space-y-3">
@@ -342,7 +344,7 @@ export default function StepForm() {
                   if (!category || relatedSubCategories.length === 0) return null;
                   return (
                     <div key={field.id} className="space-y-4 border-b pb-4">
-                      <h4 className="font-medium text-lg capitalize">{field.skill_name}</h4>
+                      <h4 className="font-medium text-base md:text-lg capitalize">{field.skill_name}</h4>
                       <Controller
                         name={`skills.${index}.skill_type`}
                         control={control}

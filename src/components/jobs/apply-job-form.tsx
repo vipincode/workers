@@ -75,7 +75,7 @@ export default function ApplyJobForm() {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 mb-[100px]">
+    <div className="max-w-md mx-auto px-4 mt-10 mb-[100px]">
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <div>
           <label htmlFor="name" className="label">

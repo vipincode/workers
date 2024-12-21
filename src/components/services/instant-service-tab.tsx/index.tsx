@@ -75,8 +75,8 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
         aria-label="Day"
         onChange={() => setMode("day")}
       />
-      <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-        <div className="flex justify-between items-center my-6">
+      <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box md:p-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
           <div className="font-semibold">Meson</div>
           <div>{instantServiceData.per_day_meason_rate || 800}/day</div>
           <div className="flex items-center w-[180px]">
@@ -101,7 +101,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
             />
           </div>
         </div>
-        <div className="flex justify-between items-center my-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
           <div className="font-semibold">Helper</div>
           <div>{instantServiceData.per_day_helper_rate || 600}/day</div>
           <div className="flex items-center w-[180px]">
@@ -127,12 +127,12 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
           </div>
         </div>
         <div>
-          <hr className="my-10" />
-          <div>
+          <hr className="my-4 md:my-10" />
+          <div className="px-4 md:px-0">
             <h3 className="font-semibold">Over Time</h3>
             <p>After 5 pm if you want these messo helpers to work overtime then then per hours rs will e chared.</p>
           </div>
-          <div className="flex justify-between items-center my-6">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
             <div className="font-semibold">Meson</div>
             <div>{instantServiceData.overtime_meason_rate || 200}/day</div>
             <div className="flex items-center w-[180px]">
@@ -157,7 +157,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
               />
             </div>
           </div>
-          <div className="flex justify-between items-center my-6">
+          <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
             <div className="font-semibold">Helper</div>
             <div>{instantServiceData.overtime_helper_rate || 150}/day</div>
             <div className="flex items-center w-[180px]">
@@ -196,7 +196,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
         aria-label="Hours"
       />
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
-        <div className="flex justify-between items-center my-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
           <div className="font-semibold">Meson</div>
           <div>{instantServiceData.per_hour_meason_rate || 200}/hour</div>
           <div className="flex items-center w-[180px]">
@@ -221,7 +221,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
             />
           </div>
         </div>
-        <div className="flex justify-between items-center my-6">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
           <div className="font-semibold">Helper</div>
           <div>{instantServiceData.per_hour_helper_rate || 150}/hour</div>
           <div className="flex items-center w-[180px]">

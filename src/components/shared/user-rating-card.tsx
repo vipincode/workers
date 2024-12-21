@@ -17,7 +17,7 @@ const UserRatingCard = ({ reviews }: UserRatingCardProp) => {
     <div>
       {displayedReviews.map((review, index) => (
         <div key={index} className="flex gap-3 mb-4">
-          <div className="w-10 h-10 bg-black text-white rounded-full flex justify-center items-center text-lg font-medium uppercase">
+          <div className="w-10 h-10 bg-primary text-white rounded-full flex justify-center items-center text-lg font-medium uppercase">
             {review.name.slice(0, 1)}
           </div>
           <div>

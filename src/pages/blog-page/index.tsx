@@ -23,7 +23,7 @@ const BlogPage = () => {
         content="Here are the biggest enterprise technology acquisitions of 2021 so far, in reverse chronological order."
       />
       <Container className="my-10">
-        <div className="grid grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {blogs.map((blog) => (
             <BlogCard key={blog.id} data={blog} />
           ))}
