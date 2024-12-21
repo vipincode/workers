@@ -1,5 +1,5 @@
 import SingleBlogCard from "../../components/blog/single-blog-card";
-import CommentForm from "../../components/shared/comment-form";
+// import CommentForm from "../../components/shared/comment-form";
 import Container from "../../components/shared/container";
 import SmallBanner from "../../components/shared/small-banner";
 import { useParams } from "react-router-dom";
@@ -41,13 +41,13 @@ const BlogDetailPage = () => {
               </div>
 
               {/* COMMENTS */}
-              <div>
+              {/* <div>
                 <h2 className="text-3xl font-semibold">Comments</h2>
                 <hr />
-              </div>
-              <div className="mt-10">
+              </div> */}
+              {/* <div className="mt-10">
                 <CommentForm />
-              </div>
+              </div> */}
             </div>
             <div className="col-span-12 md:col-span-4 space-y-4">
               <SingleBlogCard blogId={parseInt(id)} />
