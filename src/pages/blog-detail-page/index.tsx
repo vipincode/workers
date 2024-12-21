@@ -31,7 +31,7 @@ const BlogDetailPage = () => {
         />
         <Container className="my-10">
           <div className="grid grid-cols-12 gap-6">
-            <div className="blog-content col-span-8">
+            <div className="blog-content col-span-12 md:col-span-8">
               <div className="space-y-5">
                 <h2>{blog.title}</h2>
                 <img className="w-full" src={`${VITE_IMAGE_PATH_URL}/blog/${blog.blogimg}`} alt="" />
@@ -49,7 +49,7 @@ const BlogDetailPage = () => {
                 <CommentForm />
               </div>
             </div>
-            <div className="col-span-4 space-y-4">
+            <div className="col-span-12 md:col-span-4 space-y-4">
               <SingleBlogCard blogId={parseInt(id)} />
             </div>
           </div>

@@ -6,6 +6,7 @@ import { useCategories } from "../../react-query/hooks";
 import ServicesCard from "../shared/services-card";
 import { IoIosSearch } from "react-icons/io";
 import HeadingPrimary from "../typography/heading-primary";
+import { API_URL } from "../../react-query/constants";
 
 interface SearchData {
   category_id: number;
@@ -24,7 +25,7 @@ const SearchServices = () => {
 
   // Mutation function for searching services
   const searchServices = async (searchData: SearchData): Promise<ServiceResponse> => {
-    const response = await axios.post<ServiceResponse>("https://dehatwala.com/api/search-services", searchData);
+    const response = await axios.post<ServiceResponse>(`${API_URL}/search-services`, searchData);
     return response.data;
   };
 
