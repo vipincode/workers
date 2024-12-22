@@ -192,6 +192,7 @@ interface InstantApiResponse {
   slider_slogans: SliderSlogan[];
   instant_service: ServiceNotes;
   permanent_service: ServiceNotes;
+  service: Service;
 }
 
 interface CategoryProps {

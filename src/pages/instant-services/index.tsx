@@ -73,7 +73,7 @@ const InstantServices = () => {
         <div className="flex justify-end mt-[50px] mb-[100px]">
           <button
             className="btn btn-primary min-w-[300px]"
-            onClick={() => navigation(`/cart/?service=${mode === "day" ? "day" : "hour"}`)}
+            onClick={() => navigation(`/cart/?service=${mode === "day" ? "day" : "hour"}&id=${encodeURIComponent(id)}`)}
           >
             View Cart
           </button>

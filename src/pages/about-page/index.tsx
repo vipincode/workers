@@ -60,109 +60,90 @@ const AboutPage = () => {
     <div>
       <Container className="mt-10 mb-[100px] space-y-6">
         <div className="space-y-10">
-          <div className="flex flex-col md:flex-row gap-6">
-            <div className="w-full md:w-[50%] md:p-10">
-              <h2 className="text-xl md:text-3xl font-semibold mb-3 md:mb-5">About Us</h2>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
-                we are india&#39;s First Online Construction Manpower Service provider at doorstep and construction
-                sites.
-              </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
-                Dehatwala deliver direct labour to construction Site. Construction companies Use our Platform to book
-                service such as shuttering Carpenter, Bar Bender, concrete casting worker, welder Fitter, Plumber, Brick
-                Masonry work , Tile flooring Mason, Plaster Worker, Tile stones worker, Excavation and Earth work
-                worker, and other Mason helper Etc. These service are delivered in their doorstep and construction site
-                and at a time of their choosing.
-              </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
-                Dehatwala.com Provides a Platform that allow construction Skills workers, Unskilled workers , semi
-                skills Worker , Unskilled workers , Trainee, NON trainee, professional and Experience. Construction
-                skills worker, Unskilled worker, Trainee or NON Trainee, Professional and Experience To connect with
-                Construction Company looking for Specific construction work. and To Help increase income opportunities
-                and easiest way to Getting a job for construction worker. Dehatwala&#39;s vision is to Help make this
-                labour Market Trustworthy, Transparent and efficient Thereby helping construction Company Find labor
-                more easily and Construction worker Find Job Through our Portal.
-              </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
-                Dear user we are happy to tell you that we are one of the most Trustworthy online construction Manpower
-                Provider in india that Connect the Construction Manpower directly to the construction sites and other
-                doorstep.
-              </p>
+          {/* ABOUT */}
+          <div className="relative">
+            <div className="lg:float-right lg:w-1/2 lg:ml-6 mb-6">
+              <img src="/images/road.jpg" alt="Construction site" className="rounded-lg shadow-lg" />
             </div>
-            <div className="w-full md:w-[50%] md:mt-16">
-              <img src="/images/road.jpg" alt="" className="rounded-md" />
+            <div className="prose max-w-none space-y-4">
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">About Us</h2>
+              <p>
+                We are India's First Online Construction Manpower Service provider at doorstep and construction sites.
+              </p>
+              <p>
+                Dehatwala delivers direct labour to construction sites. Construction companies use our platform to book
+                services such as shuttering Carpenter, Bar Bender, concrete casting worker, welder Fitter, Plumber,
+                Brick Masonry work, Tile flooring Mason, Plaster Worker, Tile stones worker, Excavation and Earth work
+                worker, and other Mason helper etc. These services are delivered to their doorstep and construction site
+                at a time of their choosing.
+              </p>
+              <p>
+                Dehatwala.com provides a platform that allows construction skilled workers, unskilled workers,
+                semi-skilled workers, trainees, non-trainees, professionals, and experienced workers to connect with
+                construction companies looking for specific construction work. We help increase income opportunities and
+                provide the easiest way to get a job for construction workers. Dehatwala's vision is to help make this
+                labour market trustworthy, transparent, and efficient, thereby helping construction companies find labor
+                more easily and construction workers find jobs through our portal.
+              </p>
+              <p>
+                Dear user, we are happy to tell you that we are one of the most trustworthy online construction manpower
+                providers in India that connect the construction manpower directly to the construction sites and other
+                doorsteps.
+              </p>
             </div>
           </div>
-          <div className="flex flex-col md:flex-row gap-6 md:items-center">
-            <div className="w-full md:w-[50%] mt-10">
-              <img src="/images/road.jpg" alt="" className="rounded-md" />
+          {/* Our vision */}
+          <div className="relative">
+            <div className="lg:float-left lg:w-1/2 lg:mr-6 mb-6">
+              <img src="/images/road.jpg" alt="Construction site" className="rounded-lg shadow-lg" />
             </div>
-            <div className="w-full md:w-[50%] md:p-10">
-              <h2 className="text-2xl font-semibold mb-5">Our vision &amp; mission</h2>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
-                our vision is to simplify,this hiring Process by Providing Single Platform that could minimize the Gap
+            <div className="prose max-w-none space-y-4">
+              <h2 className="text-2xl md:text-3xl font-semibold">Our vision &amp; mission</h2>
+              <p>
+                Our vision is to simplify,this hiring Process by Providing Single Platform that could minimize the Gap
                 Between Construction company and construction labourers and empowering them with the right job as per
                 their skills
               </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
+              <p>
                 we have created our working System and Portal in such a way that where in the Construction company and
-                Construction labourers do not to have to go Anywhere and Get Service with just single click. it is
+                Construction labourers do not to have to go Anywhere and Get Service with just single click.it is
                 generally seen that construction company Face a lot of difficulties in Finding labourers and we have
                 been working to solve this problem and reduce the gap between the Construction Industry and the
-                Construction laborers.
+                Construction laborers
               </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
+              <p>
                 Dehatwala.com Ultimate goal is to Provide the right job to the rural and urban labourer through our
                 Portal and to Provide affordable and competent labor to the construction Industry with Ease and in less
                 time.
               </p>
             </div>
           </div>
-
-          <div className="flex flex-col md:flex-row gap-6 md:items-center">
-            <div className="w-full md:w-[50%] md:p-10">
-              <h2 className="text-xl md:text-3xl font-semibold mb-3 md:mb-5">
-                Our Mission: Helping Millions of Organizations Grow Better
-              </h2>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
-                Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dignissimos illum repellendus aliquam ea
-                iusto, laboriosam quos consequuntur corrupti enim laborum, eveniet soluta temporibus eaque dolore nam,
-                non in itaque iste! Lorem ipsum dolor, sit amet consectetur adipisicing elit. elit.
-              </p>
+          {/* Why Dehatwala**/}
+          <div className="relative">
+            <div className="lg:float-right lg:w-1/2 lg:ml-6 mb-6">
+              <img src="/images/road.jpg" alt="Construction site" className="rounded-lg shadow-lg" />
             </div>
-            <div className="w-full md:w-[50%] md:mt-10">
-              <img src="/images/one.jpg" alt="" className="rounded-md" />
-            </div>
-          </div>
-        </div>
-        <div>
-          <div className="flex flex-col md:flex-row gap-6 md:items-center my-[80px]">
-            <div className="w-full md:w-[50%] md:mt-16">
-              <img src="/images/road.jpg" alt="" className="rounded-md" />
-            </div>
-            <div className="w-full md:w-[50%] md:p-10">
-              <h2 className="text-xl md:text-3xl font-semibold mb-3 md:mb-5">Why Dehatwala</h2>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
+            <div className="prose max-w-none space-y-4">
+              <h2 className="text-2xl md:text-3xl font-semibold">Why Dehatwala*</h2>
+              <p>
                 India has nearly 70 million construction workers, and more than 30% workers are migrant and nomadic.
               </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
+              <p>
                 Our aim Is to connect these Labourers with direct Construction site through our Portal and to Provide
                 right jobs to the Construction labourers and Protect their basic right and we are continuously
                 succeeding is this mission.
               </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
-                Dehatwala.com Provide affordable labor to the construction site at their chosen time and date..
-              </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
+              <p>Dehatwala.com Provide affordable labor to the construction site at their chosen time and date..</p>
+              <p>
                 This service lasts for the duration of a fixed Contract Between dehatwala and the construction company.
                 You Can avail this Service, with just a single click on our portal.
               </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
+              <p>
                 Registration of any New construction worker. On our Portal is completely free of cost and we are very
                 happy to inform you that millions of construction labourers have already Joined us. whom we deliver to
                 the Construction site as per requirements of the construction companies.
               </p>
-              <p className="text-sm md:font-base leading-8 font-normal mt-4">
+              <p>
                 Dehatwala do not compromise at all on the Basic Right, Health, and safety Parameters of our construction
                 Labourers. We consider construction companies to provide services only after obtaining acceptance and
                 consent to our policies or Term and Conditions.. we Pride our Selves on Maintaining the highest standard
@@ -171,6 +152,8 @@ const AboutPage = () => {
             </div>
           </div>
         </div>
+
+        {/* WHY US */}
         <div>
           <div className="mt-[100px]">
             <h2 className="text-2xl font-semibold my-5 text-center">Why us</h2>
