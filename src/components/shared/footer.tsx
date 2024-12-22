@@ -11,7 +11,7 @@ const Footer = () => {
             <h2 className="mb-6 text-sm font-semibold text-primary/90 uppercase">Company</h2>
             <ul className="text-primary/60 font-normal">
               <li className="mb-4">
-                <Link to="/about" className=" hover:underline">
+                <Link to="/about-us" className=" hover:underline">
                   About
                 </Link>
               </li>

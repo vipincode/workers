@@ -49,7 +49,7 @@ const ServiceReviewPage = () => {
   const headers = ["#ID", "Service Detail", "Rating", "Review and comments"];
   const rows =
     data?.service_reviews.map((review) => ({
-      rowData: [review.id, review.service_name, review.rating, review.review_comments],
+      rowData: [review.id, review.service_name, `${review.rating} *`, review.review_comments],
     })) || [];
 
   return (

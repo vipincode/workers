@@ -110,10 +110,10 @@ export function useBlogs() {
   });
 }
 
-export function useSingleBlog(id: number) {
+export function useSingleBlog(slug: string) {
   return useQuery<SingleBlogProps, Error>({
-    queryKey: ["single-blogs", id],
-    queryFn: () => fetchSingleBlog(id),
+    queryKey: ["single-blogs", slug],
+    queryFn: () => fetchSingleBlog(slug),
   });
 }
 

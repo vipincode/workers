@@ -8,9 +8,9 @@ import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
 import SingleBlogPageLoading from "../../components/blog/loader/single-blog-page-loading";
 
 const BlogDetailPage = () => {
-  let { id } = useParams();
+  let { slug } = useParams();
 
-  const { data, status, error } = useSingleBlog(parseInt(id));
+  const { data, status, error } = useSingleBlog(slug);
 
   if (status === "pending") {
     return <SingleBlogPageLoading />;
@@ -33,7 +33,16 @@ const BlogDetailPage = () => {
           <div className="grid grid-cols-12 gap-6">
             <div className="blog-content col-span-12 md:col-span-8">
               <div className="space-y-5">
-                <h2>{blog.title}</h2>
+                <div>
+                  <h2 className="!mb-0">{blog.title}</h2>
+                  <span className="text-xs text-primary font-medium">
+                    {new Date(blog.created_at).toLocaleDateString("en-US", {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
+                </div>
                 <img className="w-full" src={`${VITE_IMAGE_PATH_URL}/blog/${blog.blogimg}`} alt="" />
                 <div>
                   <div className="prose max-w-none" dangerouslySetInnerHTML={{ __html: blog.description }} />
@@ -50,7 +59,8 @@ const BlogDetailPage = () => {
               </div> */}
             </div>
             <div className="col-span-12 md:col-span-4 space-y-4">
-              <SingleBlogCard blogId={parseInt(id)} />
+              <h2 className="text-base md:text-lg font-semibold mb-6">Related Blog</h2>
+              <SingleBlogCard blogId={slug} />
             </div>
           </div>
         </Container>

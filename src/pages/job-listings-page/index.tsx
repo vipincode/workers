@@ -121,7 +121,7 @@ export default function JobListingsPage() {
                 </select>
               </div>
               <div className="mt-auto">
-                <button type="submit" className="btn btn-primary">
+                <button type="submit" className="btn btn-primary md:mt-5 w-full md:auto">
                   Find
                 </button>
               </div>

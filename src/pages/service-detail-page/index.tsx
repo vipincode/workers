@@ -5,6 +5,10 @@ import UserRatingCard from "../../components/shared/user-rating-card";
 import DOMPurify from "dompurify";
 import { useServiceDetail } from "../../react-query/hooks";
 
+interface Tag {
+  value: string;
+}
+
 const ServicesDetailsPage = () => {
   const { slug } = useParams();
   const redirect = useNavigate();
@@ -59,27 +63,12 @@ const ServicesDetailsPage = () => {
       </div>
     );
 
-  const { service } = serviceDetailData;
+  const { service, instant_service, permanent_service } = serviceDetailData;
+
+  const tags: Tag[] = JSON.parse(service.tags || "[]");
 
   return (
     <div>
-      <div className="px-6 space-y-6 mb-6">
-        {/* <div className="breadcrumbs text-sm">
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to={`/service/${slug}`}>Listings</Link>
-            </li>
-            <li>Service detail</li>
-          </ul>
-        </div> */}
-        <div className="mt-8">
-          <h2 className="text-2xl font-semibold">{service.title}</h2>
-          <p className="mt-2">{service.short_description}</p>
-        </div>
-      </div>
       {service.slider_image.length > 0 ? (
         <ServiceDetailsCarousel data={service.slider_image} />
       ) : (
@@ -88,14 +77,20 @@ const ServicesDetailsPage = () => {
         </div>
       )}
       <Container className="mb-[80px]">
-        <div className="my-8 md:flex md:gap-8 px-0 md:px-6 space-y-4 md:space-y-0">
-          <div>
-            <strong className="text-sm">Category:</strong>
-            <span className="bg-accent text-primary text-xs px-3 py-1 rounded-md ml-2">{service.category_name}</span>
-          </div>
-          <div>
-            <strong className="text-sm">Tags:</strong>
-            <span className="bg-accent text-primary text-xs px-3 py-1 rounded-md ml-2">{service.tags}</span>
+        <div className="md:px-6 space-y-6 mb-6">
+          <div className="mt-8">
+            <h2 className="text-2xl font-semibold">{service.title}</h2>
+            <div className="mt-2 flex items-center gap-5">
+              <span className="text-sm text-primary font-normal">
+                {new Date(service.created_at).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
+              <span className="bg-accent text-primary text-xs px-3 py-1 rounded-md ml-2">{service.category_name}</span>
+            </div>
+            <p className="mt-2">{service.short_description}</p>
           </div>
         </div>
         <div className="md:flex md:gap-6">
@@ -108,6 +103,58 @@ const ServicesDetailsPage = () => {
                   __html: service.description ? DOMPurify.sanitize(service.description) : "<p>No content available</p>",
                 }}
               />
+            </div>
+            <div className="my-8">
+              <div>
+                <strong className="text-sm">Tags:</strong>
+                {tags.map((tag, index) => (
+                  <span key={index} className="bg-accent text-primary text-xs px-3 py-1 rounded-md ml-2">
+                    {tag.value}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className="mt-6">
+              <h3 className="text-base font-semibold md:text-lg mn-2">Instant services notes</h3>
+              <div className="space-y-3">
+                <div
+                  className="bg-gray-100 rounded-md px-3 py-2"
+                  dangerouslySetInnerHTML={{
+                    __html: instant_service.includes_instument
+                      ? DOMPurify.sanitize(instant_service.includes_instument)
+                      : "<p>No content available</p>",
+                  }}
+                />
+                <div
+                  className="bg-gray-100 rounded-md px-3 py-2"
+                  dangerouslySetInnerHTML={{
+                    __html: instant_service.excludes_instument
+                      ? DOMPurify.sanitize(instant_service.excludes_instument)
+                      : "<p>No content available</p>",
+                  }}
+                />
+              </div>
+            </div>
+            <div className="mt-6">
+              <h3 className="text-base font-semibold md:text-lg mb-2">Permanent services notes</h3>
+              <div className="space-y-3">
+                <div
+                  className="bg-gray-100 rounded-md px-3 py-2"
+                  dangerouslySetInnerHTML={{
+                    __html: permanent_service.includes_instument
+                      ? DOMPurify.sanitize(permanent_service.includes_instument)
+                      : "<p>No content available</p>",
+                  }}
+                />
+                <div
+                  className="bg-gray-100 rounded-md px-3 py-2"
+                  dangerouslySetInnerHTML={{
+                    __html: permanent_service.excludes_instument
+                      ? DOMPurify.sanitize(permanent_service.excludes_instument)
+                      : "<p>No content available</p>",
+                  }}
+                />
+              </div>
             </div>
             <div>
               <hr className="mb-6" />
@@ -124,14 +171,14 @@ const ServicesDetailsPage = () => {
                 <button
                   onClick={() => redirect(`/permanent-service/${service.id}`)}
                   className="btn btn-primary w-full md:w-auto capitalize"
-                  disabled={service.is_permanent_service < 1}
+                  disabled={service.is_permanent_service != 1}
                 >
                   Get permanent Service
                 </button>
                 <button
                   onClick={() => redirect(`/instant-service/${service.id}`)}
                   className="btn btn-primary w-full md:w-auto capitalize"
-                  disabled={service.is_instant_service < 1}
+                  disabled={service.is_instant_service != 1}
                 >
                   Get Instant Service
                 </button>

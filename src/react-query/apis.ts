@@ -43,8 +43,8 @@ export const fetchSubCategories = (categoryId: number) =>
 
 export const fetchBlog = () => axios.get<BlogProps>(`${API_URL}/get-blogs`).then((res) => res.data);
 
-export const fetchSingleBlog = (id: number) =>
-  axios.get<SingleBlogProps>(`${API_URL}/get-blog/${id}`).then((res) => res.data);
+export const fetchSingleBlog = (slug: string) =>
+  axios.get<SingleBlogProps>(`${API_URL}/get-blog/${slug}`).then((res) => res.data);
 
 /**
  * @HomeSlider
@@ -175,7 +175,7 @@ export const getPartners = async () => {
  */
 
 export const getPolicies = async (slug: string) => {
-  const response = await axios.get<PolicyApiResponse>(`${API_URL}/${slug}`);
+  const response = await axios.get<PolicyApiResponse>(`${API_URL}/page/${slug}`);
   return response.data;
 };
 

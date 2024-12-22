@@ -8,7 +8,7 @@ const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
     <>
       {data && (
         <Link
-          to={`/blog/${data.id}`}
+          to={`/blog/${data.slug}`}
           className="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row overflow-hidden"
         >
           <img
@@ -21,6 +21,13 @@ const BlogCard: React.FC<BlogCardProps> = ({ data }) => {
             <p className="mb-3 text-sm font-normal text-gray-700 dark:text-gray-400">
               {data.short_description.slice(0, 140)}...
             </p>
+            <span className="text-xs text-primary font-medium">
+              {new Date(data.created_at).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+              })}
+            </span>
           </div>
         </Link>
       )}

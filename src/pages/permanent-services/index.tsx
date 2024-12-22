@@ -4,6 +4,7 @@ import Container from "../../components/shared/container";
 import ServicesCarouselCard from "../../components/shared/services-carousel-card";
 import { usePermanentServices } from "../../react-query/hooks";
 import PermanentServiceLoading from "../../components/services/loader/permanent-service-loading";
+import DOMPurify from "dompurify";
 
 const PermanentServices = () => {
   const { id } = useParams();
@@ -16,6 +17,8 @@ const PermanentServices = () => {
   if (status === "pending") {
     return <PermanentServiceLoading />;
   }
+
+  const { permanent_service } = data;
   return (
     <div>
       <Container className="my-10 min-h-[60vh]">
@@ -51,6 +54,28 @@ const PermanentServices = () => {
               <p className="italic text-sm font-semibold text-blue-600">Office</p>
               <p className="text-xs font-medium">+91-898989898999</p>
             </div>
+          </div>
+        </div>
+
+        <div className="mt-6">
+          <h3 className="text-base font-semibold md:text-lg">Notes</h3>
+          <div className="space-y-3">
+            <div
+              className="bg-gray-100 rounded-md px-3 py-2"
+              dangerouslySetInnerHTML={{
+                __html: permanent_service.includes_instument
+                  ? DOMPurify.sanitize(permanent_service.includes_instument)
+                  : "<p>No content available</p>",
+              }}
+            />
+            <div
+              className="bg-gray-100 rounded-md px-3 py-2"
+              dangerouslySetInnerHTML={{
+                __html: permanent_service.excludes_instument
+                  ? DOMPurify.sanitize(permanent_service.excludes_instument)
+                  : "<p>No content available</p>",
+              }}
+            />
           </div>
         </div>
       </Container>

@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
+import { Pagination, Autoplay } from "swiper/modules";
 import Container from "./container";
 import ClientCard from "./client-card";
 import HeadingPrimary from "../typography/heading-primary";
@@ -34,10 +34,14 @@ const Testimonials = () => {
         <HeadingPrimary className="text-center mb-[50px]">What our client says</HeadingPrimary>
         <div className="max-w-[500px] mx-auto">
           <Swiper
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
             pagination={{
               dynamicBullets: true,
             }}
-            modules={[Pagination]}
+            modules={[Pagination, Autoplay]}
             className="testimonialsCarousel"
           >
             {data.clients.map((client) => (

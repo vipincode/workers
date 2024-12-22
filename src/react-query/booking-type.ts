@@ -21,6 +21,7 @@ interface BookedService {
   user_id: number;
   service_id: number;
   instant_service_id: number;
+  service_title: string;
   address: string;
   city_id: number;
   state_id: number;

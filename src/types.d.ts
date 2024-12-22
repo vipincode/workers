@@ -190,6 +190,8 @@ interface InstantServiceSliderSlogan {
 interface InstantApiResponse {
   instant_service: InstantService;
   slider_slogans: SliderSlogan[];
+  instant_service: ServiceNotes;
+  permanent_service: ServiceNotes;
 }
 
 interface CategoryProps {
@@ -496,10 +498,16 @@ export interface Review {
   rating: number;
   review_comments: string;
 }
+interface Tag {
+  id: number; // Optional if you have unique IDs
+  value: string;
+}
 
 export interface ServiceDetailApiResponse {
   service: Service;
   slider_slogans: Slogan[];
+  instant_service: ServiceNotes;
+  permanent_service: ServiceNotes;
 }
 
 // Permanet service
@@ -516,6 +524,11 @@ interface PermanentService {
   excludes_instument: string;
   created_at: string;
   updated_at: string;
+}
+
+interface ServiceNotes {
+  includes_instument: string; // HTML content in string format
+  excludes_instument: string;
 }
 
 interface SliderSlogan {

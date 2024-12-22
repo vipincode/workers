@@ -54,7 +54,7 @@ export default function JobDetailedViewPage() {
               </div>
               <div>
                 <p className="text-sm md:font-base font-semibold">Experience:</p>
-                <p className="text-sm md:font-base">{job.experience} Year</p>
+                <p className="text-sm md:font-base">{job.experience}</p>
               </div>
               <div>
                 <p className="text-sm md:font-base font-semibold">Job Skill:</p>
@@ -63,6 +63,10 @@ export default function JobDetailedViewPage() {
               <div>
                 <p className="text-sm md:font-base font-semibold">Location:</p>
                 <p className="text-sm md:font-base">{job.location}</p>
+              </div>
+              <div>
+                <p className="text-sm md:font-base font-semibold">Expiry Date:</p>
+                <p className="text-sm md:font-base">{job.last_date}</p>
               </div>
             </div>
             <div>
@@ -74,11 +78,11 @@ export default function JobDetailedViewPage() {
             </div>
           </div>
           <div className="mt-6 flex flex-col md:flex-row justify-center gap-3 md:gap-0 md:space-x-4">
-            <button className="btn btn-primary">Call Now</button>
-            <button className="btn btn-secondary text-white" onClick={handleClick}>
+            {/* <button className="btn btn-primary">Call Now</button> */}
+            <button className="btn btn-primary text-white" onClick={handleClick}>
               Apply Now
             </button>
-            <button className="btn btn-accent text-primary">WhatsApp</button>
+            {/* <button className="btn btn-accent text-primary">WhatsApp</button> */}
           </div>
         </div>
       </div>

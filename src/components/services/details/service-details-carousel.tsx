@@ -1,10 +1,18 @@
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
 import { VITE_IMAGE_PATH_URL } from "../../../react-query/constants";
+import { Autoplay, Navigation } from "swiper/modules";
 
 const ServiceDetailsCarousel = ({ data }) => {
   return (
-    <Swiper navigation={true} modules={[Navigation]} className="serviceDetailCarousel">
+    <Swiper
+      navigation={true} // Enables navigation arrows
+      autoplay={{
+        delay: 3000,
+        disableOnInteraction: false,
+      }}
+      modules={[Navigation, Autoplay]} // Attach Autoplay and Navigation
+      className="serviceDetailCarousel"
+    >
       {data.map((item: string) => (
         <SwiperSlide
           key={item}

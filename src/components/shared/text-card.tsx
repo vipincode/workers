@@ -1,12 +1,17 @@
-const TextCard = () => {
+import { MdOutlinePrecisionManufacturing } from "react-icons/md";
+
+const ICONS = {
+  MdOutlinePrecisionManufacturing,
+};
+
+const TextCard = ({ data }) => {
+  const IconComponent = ICONS[data.icon];
+
   return (
     <div className="card bg-base-100 w-full shadow-xl">
-      <div className="card-body">
-        <h2 className="text-base font-medium md:text-lg">Card title!</h2>
-        <p className="text-sm md:font-base font-normal leading-5 md:leading-6">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Vitae eum sit illo aut. Vitae, consequatur tenetur
-          debitis aliquam qui harum incidunt odio sapiente voluptas, optio delectus officiis quas aperiam error.
-        </p>
+      <div className="card-body items-center justify-center flex-col gap-2">
+        {IconComponent && <IconComponent size={62} className="text-primary" />}
+        <h2 className="text-sm font-normal md:text-base capitalize">{data.description}</h2>
       </div>
     </div>
   );

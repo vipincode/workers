@@ -1,4 +1,4 @@
-import { Calendar, MapPin } from "lucide-react";
+import { Calendar } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Service } from "../../types";
 import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
@@ -32,14 +32,20 @@ const ListingCard = ({ data }: { data: Service }) => {
           <div className="flex items-center md:flex-col gap-1 mt-2 lg:mt-0">
             <div className="badge">
               <Calendar size={12} className="text-primary" />{" "}
-              <span className="pl-2 text-[10px] md:text-xs">12-09-2024</span>
+              <span className="pl-2 text-[10px] md:text-xs">
+                {new Date(data.created_at).toLocaleDateString("en-US", {
+                  year: "numeric",
+                  month: "long",
+                  day: "numeric",
+                })}
+              </span>
             </div>
-            <div className="badge">
+            {/* <div className="badge">
               <p className="flex items-center gap-1">
                 <MapPin size={12} className="text-primary" />{" "}
                 <span className="text-[10px] md:text-xs">45, Street Delhi</span>
               </p>
-            </div>
+            </div> */}
           </div>
         </div>
         <div className="card-actions justify-between items-center">

@@ -69,14 +69,14 @@ const CartPage = () => {
                 </p>
               </div>
             </div>
-            <div className="mt-6">
+            {/* <div className="mt-6">
               <h3 className="text-[17px] font-medium">Payment offer</h3>
               <div className="space-y-2 mt-6">
                 <p className="text-sm font-normal">Offer text</p>
                 <p className="text-sm font-normal">Offer text</p>
                 <p className="text-sm font-normal">Offer text</p>
               </div>
-            </div>
+            </div> */}
             <div className="mt-6 flex items-center gap-2">
               <input type="checkbox" defaultChecked className="checkbox" />
               <p className="flex items-center text-[16px] gap-2">

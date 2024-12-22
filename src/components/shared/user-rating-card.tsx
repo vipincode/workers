@@ -20,7 +20,7 @@ const UserRatingCard = ({ reviews }: UserRatingCardProp) => {
           <div className="w-10 h-10 bg-primary text-white rounded-full flex justify-center items-center text-lg font-medium uppercase">
             {review.name.slice(0, 1)}
           </div>
-          <div>
+          <div className="flex-1">
             <div className="flex gap-5 items-center mb-3">
               <h3 className="text-base font-semibold">{review.name}</h3>
               <Rating rating={review.rating} />

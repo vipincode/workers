@@ -9,6 +9,7 @@ import InstantServicesTab from "../../components/services/instant-service-tab.ts
 import useModeStore from "../../store/mode-store.tsx";
 import InstantServiceLoading from "../../components/services/loader/instant-service-loading.tsx";
 import { useServiceStore } from "../../store/instant-service-store.ts";
+import DOMPurify from "dompurify";
 
 const InstantServices = () => {
   const { id } = useParams();
@@ -40,6 +41,8 @@ const InstantServices = () => {
   setInstantServiceId(data.instant_service.id);
   setServiceId(data.instant_service.service_id);
   localStorage.setItem("day-prices", JSON.stringify(data.instant_service));
+
+  const { instant_service } = data;
 
   return (
     <div>
@@ -74,6 +77,29 @@ const InstantServices = () => {
           >
             View Cart
           </button>
+        </div>
+        <div>
+          <div className="mt-6">
+            <h3 className="text-base font-semibold md:text-lg mb-4">Notes:</h3>
+            <div className="space-y-3">
+              <div
+                className="bg-gray-100 rounded-md px-3 py-2"
+                dangerouslySetInnerHTML={{
+                  __html: instant_service.includes_instument
+                    ? DOMPurify.sanitize(instant_service.includes_instument)
+                    : "<p>No content available</p>",
+                }}
+              />
+              <div
+                className="bg-gray-100 rounded-md px-3 py-2"
+                dangerouslySetInnerHTML={{
+                  __html: instant_service.excludes_instument
+                    ? DOMPurify.sanitize(instant_service.excludes_instument)
+                    : "<p>No content available</p>",
+                }}
+              />
+            </div>
+          </div>
         </div>
       </Container>
     </div>

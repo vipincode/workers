@@ -14,16 +14,19 @@ const JobCard = ({ job, expandedJob, setExpandedJob }: JobCardProps) => {
       <div className="bg-white rounded-lg shadow-md p-4">
         <div className="flex justify-between items-center">
           <h2 className="text-base font-semibold">{job.title}</h2>
-          <Link to={`/job-detail/${job.slug}`} className="btn btn-primary text-[11px] btn-sm btn-link uppercase">
-            Apply Now
-          </Link>
+          <div>
+            <Link to={`/job-detail/${job.slug}`} className="btn btn-primary text-[11px] btn-sm btn-link uppercase">
+              Apply Now
+            </Link>
+          </div>
         </div>
         <div className="space-y-1">
           <p className="text-gray-600 text-xs font-medium">Location: {job.location}</p>
           <p className="text-gray-600 text-xs font-medium">Daily Wage: ₹{job.salary}/day</p>
           <p className="text-gray-600 text-xs font-medium">Vacancy: {job.vaccancy} Post</p>
+          <p className="text-gray-600 text-xs font-medium">Experience: {job.experience} Post</p>
         </div>
-        <div className="mt-2">
+        <div className="mt-2 flex justify-between items-center">
           <button
             className="text-primary hover:underline flex items-center"
             onClick={() => setExpandedJob(expandedJob === job.title ? null : job.title)}
@@ -38,6 +41,11 @@ const JobCard = ({ job, expandedJob, setExpandedJob }: JobCardProps) => {
               </p>
             )}
           </button>
+          <div>
+            <p className="text-xs font-normal text-gray-500">
+              Expiry Date: <span className="text-red-600">{job.last_date}</span>
+            </p>
+          </div>
         </div>
         {expandedJob === job.title && (
           <div className="mt-2 font-job">

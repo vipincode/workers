@@ -149,7 +149,7 @@ const BookedServicePage = () => {
       instantService: service.instant_service_obj,
       rowData: [
         service.id,
-        service.service_id || "N/A",
+        service.service_title || "N/A",
         service.mode,
         service.address,
         service.state_name || "N/A",

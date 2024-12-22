@@ -34,7 +34,7 @@ const NavigationMenu = ({ categories, isLoading, isError, error, user }) => {
           </div>
         </li>
         <li>
-          <Link className="font-medium text-sm" to="/about">
+          <Link className="font-medium text-sm" to="/about-us">
             About Us
           </Link>
         </li>

@@ -3,7 +3,7 @@ import { VITE_IMAGE_PATH_URL } from "../../react-query/constants";
 import { useBlogs } from "../../react-query/hooks";
 import SingleBlogCardLoading from "./loader/single-blog-card-loading";
 
-const SingleBlogCard = ({ blogId }: { blogId: number }) => {
+const SingleBlogCard = ({ blogId }: { blogId: string }) => {
   const { data, status } = useBlogs();
 
   if (status === "pending") {
@@ -16,7 +16,7 @@ const SingleBlogCard = ({ blogId }: { blogId: number }) => {
 
   if (status === "success") {
     const { blogs } = data;
-    const otherBlogData = blogs.filter((blog) => blog.id !== blogId);
+    const otherBlogData = blogs.filter((blog) => blog.slug !== blogId);
 
     return (
       <>
