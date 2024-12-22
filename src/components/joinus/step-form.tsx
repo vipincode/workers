@@ -62,8 +62,8 @@ export default function StepForm() {
       shift: "",
       joining: "",
       mobile_number: "",
-      password: "",
-      password_confirmation: "",
+      // password: "",
+      // password_confirmation: "",
       skills: [
         {
           skill_name: "",
@@ -155,7 +155,7 @@ export default function StepForm() {
     } else if (currentStep === 2) {
       fieldsToValidate = ["skills"];
     } else if (currentStep === 3) {
-      fieldsToValidate = ["work_experience", "shift", "joining", "mobile_number", "password"];
+      fieldsToValidate = ["work_experience", "shift", "joining", "mobile_number"];
     }
 
     const isValid = await trigger(fieldsToValidate);
@@ -169,23 +169,23 @@ export default function StepForm() {
   if (isErrorStates || isErrorCities || categoryError || subCategoryError) return <p>Error loading data...</p>;
 
   // Password
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
-  const [error, setError] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [confirmPassword, setConfirmPassword] = useState("");
+  // const [error, setError] = useState("");
 
-  const handlePasswordChange = (e) => {
-    setPassword(e.target.value);
-    setError("");
-  };
+  // const handlePasswordChange = (e) => {
+  //   setPassword(e.target.value);
+  //   setError("");
+  // };
 
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    if (e.target.value !== password) {
-      setError("Passwords do not match");
-    } else {
-      setError("");
-    }
-  };
+  // const handleConfirmPasswordChange = (e) => {
+  //   setConfirmPassword(e.target.value);
+  //   if (e.target.value !== password) {
+  //     setError("Passwords do not match");
+  //   } else {
+  //     setError("");
+  //   }
+  // };
   return (
     <div className="container mx-auto p-4">
       <h1 className="text-xl md:text-2xl font-bold mb-4">Join Us</h1>
@@ -482,7 +482,7 @@ export default function StepForm() {
               />
               {errors.mobile_number && <span className="text-error text-sm mt-1">{errors.mobile_number.message}</span>}
             </div>
-            <div className="form-control">
+            {/* <div className="form-control">
               <label className="label" htmlFor="password">
                 <span className="label-text">Password</span>
               </label>
@@ -502,9 +502,9 @@ export default function StepForm() {
                 className={`input input-bordered ${errors.password ? "input-error" : ""}`}
               />
               {errors.password && <span className="text-error text-sm mt-1">{errors.password.message}</span>}
-            </div>
+            </div> */}
 
-            <div className="form-control">
+            {/* <div className="form-control">
               <label className="label" htmlFor="password_confirmation">
                 <span className="label-text">Confirm Password</span>
               </label>
@@ -529,7 +529,7 @@ export default function StepForm() {
                 <span className="text-error text-sm mt-1">{errors.password_confirmation.message}</span>
               )}
               {error && <p className="text-error text-sm mt-1">{error}</p>}
-            </div>
+            </div> */}
           </div>
         )}
 

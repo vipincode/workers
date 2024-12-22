@@ -10,8 +10,8 @@ export const FormJoinUsSchema = z.object({
   shift: z.string().optional(),
   joining: z.string().optional(), // You may want to use z.date() if joining is a date
   mobile_number: z.string().regex(/^[0-9]{10}$/, "Mobile number must be 10 digits"),
-  password: z.string().min(8, "Password must be at least 8 characters"),
-  password_confirmation: z.string().min(8, "Password confirmation must be at least 8 characters"),
+  // password: z.string().min(8, "Password must be at least 8 characters"),
+  // password_confirmation: z.string().min(8, "Password confirmation must be at least 8 characters"),
   skills: z.array(
     z.object({
       skill_name: z.string().min(1, "Skill name is required"),

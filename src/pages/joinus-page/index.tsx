@@ -39,8 +39,8 @@ const JoinUs = () => {
     <div className="my-10 min-h-[60vh]">
       <div className="container mx-auto px-4 space-y-6">
         <div className="flex justify-center flex-col">
-          <h3 className="text-center font-semibold text-xl md:text-3xl mb-3">Register with us</h3>
-          <p className="text-center text-base md:text-lg">Register as Labour | Mistry | Labour Thekedar</p>
+          <h3 className="text-center font-semibold text-xl md:text-3xl mb-3">Join with us</h3>
+          <p className="text-center text-base md:text-lg">Join as Labour | Mistry | Labour Thekedar</p>
         </div>
         <div>
           <JoinCarouselBanner data={data} />
