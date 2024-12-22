@@ -4,54 +4,49 @@ import TextCard from "../../components/shared/text-card";
 
 const AboutData = [
   {
-    id: "a",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "Have 100000+ more Manpower",
+    id: "1",
+    icon: "/images/about/24x7-consultant.png",
+    description: "24X7 Consultant",
   },
   {
-    id: "b",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "Skilled and NonSkilled Manpower",
-  },
-  {
-    id: "c",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "10000 Served Manpowers Across India",
-  },
-  {
-    id: "d",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "100+ more client",
-  },
-  {
-    id: "i",
-    icon: "MdOutlinePrecisionManufacturing",
+    id: "2",
+    icon: "/images/about/100- quality-assurance.png",
     description: "100% Quality Assurance",
   },
   {
-    id: "e",
-    icon: "MdOutlinePrecisionManufacturing",
+    id: "3",
+    icon: "/images/about/skilled-and-non-skilled-manpower.png",
+    description: "Skilled and Non Skilled Manpower",
+  },
+  {
+    id: "4",
+    icon: "/images/about/easiest-way-to-get-service.png",
+    description: "Easiest way to Get Service",
+  },
+  {
+    id: "5",
+    icon: "/images/about/india-best-manpower-service-provider.png",
     description: "India’s Best Manpower Service Provider",
   },
   {
-    id: "f",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "Weekly Skill Training Programm",
+    id: "6",
+    icon: "/images/about/have-100000+-more-manpower.png",
+    description: "Have 100000+ More Manpower",
   },
   {
-    id: "g",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "24x7 Consultant",
+    id: "7",
+    icon: "/images/about/across-india-manpower-service-delivery.png",
+    description: "Across India Manpower delivery",
   },
   {
-    id: "j",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "Well Manner and Experience manpower",
+    id: "8",
+    icon: "/images/about/day-and-night-manpower.png",
+    description: "Day & Night Shift Manpower",
   },
   {
-    id: "h",
-    icon: "MdOutlinePrecisionManufacturing",
-    description: "Easiest way to Get Service",
+    id: "9",
+    icon: "/images/about/instant-manpower-service-at-your-doostep.png",
+    description: "Instant Manpower Service at your Doorstep",
   },
 ];
 
@@ -154,7 +149,7 @@ const AboutPage = () => {
         </div>
 
         {/* WHY US */}
-        <div>
+        <div className="pb-16">
           <div className="mt-[100px]">
             <h2 className="text-2xl font-semibold my-5 text-center">Why us</h2>
           </div>

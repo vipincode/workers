@@ -1,17 +1,19 @@
-import { MdOutlinePrecisionManufacturing } from "react-icons/md";
+interface Props {
+  id: string;
+  icon: string;
+  description: string;
+}
 
-const ICONS = {
-  MdOutlinePrecisionManufacturing,
-};
+interface TextCardProps {
+  data: Props;
+}
 
-const TextCard = ({ data }) => {
-  const IconComponent = ICONS[data.icon];
-
+const TextCard = ({ data }: TextCardProps) => {
   return (
     <div className="card bg-base-100 w-full shadow-xl">
       <div className="card-body items-center justify-center flex-col gap-2">
-        {IconComponent && <IconComponent size={62} className="text-primary" />}
-        <h2 className="text-sm font-normal md:text-base capitalize">{data.description}</h2>
+        <img src={data.icon} alt="service image" className="w-16 h-16 object-contain" />
+        <h2 className="text-sm font-normal capitalize text-center">{data.description}</h2>
       </div>
     </div>
   );
