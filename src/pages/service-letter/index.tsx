@@ -171,7 +171,7 @@ function ServiceLetterPage() {
 
   const onApplySubmit = async (data: CouponFormValues) => {
     try {
-      const response = await axios.post("https://dehatwala.com/api/apply-coupon", {
+      const response = await axios.post(`${API_URL}/apply-coupon`, {
         coupon_code: data.coupon,
         user_id: user.id,
       });
@@ -184,6 +184,13 @@ function ServiceLetterPage() {
         setCouponDiscount(totalPrice * (percentage / 100)); // Calculate discount
       }
     } catch (error) {
+      if (axios.isAxiosError(error)) {
+        const errorMessage = error.response?.data?.message || "Failed to apply coupon.";
+        toast.error(errorMessage);
+      } else {
+        // Handle non-Axios errors
+        toast.error("An unexpected error occurred.");
+      }
       // setResponseMessage(error.response?.data?.message || "Failed to apply coupon.");
       setDiscountPercentage(0);
       setAppliedCouponCode("");
@@ -453,6 +460,7 @@ function ServiceLetterPage() {
                     />
                     {couponErrors.coupon && <p className="text-red-500 text-xs mt-1">{couponErrors.coupon.message}</p>}
                   </div>
+
                   <button type="submit" className="btn btn-primary btn-sm">
                     Apply
                   </button>
