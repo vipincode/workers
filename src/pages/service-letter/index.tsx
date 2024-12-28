@@ -47,8 +47,8 @@ function ServiceLetterPage() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("service");
 
-  const { totalDayPrice } = useDayRateStore();
-  const { totalHourPrice } = useHourRateStore();
+  const { totalDayPrice, resetDayState } = useDayRateStore();
+  const { totalHourPrice, resetHourState } = useHourRateStore();
 
   const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
   const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
@@ -285,6 +285,11 @@ function ServiceLetterPage() {
               setTimeout(() => {
                 navigate("/");
               }, 400);
+              if (mode === "day") {
+                resetDayState();
+              } else {
+                resetHourState();
+              }
             } else {
               // console.error("Failed to save booking:", result.status, result.statusText);
               // toast.error("Failed to save booking.",);
