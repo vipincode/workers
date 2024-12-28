@@ -11,7 +11,7 @@ const AboutData = [
   {
     id: "2",
     icon: "/images/about/100- quality-assurance.png",
-    description: "100% Quality Assurance",
+    description: "100% Quality Manpower",
   },
   {
     id: "3",
@@ -61,7 +61,7 @@ const AboutPage = () => {
               <img src="/images/road.jpg" alt="Construction site" className="rounded-lg shadow-lg" />
             </div>
             <div className="prose max-w-none space-y-4">
-              <h2 className="text-2xl md:text-3xl font-semibold mb-4">About Us</h2>
+              <h2 className="text-2xl md:text-3xl font-semibold mb-4">Who We Are</h2>
               <p>
                 We are India's First Online Construction Manpower Service provider at doorstep and construction sites.
               </p>
@@ -119,7 +119,7 @@ const AboutPage = () => {
               <img src="/images/road.jpg" alt="Construction site" className="rounded-lg shadow-lg" />
             </div>
             <div className="prose max-w-none space-y-4">
-              <h2 className="text-2xl md:text-3xl font-semibold">Why Dehatwala*</h2>
+              <h2 className="text-2xl md:text-3xl font-semibold">Why We are the best choice</h2>
               <p>
                 India has nearly 70 million construction workers, and more than 30% workers are migrant and nomadic.
               </p>
@@ -151,7 +151,7 @@ const AboutPage = () => {
         {/* WHY US */}
         <div className="pb-16">
           <div className="mt-[100px]">
-            <h2 className="text-2xl font-semibold my-5 text-center">Why us</h2>
+            <h2 className="text-2xl font-semibold my-5 text-center">Why Choose us</h2>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {AboutData.map((data) => (

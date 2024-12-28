@@ -47,8 +47,8 @@ function ServiceLetterPage() {
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("service");
 
-  const { totalDayPrice, resetDayState } = useDayRateStore();
-  const { totalHourPrice, resetHourState } = useHourRateStore();
+  const { totalDayPrice } = useDayRateStore();
+  const { totalHourPrice } = useHourRateStore();
 
   const dayRateStoreData = JSON.parse(localStorage.getItem("day-rate-store") || "{}");
   const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
@@ -240,11 +240,12 @@ function ServiceLetterPage() {
       const validatedData = formSchema.parse(extendedData);
 
       await handlePayment(validatedData).then(() => {
-        if (mode === "day") {
-          resetDayState();
-        } else {
-          resetHourState();
-        }
+        // if (mode === "day") {
+        //   resetDayState();
+        // } else {
+        //   resetHourState();
+        // }
+        console.log("Success...");
       });
     } catch (error) {
       console.error("Error in onSubmit:", error);
@@ -325,7 +326,7 @@ function ServiceLetterPage() {
           <div>
             <h2 className="text-lg lg:text-xl font-semibold mb-4">Fill Out All Required Details</h2>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div>
                   <label className="label" htmlFor="book_date">
                     <span className="label-text">Date</span>
@@ -334,10 +335,10 @@ function ServiceLetterPage() {
                     type="date"
                     {...register("book_date")}
                     placeholder="Type here"
-                    className="input input-bordered flex-1"
+                    className="input input-bordered w-full flex-1"
                     min={new Date().toISOString().split("T")[0]}
                   />
-                  {errors.book_date && <span className="text-error text-sm mt-1">{errors.book_date.message}</span>}
+                  {errors.book_date && <span className="text-error text-xs mt-1">{errors.book_date.message}</span>}
                 </div>
                 <div className="mb-2 md:mb-0">
                   <label className="label" htmlFor="time_slot">
@@ -349,7 +350,7 @@ function ServiceLetterPage() {
                     placeholder="Type here"
                     className="input input-bordered w-full"
                   />
-                  {errors.time_slot && <span className="text-error text-sm mt-1">{errors.time_slot.message}</span>}
+                  {errors.time_slot && <span className="text-error text-xs mt-1">{errors.time_slot.message}</span>}
                 </div>
               </div>
               <div>
@@ -362,7 +363,7 @@ function ServiceLetterPage() {
                   className="textarea textarea-bordered w-full"
                   placeholder="Address"
                 ></textarea>
-                {errors.address && <span className="text-error text-sm mt-1">{errors.address.message}</span>}
+                {errors.address && <span className="text-error text-xs mt-1">{errors.address.message}</span>}
               </div>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                 {isLoadingStates ? (
@@ -387,7 +388,7 @@ function ServiceLetterPage() {
                         </option>
                       ))}
                     </select>
-                    {errors.state_id && <span className="text-error text-sm mt-1">{errors.state_id.message}</span>}
+                    {errors.state_id && <span className="text-error text-xs mt-1">{errors.state_id.message}</span>}
                   </div>
                 )}
 
@@ -414,7 +415,7 @@ function ServiceLetterPage() {
                         </option>
                       ))}
                     </select>
-                    {errors.city_id && <span className="text-error text-sm mt-1">{errors.city_id.message}</span>}
+                    {errors.city_id && <span className="text-error text-xs mt-1">{errors.city_id.message}</span>}
                   </div>
                 )}
                 <div>
@@ -428,7 +429,7 @@ function ServiceLetterPage() {
                     placeholder="Type here"
                     className="input input-bordered w-full"
                   />
-                  {errors.pincode && <span className="text-error text-sm mt-1">{errors.pincode.message}</span>}
+                  {errors.pincode && <span className="text-error text-xs mt-1">{errors.pincode.message}</span>}
                 </div>
               </div>
             </form>
@@ -539,7 +540,7 @@ function ServiceLetterPage() {
                 </button>
               ) : (
                 <button
-                  onClick={handleSubmit(onSubmit)}
+                  onClick={() => toast.success("Work in progress!")}
                   type="submit"
                   disabled={!active}
                   className="btn btn-primary flex-1 mt-4"

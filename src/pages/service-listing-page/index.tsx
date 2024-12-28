@@ -45,7 +45,7 @@ const ServiceListingPage = () => {
       </div>
       <Container className="my-[80px]">
         <div className="md:flex">
-          <div className="hidden md:block w-[300px] sticky top-0">
+          <div className="hidden md:block w-[180px] xl:w-[300px] sticky top-0">
             {subCategories && <ListingSideBar subCategories={subCategories} />}
             {!subCategories && (
               <div className="min-h-[80vh] flex flex-col gap-6">
@@ -116,7 +116,7 @@ const ServiceListingPage = () => {
               <ListingCard key={service.id} data={service} />
             ))}
           </div>
-          <div className="md:w-[200px] mt-6 md:mt-0 px-6">{/* <p>Adds area</p> */}</div>
+          <div className="md:w-[200px] mt-6 md:mt-0 px-6 hidden xl:block">{/* <p>Adds area</p> */}</div>
         </div>
       </Container>
     </div>
