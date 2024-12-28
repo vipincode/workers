@@ -3,7 +3,13 @@ import { useDayRateStore } from "../../store/day-service-store";
 import { useHourRateStore } from "../../store/hour-service-store";
 import { useSearchParams } from "react-router-dom";
 
-const CartPrices = () => {
+interface CouponProps {
+  couponDayPrice: number;
+  couponHourPrice: number;
+  couponDiscountedAmount: number;
+}
+
+const CartPrices = ({ couponDayPrice, couponHourPrice, couponDiscountedAmount }: CouponProps) => {
   const { totalMesonDayRate, totalHelperDayRate, totalMesonOvertimeRate, totalHelperOvertimeRate, totalDayPrice } =
     useDayRateStore();
   const { totalHelperHourRate, totalHourPrice, totalMesonHourRate } = useHourRateStore();
@@ -52,10 +58,24 @@ const CartPrices = () => {
               <IndianRupee size={14} /> {tip}
             </strong>
           </p>
+          <p className="flex justify-between items-center text-sm gap-4 py-4">
+            Coupon Discount:
+            <strong className="flex items-center gap-1">
+              <IndianRupee size={14} /> {couponDiscountedAmount}
+            </strong>
+          </p>
+
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {totalDayPrice}
+            </strong>
+          </p>
+
+          <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
+            Grand Total:
+            <strong className="flex items-center gap-1 text-green-500">
+              <IndianRupee size={14} /> {couponDayPrice}
             </strong>
           </p>
         </div>
@@ -79,10 +99,22 @@ const CartPrices = () => {
               <IndianRupee size={14} /> {tip}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
+          <p className="flex justify-between items-center text-sm gap-4 py-4">
+            Coupon Discount:
+            <strong className="flex items-center gap-1">
+              <IndianRupee size={14} /> {couponDiscountedAmount}
+            </strong>
+          </p>
+          <p className="flex justify-between items-center text-sm font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {totalHourPrice}
+            </strong>
+          </p>
+          <p className="flex justify-between items-center text-sm font-medium gap-4 py-6">
+            Grand Total:
+            <strong className="flex items-center gap-1 text-green-500">
+              <IndianRupee size={14} /> {couponHourPrice}
             </strong>
           </p>
         </div>

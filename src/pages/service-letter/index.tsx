@@ -1,6 +1,6 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import CartPrices from "../../components/shared/cart-prices";
@@ -9,7 +9,6 @@ import { getCities, getStates } from "../../react-query/apis";
 import { RAZORPAY_KEY_ID } from "../../react-query/constants";
 import { useDayRateStore } from "../../store/day-service-store";
 import { useHourRateStore } from "../../store/hour-service-store";
-// import useModeStore from "../../store/mode-store";
 import { CitiesResponse, StateProps } from "../../types";
 import DayService from "../../components/services/instant-service-tab.tsx/day-service";
 import HourService from "../../components/services/instant-service-tab.tsx/hour-service";
@@ -17,19 +16,34 @@ import toast from "react-hot-toast";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { API_URL } from "../../react-query/constants";
 import { useAuthStore } from "../../store/auth-store";
-// import SignInModal from "../../components/auth/signin-modal";
+import axios from "axios";
+
+interface CouponFormValues {
+  coupon: string;
+}
 
 function ServiceLetterPage() {
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   const [active, setActive] = useState(true);
   const navigate = useNavigate();
 
-  // const location = useLocation(); // Access current location
+  // Manage Radio button open button
+  const [selectedPayment, setSelectedPayment] = useState("Pay Online");
+  const [isButtonOpen, setIsButtonOpen] = useState(true);
+
+  const handleRadioChange = (e) => {
+    setSelectedPayment(e.target.value);
+    if (e.target.value === "Pay Online") {
+      setIsButtonOpen(true);
+    } else {
+      setIsButtonOpen(false);
+    }
+  };
+
+  // Manage Radio button open button end
+
   // Get user and token
   const { token, user } = useAuthStore();
-  // const { openModal } = useModalStore();
-
-  // const mode = useModeStore((state) => state.mode);
   const [searchParams] = useSearchParams();
   const mode = searchParams.get("service");
 
@@ -40,9 +54,9 @@ function ServiceLetterPage() {
   const hourRateStoreData = JSON.parse(localStorage.getItem("hour-rate-store") || "{}");
   const instantServiceStoreData = JSON.parse(localStorage.getItem("service-store") || "{}");
 
-  const price = useMemo(() => {
-    return mode === "day" ? totalDayPrice : totalHourPrice;
-  }, [mode, totalDayPrice, totalHourPrice]);
+  // const price = useMemo(() => {
+  //   return mode === "day" ? totalDayPrice : totalHourPrice;
+  // }, [mode, totalDayPrice, totalHourPrice]);
 
   const {
     data: states,
@@ -144,6 +158,55 @@ function ServiceLetterPage() {
   const tip = mode === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
   const totalPrice = mode === "day" ? dayRateStoreData.state.totalDayPrice : hourRateStoreData.state.totalHourPrice;
 
+  // Handle coupon
+  const form = useForm<CouponFormValues>();
+  const {
+    handleSubmit: handleCouponSubmit,
+    formState: { errors: couponErrors },
+  } = form;
+  // const [responseMessage, setResponseMessage] = useState("");
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [appliedCouponCode, setAppliedCouponCode] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState(0);
+
+  const onApplySubmit = async (data: CouponFormValues) => {
+    try {
+      const response = await axios.post("https://dehatwala.com/api/apply-coupon", {
+        coupon_code: data.coupon,
+        user_id: user.id,
+      });
+
+      // setResponseMessage(response.data.message || "Coupon applied successfully!");
+      if (response.data.coupon) {
+        const percentage = response.data.coupon.percentage;
+        setDiscountPercentage(percentage);
+        setAppliedCouponCode(data.coupon); // Store applied coupon code
+        setCouponDiscount(totalPrice * (percentage / 100)); // Calculate discount
+      }
+    } catch (error) {
+      // setResponseMessage(error.response?.data?.message || "Failed to apply coupon.");
+      setDiscountPercentage(0);
+      setAppliedCouponCode("");
+      setCouponDiscount(0);
+    }
+  };
+
+  const TotalCouponDiscountedPrice =
+    mode === "day" ? totalDayPrice * (discountPercentage / 100) : totalHourPrice * (discountPercentage / 100);
+  // const TotalCouponPrice = mode === "day" ? discountedDayPrice : discountedHourPrice;
+
+  const discountedDayPrice = totalDayPrice - TotalCouponDiscountedPrice;
+  const discountedHourPrice = totalHourPrice - TotalCouponDiscountedPrice;
+
+  const TotalCouponPrice = mode === "day" ? discountedDayPrice : discountedHourPrice;
+
+  const handleRemoveCoupon = () => {
+    setDiscountPercentage(0);
+    setAppliedCouponCode("");
+    setCouponDiscount(0);
+  };
+  //Coupon
+
   useEffect(() => {
     const currentPath = window.location.pathname + window.location.search;
 
@@ -153,6 +216,9 @@ function ServiceLetterPage() {
   }, [token, navigate]);
 
   const onSubmit = async (data: FormData) => {
+    const isCouponApplied = discountPercentage > 0;
+    const totalAmountToSend = isCouponApplied ? TotalCouponPrice : totalPrice;
+
     const extendedData: FormData = {
       ...data,
       user_id: user.id,
@@ -161,9 +227,10 @@ function ServiceLetterPage() {
       mode: mode as "day" | "hour",
       pick_and_drop: "0" as "0" | "1",
       tip: tip,
-      total_amount: totalPrice,
-      coupon_code: "",
-      coupon_discounted: 0,
+      total_amount: totalAmountToSend,
+      // total_amount: totalPrice,
+      coupon_code: isCouponApplied ? appliedCouponCode : "",
+      coupon_discounted: isCouponApplied ? couponDiscount : 0,
       instant_service_obj: mode === "day" ? dayRateStoreData.state : hourRateStoreData.state,
       status: "1" as "0" | "1",
       transaction_id: "",
@@ -186,7 +253,7 @@ function ServiceLetterPage() {
 
   const handlePayment = async (extendedData: FormData) => {
     const validatedData = formSchema.parse(extendedData);
-    const final_price = (100 * price).toFixed(2);
+    const final_price = (100 * validatedData.total_amount).toFixed(2);
 
     const options = {
       key: RAZORPAY_KEY_ID,
@@ -252,132 +319,236 @@ function ServiceLetterPage() {
 
   return (
     <div className="min-h-[60vh] mb-[100px] ">
-      <Container className="min-h-[60vh] mb-[100px] lg:max-w-[60%] ">
-        <div className="mt-7">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div>
-                <label className="label" htmlFor="book_date">
-                  <span className="label-text">Date</span>
-                </label>
-                <input
-                  type="date"
-                  {...register("book_date")}
-                  placeholder="Type here"
-                  className="input input-bordered w-full"
-                  min={new Date().toISOString().split("T")[0]}
-                />
-                {errors.book_date && <span className="text-error text-sm mt-1">{errors.book_date.message}</span>}
-              </div>
-              <div className="mb-2 md:mb-0">
-                <label className="label" htmlFor="time_slot">
-                  <span className="label-text">Time slot</span>
-                </label>
-                <input
-                  type="time"
-                  {...register("time_slot")}
-                  placeholder="Type here"
-                  className="input input-bordered w-full"
-                />
-                {errors.time_slot && <span className="text-error text-sm mt-1">{errors.time_slot.message}</span>}
-              </div>
-            </div>
-            <div>
-              <label className="label" htmlFor="address">
-                <span className="label-text">Address</span>
-              </label>
-              <textarea
-                {...register("address")}
-                id="address"
-                className="textarea textarea-bordered w-full"
-                placeholder="Address"
-              ></textarea>
-              {errors.address && <span className="text-error text-sm mt-1">{errors.address.message}</span>}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {isLoadingStates ? (
-                <div className="space-y-3">
-                  <div className="skeleton h-5 w-16" />
-                  <div className="skeleton h-8 w-full" />
-                </div>
-              ) : (
-                <div className="form-control">
-                  <label className="label" htmlFor="state_id">
-                    <span className="label-text">State</span>
+      <Container className="min-h-[60vh] mb-[100px]">
+        <div className="mt-7 grid grid-cols-1 lg:grid-cols-2 gap-8">
+          {/* user form */}
+          <div>
+            <h2 className="text-lg lg:text-xl font-semibold mb-4">Fill Out All Required Details</h2>
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div>
+                  <label className="label" htmlFor="book_date">
+                    <span className="label-text">Date</span>
                   </label>
-                  <select
-                    id="state_id"
-                    {...register("state_id", { required: "State is required" })}
-                    className={`select select-bordered w-full ${errors.state_id ? "select-error" : ""}`}
-                  >
-                    <option value="">Select a state</option>
-                    {states?.states.map((state) => (
-                      <option key={state.id} value={state.id}>
-                        {state.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.state_id && <span className="text-error text-sm mt-1">{errors.state_id.message}</span>}
+                  <input
+                    type="date"
+                    {...register("book_date")}
+                    placeholder="Type here"
+                    className="input input-bordered flex-1"
+                    min={new Date().toISOString().split("T")[0]}
+                  />
+                  {errors.book_date && <span className="text-error text-sm mt-1">{errors.book_date.message}</span>}
                 </div>
-              )}
+                <div className="mb-2 md:mb-0">
+                  <label className="label" htmlFor="time_slot">
+                    <span className="label-text">Time slot</span>
+                  </label>
+                  <input
+                    type="time"
+                    {...register("time_slot")}
+                    placeholder="Type here"
+                    className="input input-bordered w-full"
+                  />
+                  {errors.time_slot && <span className="text-error text-sm mt-1">{errors.time_slot.message}</span>}
+                </div>
+              </div>
+              <div>
+                <label className="label" htmlFor="address">
+                  <span className="label-text">Address</span>
+                </label>
+                <textarea
+                  {...register("address")}
+                  id="address"
+                  className="textarea textarea-bordered w-full"
+                  placeholder="Address"
+                ></textarea>
+                {errors.address && <span className="text-error text-sm mt-1">{errors.address.message}</span>}
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                {isLoadingStates ? (
+                  <div className="space-y-3">
+                    <div className="skeleton h-5 w-16" />
+                    <div className="skeleton h-8 w-full" />
+                  </div>
+                ) : (
+                  <div className="form-control">
+                    <label className="label" htmlFor="state_id">
+                      <span className="label-text">State</span>
+                    </label>
+                    <select
+                      id="state_id"
+                      {...register("state_id", { required: "State is required" })}
+                      className={`select select-bordered w-full ${errors.state_id ? "select-error" : ""}`}
+                    >
+                      <option value="">Select a state</option>
+                      {states?.states.map((state) => (
+                        <option key={state.id} value={state.id}>
+                          {state.name}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.state_id && <span className="text-error text-sm mt-1">{errors.state_id.message}</span>}
+                  </div>
+                )}
 
-              {isLoadingCities ? (
-                <div className="space-y-3">
-                  <div className="skeleton h-5 w-16" />
-                  <div className="skeleton h-8 w-full" />
-                </div>
-              ) : (
-                <div className="form-control">
-                  <label className="label" htmlFor="city_id">
-                    <span className="label-text">City</span>
+                {isLoadingCities ? (
+                  <div className="space-y-3">
+                    <div className="skeleton h-5 w-16" />
+                    <div className="skeleton h-8 w-full" />
+                  </div>
+                ) : (
+                  <div className="form-control">
+                    <label className="label" htmlFor="city_id">
+                      <span className="label-text">City</span>
+                    </label>
+                    <select
+                      id="city_id"
+                      {...register("city_id", { required: "City is required" })}
+                      className={`select select-bordered w-full ${errors.city_id ? "select-error" : ""}`}
+                      disabled={!selectedStateId || isLoadingCities}
+                    >
+                      <option value="">Select a city</option>
+                      {(cities?.cites || []).map((city) => (
+                        <option key={city.id} value={city.id}>
+                          {city.name}
+                        </option>
+                      ))}
+                    </select>
+                    {errors.city_id && <span className="text-error text-sm mt-1">{errors.city_id.message}</span>}
+                  </div>
+                )}
+                <div>
+                  <label className="label" htmlFor="pin">
+                    <span className="label-text">Pin code</span>
                   </label>
-                  <select
-                    id="city_id"
-                    {...register("city_id", { required: "City is required" })}
-                    className={`select select-bordered w-full ${errors.city_id ? "select-error" : ""}`}
-                    disabled={!selectedStateId || isLoadingCities}
-                  >
-                    <option value="">Select a city</option>
-                    {(cities?.cites || []).map((city) => (
-                      <option key={city.id} value={city.id}>
-                        {city.name}
-                      </option>
-                    ))}
-                  </select>
-                  {errors.city_id && <span className="text-error text-sm mt-1">{errors.city_id.message}</span>}
+                  <input
+                    {...register("pincode")}
+                    id="pin"
+                    type="text"
+                    placeholder="Type here"
+                    className="input input-bordered w-full"
+                  />
+                  {errors.pincode && <span className="text-error text-sm mt-1">{errors.pincode.message}</span>}
                 </div>
-              )}
-              <div>
-                <label className="label" htmlFor="pin">
-                  <span className="label-text">Pin code</span>
+              </div>
+            </form>
+            {!appliedCouponCode && (
+              <div className="my-6">
+                <hr className="my-4" />
+                <div className="text-sm font-semibold mb-2">Apply Coupon:</div>
+                <form onSubmit={handleCouponSubmit(onApplySubmit)} className="flex items-center gap-3">
+                  <div>
+                    <input
+                      id="coupon"
+                      type="text"
+                      placeholder="Coupon code"
+                      className="input input-bordered w-full input-sm max-w-[200px]"
+                      {...form.register("coupon", { required: "Coupon code is required" })}
+                    />
+                    {couponErrors.coupon && <p className="text-red-500 text-xs mt-1">{couponErrors.coupon.message}</p>}
+                  </div>
+                  <button type="submit" className="btn btn-primary btn-sm">
+                    Apply
+                  </button>
+                </form>
+                <hr className="my-6" />
+              </div>
+            )}
+            {appliedCouponCode && (
+              <div className="my-6">
+                <div className="text-sm font-semibold mb-2">Coupon applied:</div>
+                <div className="flex items-center">
+                  <span className="bg-green-200 text-green-600 rounded-md block px-2 py-1">{appliedCouponCode}</span>
+                  <button className="btn-link btn" onClick={handleRemoveCoupon}>
+                    Remove
+                  </button>
+                </div>
+              </div>
+            )}
+            <div>
+              <h3 className="font-medium">Select Payment mode</h3>
+              <div className="payment-methods mt-4 flex flex-col gap-5">
+                <label
+                  htmlFor="cod"
+                  className={`flex items-center gap-3 cursor-pointer payment-label ${
+                    selectedPayment === "COD" ? "checked" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    id="cod"
+                    name="radio-1"
+                    value="COD"
+                    className="radio radio-primary"
+                    checked={selectedPayment === "COD"}
+                    onChange={handleRadioChange}
+                  />
+                  Cash on delivery (COD)
                 </label>
-                <input
-                  {...register("pincode")}
-                  id="pin"
-                  type="text"
-                  placeholder="Type here"
-                  className="input input-bordered w-full"
-                />
-                {errors.pincode && <span className="text-error text-sm mt-1">{errors.pincode.message}</span>}
+
+                <label
+                  htmlFor="payOnline"
+                  className={`flex items-center gap-3 cursor-pointer payment-label ${
+                    selectedPayment === "Pay Online" ? "checked" : ""
+                  }`}
+                >
+                  <input
+                    type="radio"
+                    id="payOnline"
+                    name="radio-1"
+                    value="Pay Online"
+                    className="radio radio-primary"
+                    checked={selectedPayment === "Pay Online"}
+                    onChange={handleRadioChange}
+                  />
+                  Pay Online
+                </label>
               </div>
             </div>
-          </form>
-          <div className="relative pt-10 mb-8">
-            <button className="btn btn-primary btn-xs mt-10 absolute right-0 -top-2" onClick={() => setActive(!active)}>
-              {active ? "Edit" : "Save"}
-            </button>
-            {active && <CartPrices />}
-            {!active && mode === "day" && <DayService />}
-            {!active && mode === "hour" && <HourService />}
           </div>
-          <button
-            onClick={handleSubmit(onSubmit)}
-            type="submit"
-            disabled={!active}
-            className="btn btn-primary w-full mt-4"
-          >
-            Proceed to pay
-          </button>
+          {/* Total Amount table */}
+          <div>
+            <div className="relative mb-8">
+              <button
+                className="btn btn-primary btn-xs mt-10 absolute right-0 -top-[41px]"
+                onClick={() => setActive(!active)}
+              >
+                {active ? "Edit" : "Save"}
+              </button>
+              {active && (
+                <CartPrices
+                  couponDayPrice={discountedDayPrice}
+                  couponHourPrice={discountedHourPrice}
+                  couponDiscountedAmount={TotalCouponDiscountedPrice}
+                />
+              )}
+              {!active && mode === "day" && <DayService />}
+              {!active && mode === "hour" && <HourService />}
+            </div>
+
+            <hr className="my-8" />
+            <div className="flex items-center gap-6">
+              {isButtonOpen ? (
+                <button
+                  onClick={handleSubmit(onSubmit)}
+                  type="submit"
+                  disabled={!active}
+                  className="btn btn-primary flex-1 mt-4"
+                >
+                  Proceed to pay
+                </button>
+              ) : (
+                <button
+                  onClick={handleSubmit(onSubmit)}
+                  type="submit"
+                  disabled={!active}
+                  className="btn btn-primary flex-1 mt-4"
+                >
+                  COD
+                </button>
+              )}
+            </div>
+          </div>
         </div>
       </Container>
     </div>
