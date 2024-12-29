@@ -200,18 +200,31 @@ function ServiceLetterPage() {
 
   const TotalCouponDiscountedPrice =
     mode === "day" ? totalDayPrice * (discountPercentage / 100) : totalHourPrice * (discountPercentage / 100);
-  // const TotalCouponPrice = mode === "day" ? discountedDayPrice : discountedHourPrice;
 
+  // ONLINE
   const discountedDayPrice = totalDayPrice - TotalCouponDiscountedPrice;
   const discountedHourPrice = totalHourPrice - TotalCouponDiscountedPrice;
-
   const TotalCouponPrice = mode === "day" ? discountedDayPrice : discountedHourPrice;
+
+  // 2% Charge on COD
+  const codSurcharge = 0.02; // 2% surcharge for COD
+  const finalDayPrice = selectedPayment === "COD" ? discountedDayPrice * (1 + codSurcharge) : discountedDayPrice;
+  const finalHourPrice = selectedPayment === "COD" ? discountedHourPrice * (1 + codSurcharge) : discountedHourPrice;
+  const TotalCODPrice = mode === "day" ? finalDayPrice : finalHourPrice;
+
+  const codChargeAmount =
+    mode === "day"
+      ? discountedDayPrice * (1 + codSurcharge) - discountedDayPrice
+      : discountedHourPrice * (1 + codSurcharge) - discountedHourPrice;
 
   const handleRemoveCoupon = () => {
     setDiscountPercentage(0);
     setAppliedCouponCode("");
     setCouponDiscount(0);
   };
+
+  // 2%
+
   //Coupon
 
   useEffect(() => {
@@ -326,6 +339,33 @@ function ServiceLetterPage() {
 
     const razorpay = new (window as any).Razorpay(options);
     razorpay.open();
+  };
+
+  const handleCODSubmit = (data: FormData) => {
+    const isCouponApplied = discountPercentage > 0;
+    const totalAmountToSend = isCouponApplied
+      ? TotalCODPrice
+      : selectedPayment === "COD"
+      ? totalPrice * (1 + codSurcharge)
+      : totalPrice;
+
+    const extendedData: FormData = {
+      ...data,
+      user_id: user.id,
+      service_id: instantServiceStoreData.state.serviceId,
+      instant_service_id: instantServiceStoreData.state.instantServiceId,
+      mode: mode as "day" | "hour",
+      pick_and_drop: "0" as "0" | "1",
+      tip: tip,
+      total_amount: totalAmountToSend,
+      coupon_code: isCouponApplied ? appliedCouponCode : "",
+      coupon_discounted: isCouponApplied ? couponDiscount : 0,
+      instant_service_obj: mode === "day" ? dayRateStoreData.state : hourRateStoreData.state,
+      status: "1" as "0" | "1",
+      transaction_id: "",
+    };
+
+    console.log(extendedData);
   };
 
   if (isErrorStates || isErrorCities) return <p>Error loading data...</p>;
@@ -530,10 +570,17 @@ function ServiceLetterPage() {
                 {active ? "Edit" : "Save"}
               </button>
               {active && (
+                // <CartPrices
+                //   couponDayPrice={discountedDayPrice}
+                //   couponHourPrice={discountedHourPrice}
+                //   couponDiscountedAmount={TotalCouponDiscountedPrice}
+                // />
                 <CartPrices
-                  couponDayPrice={discountedDayPrice}
-                  couponHourPrice={discountedHourPrice}
+                  couponDayPrice={finalDayPrice}
+                  couponHourPrice={finalHourPrice}
                   couponDiscountedAmount={TotalCouponDiscountedPrice}
+                  isCOD={selectedPayment === "COD"}
+                  codChargeAmount={codChargeAmount}
                 />
               )}
               {!active && mode === "day" && <DayService />}
@@ -553,7 +600,7 @@ function ServiceLetterPage() {
                 </button>
               ) : (
                 <button
-                  onClick={() => toast.success("Work in progress!")}
+                  onClick={handleSubmit(handleCODSubmit)}
                   type="submit"
                   disabled={!active}
                   className="btn btn-primary flex-1 mt-4"

@@ -7,9 +7,17 @@ interface CouponProps {
   couponDayPrice?: number;
   couponHourPrice?: number;
   couponDiscountedAmount?: number;
+  isCOD?: boolean;
+  codChargeAmount?: number;
 }
 
-const CartPrices = ({ couponDayPrice, couponHourPrice, couponDiscountedAmount }: CouponProps) => {
+const CartPrices = ({
+  couponDayPrice,
+  couponHourPrice,
+  couponDiscountedAmount,
+  isCOD,
+  codChargeAmount,
+}: CouponProps) => {
   const { totalMesonDayRate, totalHelperDayRate, totalMesonOvertimeRate, totalHelperOvertimeRate, totalDayPrice } =
     useDayRateStore();
   const { totalHelperHourRate, totalHourPrice, totalMesonHourRate } = useHourRateStore();
@@ -58,12 +66,22 @@ const CartPrices = ({ couponDayPrice, couponHourPrice, couponDiscountedAmount }:
               <IndianRupee size={14} /> {tip}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
-            Coupon Discount:
-            <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {couponDiscountedAmount}
-            </strong>
-          </p>
+          {isCOD && (
+            <p className="flex justify-between items-center text-sm gap-4 py-4">
+              COD Charge:
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {codChargeAmount.toFixed(2)}
+              </strong>
+            </p>
+          )}
+          {couponDiscountedAmount > 0 && (
+            <p className="flex justify-between items-center text-sm gap-4 py-4">
+              Coupon Discount:
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {couponDiscountedAmount}
+              </strong>
+            </p>
+          )}
 
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
@@ -101,12 +119,14 @@ const CartPrices = ({ couponDayPrice, couponHourPrice, couponDiscountedAmount }:
               <IndianRupee size={14} /> {tip}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
-            Coupon Discount:
-            <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {couponDiscountedAmount}
-            </strong>
-          </p>
+          {couponDiscountedAmount > 0 && (
+            <p className="flex justify-between items-center text-sm gap-4 py-4">
+              Coupon Discount:
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {couponDiscountedAmount}
+              </strong>
+            </p>
+          )}
           <p className="flex justify-between items-center text-sm font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1 text-sm">
