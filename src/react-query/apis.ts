@@ -22,7 +22,6 @@ import {
   ServiceDetailApiResponse,
   ServicesProps,
   SingleBlogProps,
-  SliderApiResponse,
   SliderProps,
   StateProps,
   SubCategoryProps,
