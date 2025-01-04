@@ -38,26 +38,7 @@ const PermanentServices = () => {
             permanentServiceId={data.permanent_service.id}
           />
         </div>
-        <div className="bg-accent p-6 rounded-md mt-10">
-          <h2 className="text-xl md:text-[38px] font-semibold text-center mb-6">Customercare services</h2>
-          <h2 className="text-base md:text-[24px] font-medium text-center">+00-8676767676767</h2>
-          <div className="md:flex md:justify-center md:gap-5 space-y-3 md:space-y-0 mt-10">
-            <div className="text-center md:text-left">
-              <p className="italic text-sm font-semibold text-blue-600">WhatsApp</p>
-              <p className="text-xs font-medium">+91-898989898999</p>
-            </div>
-            <div className="text-center md:text-left">
-              <p className="italic text-sm font-semibold text-blue-600">Email</p>
-              <p className="text-xs font-medium">+91-898989898999</p>
-            </div>
-            <div className="text-center md:text-left">
-              <p className="italic text-sm font-semibold text-blue-600">Office</p>
-              <p className="text-xs font-medium">+91-898989898999</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="mt-6">
+        <div className="mt-10">
           <h3 className="text-base font-semibold md:text-lg">Notes</h3>
           <div className="space-y-3">
             <div
@@ -76,6 +57,24 @@ const PermanentServices = () => {
                   : "<p>No content available</p>",
               }}
             />
+          </div>
+        </div>
+        <div className="bg-accent p-6 rounded-md mt-10">
+          <h2 className="text-xl md:text-[38px] font-semibold text-center mb-6">Customercare services</h2>
+          <h2 className="text-base md:text-[24px] font-medium text-center">+00-8676767676767</h2>
+          <div className="md:flex md:justify-center md:gap-5 space-y-3 md:space-y-0 mt-10">
+            <div className="text-center md:text-left">
+              <p className="italic text-sm font-semibold text-blue-600">WhatsApp</p>
+              <p className="text-xs font-medium">+91-898989898999</p>
+            </div>
+            <div className="text-center md:text-left">
+              <p className="italic text-sm font-semibold text-blue-600">Email</p>
+              <p className="text-xs font-medium">+91-898989898999</p>
+            </div>
+            <div className="text-center md:text-left">
+              <p className="italic text-sm font-semibold text-blue-600">Office</p>
+              <p className="text-xs font-medium">+91-898989898999</p>
+            </div>
           </div>
         </div>
       </Container>

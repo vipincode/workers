@@ -4,14 +4,22 @@ import { Link } from "react-router-dom";
 import JobCardSkeleton from "../../components/skeleton/job-card-skeleton";
 import { useForm } from "react-hook-form";
 import { useQuery } from "@tanstack/react-query";
-import { fetchJobs } from "../../react-query/apis";
+import { fetchJobCarousel, fetchJobs } from "../../react-query/apis";
 import { SearchIcon } from "lucide-react";
 import { useJobsCategory } from "../../react-query/hooks";
 import { JobApiResponse } from "../../types";
+import JobCategoryCarousel from "../../components/jobs/job-category-carousel";
 
 export default function JobListingsPage() {
   const [expandedJob, setExpandedJob] = useState<string | null>(null);
   const [filters, setFilters] = useState({});
+
+  const sliderData = useQuery({
+    queryKey: ["job-sliders"],
+    queryFn: fetchJobCarousel,
+    enabled: true,
+  });
+
   const { register, handleSubmit } = useForm({
     defaultValues: {
       location: "",
@@ -39,11 +47,23 @@ export default function JobListingsPage() {
     setFilters(data);
   };
 
+  if (sliderData.isLoading) {
+    return <p>Loading..</p>;
+  }
+  if (sliderData.isError) {
+    return <p>Error loading job sliders</p>;
+  }
+
   if (isLoading) return <JobCardSkeleton />;
   if (isError || categoryError) return <p>Error loading jobs or categories.</p>;
 
+  console.log(sliderData.data);
+
   return (
     <div className="min-h-screen bg-gray-100 p-4">
+      <div>
+        <JobCategoryCarousel sliders={sliderData.data.sliders} />
+      </div>
       <div className="flex justify-center items-center py-6 bg-accent/40 mb-10 rounded-md">
         <div className="space-y-4">
           <div className="text-center">
@@ -51,24 +71,16 @@ export default function JobListingsPage() {
             <p>Search by Location, Industry, Experience, and Salary</p>
           </div>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-            <div className="pt-4 relative w-full">
-              <input
-                {...register("location")}
-                type="text"
-                placeholder="Search by location, name..."
-                className="input input-bordered w-full input-md"
-              />
-              <SearchIcon className="absolute right-5 top-7" />
-            </div>
-            <div className="md:flex md:items-center md:gap-4  space-y-4 md:space-y-0">
+            <div className="flex items-center bg-white rounded-full px-5 py-2">
               {categoryLoading ? (
                 "Loading..."
               ) : (
-                <div>
-                  <label htmlFor="category" className="font-medium block text-sm mb-1">
-                    Category
-                  </label>
-                  <select {...register("category")} defaultValue="" className="select select-bordered w-full">
+                <div className="w-full">
+                  <select
+                    {...register("category")}
+                    defaultValue=""
+                    className="select w-full outline-none focus:ring-0 bg-white focus:outline-none focus-within:outline-none focus-within:ring-0 focus::shadow-none focus:border-none"
+                  >
                     <option value="" disabled>
                       Select category
                     </option>
@@ -80,49 +92,17 @@ export default function JobListingsPage() {
                   </select>
                 </div>
               )}
-              <div>
-                <label htmlFor="experience" className="font-medium block text-sm mb-1">
-                  Experience
-                </label>
-                <select {...register("experience")} defaultValue="" className="select select-bordered w-full">
-                  <option value="" disabled>
-                    Select experience
-                  </option>
-                  <option>0-1 Year</option>
-                  <option>1-2 Year</option>
-                  <option>2-3 Year</option>
-                  <option>3-4 Year</option>
-                  <option>4-5 Year</option>
-                  <option>5-6 Year</option>
-                  <option>7-8 Year</option>
-                  <option>9-10 Year</option>
-                  <option>10+ Year</option>
-                  <option>20+ Year</option>
-                </select>
+              <div className="w-full">
+                <input
+                  {...register("location")}
+                  type="text"
+                  placeholder="Search by location, name..."
+                  className="input w-full input-md outline-none focus:ring-0 bg-white focus:outline-none focus-within:outline-none focus-within:ring-0 focus::shadow-none focus:border-none"
+                />
               </div>
               <div>
-                <label htmlFor="salary" className="font-medium block text-sm mb-1">
-                  Salary
-                </label>
-                <select {...register("salary")} defaultValue="" className="select select-bordered w-full">
-                  <option value="" disabled>
-                    Select salary
-                  </option>
-                  <option>0-10000</option>
-                  <option>10000-20000</option>
-                  <option>20000-30000</option>
-                  <option>30000-40000</option>
-                  <option>40000-50000</option>
-                  <option>50000-60000</option>
-                  <option>70000-80000</option>
-                  <option>90000-100000</option>
-                  <option>100000+</option>
-                  <option>200000+</option>
-                </select>
-              </div>
-              <div className="mt-auto">
-                <button type="submit" className="btn btn-primary md:mt-5 w-full md:auto">
-                  Find
+                <button type="submit" className="btn btn-primary rounded-full">
+                  <SearchIcon />
                 </button>
               </div>
             </div>

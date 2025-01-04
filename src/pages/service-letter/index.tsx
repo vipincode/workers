@@ -1,5 +1,5 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -137,6 +137,7 @@ function ServiceLetterPage() {
     status: z.enum(["0", "1"]).optional(),
     transaction_id: z.string().optional(),
     total_amount: z.number().optional(),
+    payment_mode: z.enum(["Online", "Offline"]).optional(),
   });
 
   type FormData = z.infer<typeof formSchema>;
@@ -254,6 +255,7 @@ function ServiceLetterPage() {
       instant_service_obj: mode === "day" ? dayRateStoreData.state : hourRateStoreData.state,
       status: "1" as "0" | "1",
       transaction_id: "",
+      payment_mode: selectedPayment === "Pay Online" ? "Online" : "Offline",
     };
 
     try {
@@ -303,7 +305,7 @@ function ServiceLetterPage() {
               await result.json();
               toast.success("Booking saved successfully!");
               setTimeout(() => {
-                navigate("/");
+                navigate("/booked-services");
               }, 400);
               if (mode === "day") {
                 resetDayState();
@@ -341,6 +343,34 @@ function ServiceLetterPage() {
     razorpay.open();
   };
 
+  //COD
+
+  // Define the API call
+  const savePayAfterService = async (data: FormData) => {
+    const response = await axios.post(`${API_URL}/save-pay-after-service`, data);
+    console.log(response, "response");
+    return response.data;
+  };
+
+  const mutation = useMutation({
+    mutationFn: savePayAfterService,
+    onSuccess: () => {
+      toast.success("Booking saved successfully!");
+      setTimeout(() => {
+        navigate("/booked-services");
+      }, 400);
+      if (mode === "day") {
+        resetDayState();
+      } else {
+        resetHourState();
+      }
+    },
+    onError: (error: unknown) => {
+      console.error("Error:", error);
+      toast.error("Failed to save booking.");
+    },
+  });
+
   const handleCODSubmit = (data: FormData) => {
     const isCouponApplied = discountPercentage > 0;
     const totalAmountToSend = isCouponApplied
@@ -363,9 +393,10 @@ function ServiceLetterPage() {
       instant_service_obj: mode === "day" ? dayRateStoreData.state : hourRateStoreData.state,
       status: "1" as "0" | "1",
       transaction_id: "",
+      payment_mode: "Offline",
     };
 
-    console.log(extendedData);
+    mutation.mutate(extendedData);
   };
 
   if (isErrorStates || isErrorCities) return <p>Error loading data...</p>;
@@ -522,23 +553,28 @@ function ServiceLetterPage() {
             <div>
               <h3 className="font-medium">Select Payment mode</h3>
               <div className="payment-methods mt-4 flex flex-col gap-5">
-                <label
-                  htmlFor="cod"
-                  className={`flex items-center gap-3 cursor-pointer payment-label ${
-                    selectedPayment === "COD" ? "checked" : ""
-                  }`}
-                >
-                  <input
-                    type="radio"
-                    id="cod"
-                    name="radio-1"
-                    value="COD"
-                    className="radio radio-primary"
-                    checked={selectedPayment === "COD"}
-                    onChange={handleRadioChange}
-                  />
-                  Cash on delivery (COD)
-                </label>
+                <div>
+                  <label
+                    htmlFor="cod"
+                    className={`flex items-center gap-3 cursor-pointer payment-label ${
+                      selectedPayment === "COD" ? "checked" : ""
+                    }`}
+                  >
+                    <input
+                      type="radio"
+                      id="cod"
+                      name="radio-1"
+                      value="COD"
+                      className="radio radio-primary"
+                      checked={selectedPayment === "COD"}
+                      onChange={handleRadioChange}
+                    />
+                    Pay with cash after service
+                  </label>
+                  <div className="text-sm text-gray-500 mt-2 pl-8">
+                    A 2% surcharge will be added to the total amount for cash on delivery.
+                  </div>
+                </div>
 
                 <label
                   htmlFor="payOnline"
@@ -601,11 +637,11 @@ function ServiceLetterPage() {
               ) : (
                 <button
                   onClick={handleSubmit(handleCODSubmit)}
+                  disabled={mutation.isPending}
                   type="submit"
-                  disabled={!active}
                   className="btn btn-primary flex-1 mt-4"
                 >
-                  COD
+                  Pay with cash after service
                 </button>
               )}
             </div>

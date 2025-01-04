@@ -13,6 +13,7 @@ import {
   JobApiResponse,
   JobCategoryApiResponse,
   JobDetailApiResponse,
+  JobSliderProps,
   PartnersApiResponse,
   PermanentServiceResponse,
   PolicyApiResponse,
@@ -21,6 +22,7 @@ import {
   ServiceDetailApiResponse,
   ServicesProps,
   SingleBlogProps,
+  SliderApiResponse,
   SliderProps,
   StateProps,
   SubCategoryProps,
@@ -52,6 +54,13 @@ export const fetchSingleBlog = (slug: string) =>
  */
 
 export const fetchHeroCarousel = () => axios.get<SliderProps>(`${API_URL}/get-sliders`).then((res) => res.data);
+
+/**
+ * @JobSlider
+ * Get Slider data.
+ */
+
+export const fetchJobCarousel = () => axios.get<JobSliderProps>(`${API_URL}/job-sliders`).then((res) => res.data);
 
 /**
  * @InstantService

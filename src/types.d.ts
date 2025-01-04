@@ -550,3 +550,23 @@ interface SliderSlogan {
 interface ApiErrorResponse {
   message: string;
 }
+
+// JOB Slider
+export interface SliderApiResponse {
+  id: number;
+  category_id: number;
+  title: string;
+  tagline: string;
+  rlink: string;
+  slider_img: string;
+  status: string;
+  slider_page: string | null;
+  image_link: string;
+  deleted_at: string | null;
+  created_at: string;
+  updated_at: string;
+}
+
+export interface JobSliderProps {
+  sliders: SliderApiResponse[];
+}

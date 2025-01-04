@@ -1,7 +1,8 @@
 import { Pagination } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { JobSliderProps } from "../../types";
 
-const JobCategoryCarousel = ({ data }: { data: string[] }) => {
+const JobCategoryCarousel = ({ sliders }: JobSliderProps) => {
   return (
     <Swiper
       pagination={{
@@ -10,10 +11,16 @@ const JobCategoryCarousel = ({ data }: { data: string[] }) => {
       modules={[Pagination]}
       className="mySwiper"
     >
-      {data.map((item) => (
-        <SwiperSlide key={item}>
-          <div className="min-h-[160px] md:min-h-[300px] flex items-center justify-center bg-accent">
-            <h3 className="text-base md:text-2xl font-medium">{item}</h3>
+      {sliders.map((item) => (
+        <SwiperSlide key={item.id}>
+          <div
+            style={{ backgroundImage: `url(${item.image_link})` }}
+            className="bg-cover bg-center bg-no-repeat h-[300px]"
+          >
+            <div className="flex flex-col justify-center items-center h-full p-4">
+              <h3 className="text-lg font-medium">{item.title}</h3>
+              <h3 className="text-base font-normal">{item.tagline}</h3>
+            </div>
           </div>
         </SwiperSlide>
       ))}

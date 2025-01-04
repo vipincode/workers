@@ -481,7 +481,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             className="btn btn-primary w-full md:w-auto min-w-[120px]"
             disabled={mutation.isPending}
           >
-            {mutation.isPending ? "Submitting..." : "Get OTP"}
+            {mutation.isPending ? "Submitting..." : "Permanent Service Request"}
           </button>
         </div>
       </form>

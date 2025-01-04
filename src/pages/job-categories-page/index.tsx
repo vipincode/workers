@@ -2,17 +2,18 @@ import { Link } from "react-router-dom";
 import JobCategoryCarousel from "../../components/jobs/job-category-carousel";
 import { useJobsCategory } from "../../react-query/hooks";
 import JobCategorySkeleton from "../../components/skeleton/job-category-skeleton";
+import { useQuery } from "@tanstack/react-query";
+import { fetchJobCarousel } from "../../react-query/apis";
+import { JobSliderProps } from "../../types";
 
 export default function JobCategoriesPage() {
-  const sliderTexts = [
-    "अब सिर्फ एक क्लिक में नौकरी पाएं",
-    "नौकरी का सीधा अपडेट आपके फोन पर",
-    "देश भर में हजारो नौकरिया अभी अप्लाई करें",
-    "अब आपकी मनचाही नौकरी खुद आपको ढूंढेगी",
-    "100% सत्यापित और निशुल्क नौकरिया",
-  ];
-
   const { data, isLoading, isError } = useJobsCategory();
+
+  const sliderData = useQuery<JobSliderProps, Error>({
+    queryKey: ["job-sliders"],
+    queryFn: fetchJobCarousel,
+    enabled: true,
+  });
 
   if (isError) {
     return <p>Error, Something went wrong</p>;
@@ -21,10 +22,19 @@ export default function JobCategoriesPage() {
     return <JobCategorySkeleton />;
   }
 
+  if (sliderData.isLoading) {
+    return <JobCategorySkeleton />;
+  }
+  if (sliderData.isError) {
+    return <p>Error loading job sliders</p>;
+  }
+
+  console.log(sliderData.data);
+
   return (
     <div className="min-h-screen bg-gray-100 p-4">
       <div className="mb-6">
-        <JobCategoryCarousel data={sliderTexts} />
+        <JobCategoryCarousel sliders={sliderData.data.sliders} />
       </div>
       <div className="mx-auto max-w-[500px] h-[60px] mb-0 md:mb-10 rounded-md flex justify-center items-center">
         <h2 className="text-base md:text-2xl font-bold text-center">Choose Job by Categories</h2>
