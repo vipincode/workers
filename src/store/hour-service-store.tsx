@@ -15,25 +15,25 @@ const localStorageProvider = {
 };
 
 interface RateState {
-  mesonHourCount: number;
+  MasonHourCount: number;
   helperHourCount: number;
 
-  mesonRate: number;
+  MasonRate: number;
   helperRate: number;
 
-  totalMesonHourRate: number;
+  totalMasonHourRate: number;
   totalHelperHourRate: number;
 
   totalHourPrice: number;
 
   tipValue: number;
 
-  incrementMesonHour: () => void;
-  decrementMesonHour: () => void;
+  incrementMasonHour: () => void;
+  decrementMasonHour: () => void;
   incrementHelperHour: () => void;
   decrementHelperHour: () => void;
 
-  setMesonRate: (rate: number) => void;
+  setMasonRate: (rate: number) => void;
   setHelperRate: (rate: number) => void;
 
   setHourTipPrice: (value: number) => void;
@@ -43,23 +43,23 @@ interface RateState {
 
 const initialState: Omit<
   RateState,
-  | "incrementMesonHour"
-  | "decrementMesonHour"
+  | "incrementMasonHour"
+  | "decrementMasonHour"
   | "incrementHelperHour"
   | "decrementHelperHour"
-  | "setMesonRate"
+  | "setMasonRate"
   | "setHelperRate"
   | "setHourTipPrice"
   | "resetHourTipPrice"
   | "resetHourState"
 > = {
-  mesonHourCount: 1,
+  MasonHourCount: 1,
   helperHourCount: 1,
 
-  mesonRate: 250,
+  MasonRate: 250,
   helperRate: 200,
 
-  totalMesonHourRate: 250,
+  totalMasonHourRate: 250,
   totalHelperHourRate: 200,
 
   totalHourPrice: 450,
@@ -74,7 +74,7 @@ export const useHourRateStore = create(
 
       setHourTipPrice: (value: number) =>
         set((state) => {
-          const newTotalHourPrice = state.totalMesonHourRate + state.totalHelperHourRate + value; // Add tip to the total price
+          const newTotalHourPrice = state.totalMasonHourRate + state.totalHelperHourRate + value; // Add tip to the total price
           return {
             tipValue: value,
             totalHourPrice: newTotalHourPrice,
@@ -83,20 +83,20 @@ export const useHourRateStore = create(
 
       resetHourTipPrice: () =>
         set((state) => {
-          const newTotalHourPrice = state.totalMesonHourRate + state.totalHelperHourRate; // Remove tip from the total price
+          const newTotalHourPrice = state.totalMasonHourRate + state.totalHelperHourRate; // Remove tip from the total price
           return {
             tipValue: 0, // Reset tip value
             totalHourPrice: newTotalHourPrice,
           };
         }),
 
-      setMesonRate: (rate: number) =>
+      setMasonRate: (rate: number) =>
         set((state) => {
-          const newTotalMesonHourRate = state.mesonHourCount * rate;
+          const newTotalMasonHourRate = state.MasonHourCount * rate;
           return {
-            mesonRate: rate,
-            totalMesonHourRate: newTotalMesonHourRate,
-            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate + state.tipValue,
+            MasonRate: rate,
+            totalMasonHourRate: newTotalMasonHourRate,
+            totalHourPrice: newTotalMasonHourRate + state.totalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -106,29 +106,29 @@ export const useHourRateStore = create(
           return {
             helperRate: rate,
             totalHelperHourRate: newTotalHelperHourRate,
-            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate + state.tipValue,
+            totalHourPrice: state.totalMasonHourRate + newTotalHelperHourRate + state.tipValue,
           };
         }),
 
-      incrementMesonHour: () =>
+      incrementMasonHour: () =>
         set((state) => {
-          const newMesonHourCount = state.mesonHourCount + 1;
-          const newTotalMesonHourRate = newMesonHourCount * state.mesonRate;
+          const newMasonHourCount = state.MasonHourCount + 1;
+          const newTotalMasonHourRate = newMasonHourCount * state.MasonRate;
           return {
-            mesonHourCount: newMesonHourCount,
-            totalMesonHourRate: newTotalMesonHourRate,
-            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate + state.tipValue,
+            MasonHourCount: newMasonHourCount,
+            totalMasonHourRate: newTotalMasonHourRate,
+            totalHourPrice: newTotalMasonHourRate + state.totalHelperHourRate + state.tipValue,
           };
         }),
 
-      decrementMesonHour: () =>
+      decrementMasonHour: () =>
         set((state) => {
-          const newMesonHourCount = Math.max(1, state.mesonHourCount - 1);
-          const newTotalMesonHourRate = newMesonHourCount * state.mesonRate;
+          const newMasonHourCount = Math.max(1, state.MasonHourCount - 1);
+          const newTotalMasonHourRate = newMasonHourCount * state.MasonRate;
           return {
-            mesonHourCount: newMesonHourCount,
-            totalMesonHourRate: newTotalMesonHourRate,
-            totalHourPrice: newTotalMesonHourRate + state.totalHelperHourRate + state.tipValue,
+            MasonHourCount: newMasonHourCount,
+            totalMasonHourRate: newTotalMasonHourRate,
+            totalHourPrice: newTotalMasonHourRate + state.totalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -139,7 +139,7 @@ export const useHourRateStore = create(
           return {
             helperHourCount: newHelperHourCount,
             totalHelperHourRate: newTotalHelperHourRate,
-            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate + state.tipValue,
+            totalHourPrice: state.totalMasonHourRate + newTotalHelperHourRate + state.tipValue,
           };
         }),
 
@@ -150,7 +150,7 @@ export const useHourRateStore = create(
           return {
             helperHourCount: newHelperHourCount,
             totalHelperHourRate: newTotalHelperHourRate,
-            totalHourPrice: state.totalMesonHourRate + newTotalHelperHourRate + state.tipValue,
+            totalHourPrice: state.totalMasonHourRate + newTotalHelperHourRate + state.tipValue,
           };
         }),
       resetHourState: () =>

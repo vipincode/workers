@@ -356,11 +356,11 @@ export default function StepForm() {
                                 <input
                                   type="radio"
                                   className="radio radio-primary"
-                                  value="Meson"
-                                  checked={value === "Meson"}
-                                  onChange={() => onChange("Meson")}
+                                  value="Mason"
+                                  checked={value === "Mason"}
+                                  onChange={() => onChange("Mason")}
                                 />
-                                <span className="label-text ml-2">Meson</span>
+                                <span className="label-text ml-2">Mason</span>
                               </label>
                               <label className="label cursor-pointer">
                                 <input

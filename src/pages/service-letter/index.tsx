@@ -81,29 +81,29 @@ function ServiceLetterPage() {
 
   // Instant Service
   const instantServiceObjSchema = z.object({
-    mesonDayCount: z.number(),
+    MasonDayCount: z.number(),
     helperDayCount: z.number(),
-    mesonRate: z.number(),
+    MasonRate: z.number(),
     helperRate: z.number(),
-    mesonOvertimeCount: z.number(),
+    MasonOvertimeCount: z.number(),
     helperOvertimeCount: z.number(),
-    mesonOvertimeRate: z.number(),
+    MasonOvertimeRate: z.number(),
     helperOvertimeRate: z.number(),
-    totalMesonDayRate: z.number(),
+    totalMasonDayRate: z.number(),
     totalHelperDayRate: z.number(),
-    totalMesonOvertimeRate: z.number(),
+    totalMasonOvertimeRate: z.number(),
     totalHelperOvertimeRate: z.number(),
     totalDayPrice: z.number(),
     tipValue: z.number(),
   });
   const instantHourServiceObjSchema = z.object({
-    mesonHourCount: z.number(),
+    MasonHourCount: z.number(),
     helperHourCount: z.number(),
 
-    mesonRate: z.number(),
+    MasonRate: z.number(),
     helperRate: z.number(),
 
-    totalMesonHourRate: z.number(),
+    totalMasonHourRate: z.number(),
     totalHelperHourRate: z.number(),
 
     totalHourPrice: z.number(),

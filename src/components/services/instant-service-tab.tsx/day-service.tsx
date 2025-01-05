@@ -4,20 +4,20 @@ import { useState, useEffect } from "react";
 
 const DayService = () => {
   const {
-    mesonDayCount,
+    MasonDayCount,
     helperDayCount,
-    totalMesonDayRate,
-    incrementMesonDay,
-    decrementMesonDay,
+    totalMasonDayRate,
+    incrementMasonDay,
+    decrementMasonDay,
     totalHelperDayRate,
     incrementHelperDay,
     decrementHelperDay,
-    mesonOvertimeCount,
+    MasonOvertimeCount,
     helperOvertimeCount,
-    totalMesonOvertimeRate,
+    totalMasonOvertimeRate,
     totalHelperOvertimeRate,
-    incrementMesonOvertime,
-    decrementMesonOvertime,
+    incrementMasonOvertime,
+    decrementMasonOvertime,
     incrementHelperOvertime,
     decrementHelperOvertime,
   } = useDayRateStore();
@@ -42,21 +42,21 @@ const DayService = () => {
 
   return (
     <div className="mt-8 border p-4 rounded-md">
-      {/* Meson Section */}
+      {/* Mason Section */}
       <div className="flex flex-col md:flex-row gap-2 justify-between items-center my-6">
-        <div className="font-semibold">Meson</div>
+        <div className="font-semibold">Mason</div>
         <div>{instantService.per_day_meason_rate || 800}/day</div>
         <div className="flex items-center w-[180px]">
-          <button className="w-[50px] font-semibold" onClick={decrementMesonDay}>
+          <button className="w-[50px] font-semibold" onClick={decrementMasonDay}>
             -
           </button>
           <input
             type="number"
-            value={mesonDayCount}
+            value={MasonDayCount}
             className="input input-bordered input-xs w-full flex-1 text-center"
             readOnly
           />
-          <button className="w-[50px] font-semibold" onClick={incrementMesonDay}>
+          <button className="w-[50px] font-semibold" onClick={incrementMasonDay}>
             +
           </button>
         </div>
@@ -64,7 +64,7 @@ const DayService = () => {
           <input
             type="number"
             readOnly
-            value={totalMesonDayRate}
+            value={totalMasonDayRate}
             className="input input-bordered input-xs w-full text-center font-medium"
           />
         </div>
@@ -104,21 +104,21 @@ const DayService = () => {
         <h3 className="text-sm md:font-base font-semibold">Over Time</h3>
         <p className="text-sm md:text-base">After 5 PM, overtime charges will apply per hour.</p>
 
-        {/* Meson Overtime */}
+        {/* Mason Overtime */}
         <div className="flex flex-col md:flex-row gap-2 justify-between items-center my-6">
-          <div className="font-semibold">Meson</div>
+          <div className="font-semibold">Mason</div>
           <div>{instantService.overtime_meason_rate || 200}/hour</div>
           <div className="flex items-center w-[180px]">
-            <button className="w-[50px] font-semibold" onClick={decrementMesonOvertime}>
+            <button className="w-[50px] font-semibold" onClick={decrementMasonOvertime}>
               -
             </button>
             <input
               type="number"
-              value={mesonOvertimeCount}
+              value={MasonOvertimeCount}
               className="input input-bordered input-xs w-full flex-1 text-center"
               readOnly
             />
-            <button className="w-[50px] font-semibold" onClick={incrementMesonOvertime}>
+            <button className="w-[50px] font-semibold" onClick={incrementMasonOvertime}>
               +
             </button>
           </div>
@@ -126,7 +126,7 @@ const DayService = () => {
             <input
               type="number"
               readOnly
-              value={totalMesonOvertimeRate}
+              value={totalMasonOvertimeRate}
               className="input input-bordered input-xs w-full text-center font-medium"
             />
           </div>
@@ -172,20 +172,20 @@ export default DayService;
 
 // const DayService = () => {
 //   const {
-//     mesonDayCount,
+//     MasonDayCount,
 //     helperDayCount,
-//     totalMesonDayRate,
-//     incrementMesonDay,
-//     decrementMesonDay,
+//     totalMasonDayRate,
+//     incrementMasonDay,
+//     decrementMasonDay,
 //     totalHelperDayRate,
 //     incrementHelperDay,
 //     decrementHelperDay,
-//     mesonOvertimeCount,
+//     MasonOvertimeCount,
 //     helperOvertimeCount,
-//     totalMesonOvertimeRate,
+//     totalMasonOvertimeRate,
 //     totalHelperOvertimeRate,
-//     incrementMesonOvertime,
-//     decrementMesonOvertime,
+//     incrementMasonOvertime,
+//     decrementMasonOvertime,
 //     incrementHelperOvertime,
 //     decrementHelperOvertime,
 //   } = useDayRateStore();
@@ -199,18 +199,18 @@ export default DayService;
 //   return (
 //     <div className="mt-8 border p-4 rounded-md">
 //       <div className="flex justify-between items-center my-6">
-//         <div className="font-semibold">Meson</div>
+//         <div className="font-semibold">Mason</div>
 //         <div>{instantService.per_day_meason_rate || 800}/day</div>
 //         <div className="flex items-center w-[180px]">
-//           <button className="w-[50px] font-semibold" onClick={decrementMesonDay}>
+//           <button className="w-[50px] font-semibold" onClick={decrementMasonDay}>
 //             -
 //           </button>
 //           <input
 //             type="number"
-//             value={mesonDayCount}
+//             value={MasonDayCount}
 //             className="input input-bordered input-xs w-full flex-1 text-center"
 //           />
-//           <button className="w-[50px] font-semibold" onClick={incrementMesonDay}>
+//           <button className="w-[50px] font-semibold" onClick={incrementMasonDay}>
 //             +
 //           </button>
 //         </div>
@@ -218,7 +218,7 @@ export default DayService;
 //           <input
 //             type="number"
 //             readOnly
-//             value={totalMesonDayRate}
+//             value={totalMasonDayRate}
 //             className="input input-bordered input-xs w-full text-center  font-medium"
 //           />
 //         </div>
@@ -255,18 +255,18 @@ export default DayService;
 //           <p>After 5 pm if you want these messo helpers to work overtime then then per hours rs will e chared.</p>
 //         </div>
 //         <div className="flex justify-between items-center my-6">
-//           <div className="font-semibold">Meson</div>
+//           <div className="font-semibold">Mason</div>
 //           <div>{instantService.overtime_meason_rate || 200}/day</div>
 //           <div className="flex items-center w-[180px]">
-//             <button className="w-[50px] font-semibold" onClick={decrementMesonOvertime}>
+//             <button className="w-[50px] font-semibold" onClick={decrementMasonOvertime}>
 //               -
 //             </button>
 //             <input
 //               type="number"
-//               value={mesonOvertimeCount}
+//               value={MasonOvertimeCount}
 //               className="input input-bordered input-xs w-full flex-1 text-center"
 //             />
-//             <button className="w-[50px] font-semibold" onClick={incrementMesonOvertime}>
+//             <button className="w-[50px] font-semibold" onClick={incrementMasonOvertime}>
 //               +
 //             </button>
 //           </div>
@@ -274,7 +274,7 @@ export default DayService;
 //             <input
 //               type="number"
 //               readOnly
-//               value={totalMesonOvertimeRate}
+//               value={totalMasonOvertimeRate}
 //               className="input input-bordered input-xs w-full text-center  font-medium"
 //             />
 //           </div>

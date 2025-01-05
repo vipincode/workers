@@ -12,55 +12,55 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
   const { mode, setMode } = useModeStore();
 
   const {
-    mesonDayCount,
+    MasonDayCount,
     helperDayCount,
-    totalMesonDayRate,
-    incrementMesonDay,
-    decrementMesonDay,
+    totalMasonDayRate,
+    incrementMasonDay,
+    decrementMasonDay,
     totalHelperDayRate,
     incrementHelperDay,
     decrementHelperDay,
-    mesonOvertimeCount,
+    MasonOvertimeCount,
     helperOvertimeCount,
-    totalMesonOvertimeRate,
+    totalMasonOvertimeRate,
     totalHelperOvertimeRate,
-    incrementMesonOvertime,
-    decrementMesonOvertime,
+    incrementMasonOvertime,
+    decrementMasonOvertime,
     incrementHelperOvertime,
     decrementHelperOvertime,
 
-    setMesonDayRate,
+    setMasonDayRate,
     setHelperDayRate,
-    setMesonOvertimeRate,
+    setMasonOvertimeRate,
     setHelperOvertimeRate,
   } = useDayRateStore((state) => state);
 
   const {
     decrementHelperHour,
-    decrementMesonHour,
+    decrementMasonHour,
     helperHourCount,
     incrementHelperHour,
-    incrementMesonHour,
-    mesonHourCount,
+    incrementMasonHour,
+    MasonHourCount,
     totalHelperHourRate,
-    totalMesonHourRate,
+    totalMasonHourRate,
 
-    setMesonRate,
+    setMasonRate,
     setHelperRate,
   } = useHourRateStore((state) => state);
 
   React.useEffect(() => {
     if (instantServiceData) {
-      setMesonRate(instantServiceData.per_hour_meason_rate || 200);
+      setMasonRate(instantServiceData.per_hour_meason_rate || 200);
       setHelperRate(instantServiceData.per_hour_helper_rate || 150);
       // Day
 
-      setMesonDayRate(instantServiceData.per_day_meason_rate);
+      setMasonDayRate(instantServiceData.per_day_meason_rate);
       setHelperDayRate(instantServiceData.per_day_helper_rate);
-      setMesonOvertimeRate(instantServiceData.overtime_meason_rate);
+      setMasonOvertimeRate(instantServiceData.overtime_meason_rate);
       setHelperOvertimeRate(instantServiceData.overtime_helper_rate);
     }
-  }, [instantServiceData, setMesonRate, setHelperRate, setMesonDayRate, setHelperDayRate, setHelperOvertimeRate]);
+  }, [instantServiceData, setMasonRate, setHelperRate, setMasonDayRate, setHelperDayRate, setHelperOvertimeRate]);
 
   return (
     <div role="tablist" className="tabs tabs-lifted">
@@ -77,18 +77,18 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
       />
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box md:p-6">
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
-          <div className="font-semibold">Meson</div>
+          <div className="font-semibold">Mason</div>
           <div>{instantServiceData.per_day_meason_rate || 800}/day</div>
           <div className="flex items-center w-[180px]">
-            <button className="w-[50px] font-semibold" onClick={decrementMesonDay}>
+            <button className="w-[50px] font-semibold" onClick={decrementMasonDay}>
               -
             </button>
             <input
               type="number"
-              value={mesonDayCount}
+              value={MasonDayCount}
               className="input input-bordered input-xs w-full flex-1 text-center"
             />
-            <button className="w-[50px] font-semibold" onClick={incrementMesonDay}>
+            <button className="w-[50px] font-semibold" onClick={incrementMasonDay}>
               +
             </button>
           </div>
@@ -96,7 +96,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
             <input
               type="number"
               readOnly
-              value={totalMesonDayRate}
+              value={totalMasonDayRate}
               className="input input-bordered input-xs w-full text-center  font-medium"
             />
           </div>
@@ -130,21 +130,21 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
           <hr className="my-4 md:my-10" />
           <div className="px-4 md:px-0">
             <h3 className="font-semibold">Over Time</h3>
-            <p>After 5 pm if you want these messo helpers to work overtime then then per hours rs will e chared.</p>
+            <p>After 5 pm if you want these Mason helpers to work overtime then then per hours Rs. will be chared.</p>
           </div>
           <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
-            <div className="font-semibold">Meson</div>
-            <div>{instantServiceData.overtime_meason_rate || 200}/day</div>
+            <div className="font-semibold">Mason</div>
+            <div>{instantServiceData.overtime_meason_rate || 200}/hrs</div>
             <div className="flex items-center w-[180px]">
-              <button className="w-[50px] font-semibold" onClick={decrementMesonOvertime}>
+              <button className="w-[50px] font-semibold" onClick={decrementMasonOvertime}>
                 -
               </button>
               <input
                 type="number"
-                value={mesonOvertimeCount}
+                value={MasonOvertimeCount}
                 className="input input-bordered input-xs w-full flex-1 text-center"
               />
-              <button className="w-[50px] font-semibold" onClick={incrementMesonOvertime}>
+              <button className="w-[50px] font-semibold" onClick={incrementMasonOvertime}>
                 +
               </button>
             </div>
@@ -152,14 +152,14 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
               <input
                 type="number"
                 readOnly
-                value={totalMesonOvertimeRate}
+                value={totalMasonOvertimeRate}
                 className="input input-bordered input-xs w-full text-center  font-medium"
               />
             </div>
           </div>
           <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
             <div className="font-semibold">Helper</div>
-            <div>{instantServiceData.overtime_helper_rate || 150}/day</div>
+            <div>{instantServiceData.overtime_helper_rate || 150}/hrs</div>
             <div className="flex items-center w-[180px]">
               <button className="w-[50px] font-semibold" onClick={decrementHelperOvertime}>
                 -
@@ -197,18 +197,18 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
       />
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">
-          <div className="font-semibold">Meson</div>
+          <div className="font-semibold">Mason</div>
           <div>{instantServiceData.per_hour_meason_rate || 200}/hour</div>
           <div className="flex items-center w-[180px]">
-            <button className="w-[50px] font-semibold" onClick={decrementMesonHour}>
+            <button className="w-[50px] font-semibold" onClick={decrementMasonHour}>
               -
             </button>
             <input
               type="number"
-              value={mesonHourCount}
+              value={MasonHourCount}
               className="input input-bordered input-xs w-full flex-1 text-center"
             />
-            <button className="w-[50px] font-semibold" onClick={incrementMesonHour}>
+            <button className="w-[50px] font-semibold" onClick={incrementMasonHour}>
               +
             </button>
           </div>
@@ -216,7 +216,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
             <input
               type="number"
               readOnly
-              value={totalMesonHourRate}
+              value={totalMasonHourRate}
               className="input input-bordered input-xs w-full text-center  font-medium"
             />
           </div>

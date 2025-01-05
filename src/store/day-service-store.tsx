@@ -15,39 +15,39 @@ const localStorageProvider = {
 };
 
 interface RateState {
-  mesonDayCount: number;
+  MasonDayCount: number;
   helperDayCount: number;
 
-  mesonRate: number;
+  MasonRate: number;
   helperRate: number;
 
-  mesonOvertimeCount: number;
+  MasonOvertimeCount: number;
   helperOvertimeCount: number;
 
-  mesonOvertimeRate: number;
+  MasonOvertimeRate: number;
   helperOvertimeRate: number;
 
-  totalMesonDayRate: number;
+  totalMasonDayRate: number;
   totalHelperDayRate: number;
-  totalMesonOvertimeRate: number;
+  totalMasonOvertimeRate: number;
   totalHelperOvertimeRate: number;
 
   totalDayPrice: number;
   tipValue: number;
 
-  incrementMesonDay: () => void;
-  decrementMesonDay: () => void;
+  incrementMasonDay: () => void;
+  decrementMasonDay: () => void;
   incrementHelperDay: () => void;
   decrementHelperDay: () => void;
 
-  incrementMesonOvertime: () => void;
-  decrementMesonOvertime: () => void;
+  incrementMasonOvertime: () => void;
+  decrementMasonOvertime: () => void;
   incrementHelperOvertime: () => void;
   decrementHelperOvertime: () => void;
 
-  setMesonDayRate: (rate: number) => void;
+  setMasonDayRate: (rate: number) => void;
   setHelperDayRate: (rate: number) => void;
-  setMesonOvertimeRate: (rate: number) => void;
+  setMasonOvertimeRate: (rate: number) => void;
   setHelperOvertimeRate: (rate: number) => void;
 
   setTipPrice: (value: number) => void;
@@ -56,24 +56,24 @@ interface RateState {
 }
 
 const initialState = {
-  mesonDayCount: 1,
+  MasonDayCount: 1,
   helperDayCount: 1,
 
-  mesonRate: 800, // Default rates
+  MasonRate: 800, // Default rates
   helperRate: 600,
 
-  mesonOvertimeCount: 0,
+  MasonOvertimeCount: 0,
   helperOvertimeCount: 0,
 
-  mesonOvertimeRate: 200, // Default overtime rates
+  MasonOvertimeRate: 200, // Default overtime rates
   helperOvertimeRate: 150,
 
-  totalMesonDayRate: 800,
+  totalMasonDayRate: 800,
   totalHelperDayRate: 600,
-  totalMesonOvertimeRate: 0,
+  totalMasonOvertimeRate: 0,
   totalHelperOvertimeRate: 0,
 
-  totalDayPrice: 1400, // Initial total price (meson + helper)
+  totalDayPrice: 1400, // Initial total price (Mason + helper)
 
   tipValue: 0,
 };
@@ -85,9 +85,9 @@ export const useDayRateStore = create(
       setTipPrice: (value: number) =>
         set((state) => {
           const newTotalDayPrice =
-            state.totalMesonDayRate +
+            state.totalMasonDayRate +
             state.totalHelperDayRate +
-            state.totalMesonOvertimeRate +
+            state.totalMasonOvertimeRate +
             state.totalHelperOvertimeRate +
             value; // Add the tip value to the total price
           return {
@@ -99,9 +99,9 @@ export const useDayRateStore = create(
       resetDayTipPrice: () =>
         set((state) => {
           const newTotalDayPrice =
-            state.totalMesonDayRate +
+            state.totalMasonDayRate +
             state.totalHelperDayRate +
-            state.totalMesonOvertimeRate +
+            state.totalMasonOvertimeRate +
             state.totalHelperOvertimeRate; // Exclude the tip value
           return {
             tipValue: 0, // Reset the tip value to 0
@@ -109,16 +109,16 @@ export const useDayRateStore = create(
           };
         }),
 
-      setMesonDayRate: (rate: number) =>
+      setMasonDayRate: (rate: number) =>
         set((state) => {
-          const newTotalMesonDayRate = state.mesonDayCount * rate;
+          const newTotalMasonDayRate = state.MasonDayCount * rate;
           return {
-            mesonRate: rate,
-            totalMesonDayRate: newTotalMesonDayRate,
+            MasonRate: rate,
+            totalMasonDayRate: newTotalMasonDayRate,
             totalDayPrice:
-              newTotalMesonDayRate +
+              newTotalMasonDayRate +
               state.totalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
@@ -131,24 +131,24 @@ export const useDayRateStore = create(
             helperRate: rate,
             totalHelperDayRate: newTotalHelperDayRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               newTotalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
         }),
 
-      setMesonOvertimeRate: (rate: number) =>
+      setMasonOvertimeRate: (rate: number) =>
         set((state) => {
-          const newTotalMesonOvertimeRate = state.mesonOvertimeCount * rate;
+          const newTotalMasonOvertimeRate = state.MasonOvertimeCount * rate;
           return {
-            mesonOvertimeRate: rate,
-            totalMesonOvertimeRate: newTotalMesonOvertimeRate,
+            MasonOvertimeRate: rate,
+            totalMasonOvertimeRate: newTotalMasonOvertimeRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               state.totalHelperDayRate +
-              newTotalMesonOvertimeRate +
+              newTotalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
@@ -161,41 +161,41 @@ export const useDayRateStore = create(
             helperOvertimeRate: rate,
             totalHelperOvertimeRate: newTotalHelperOvertimeRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               state.totalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               newTotalHelperOvertimeRate +
               state.tipValue,
           };
         }),
 
-      incrementMesonDay: () =>
+      incrementMasonDay: () =>
         set((state) => {
-          const newMesonDayCount = state.mesonDayCount + 1;
-          const newTotalMesonDayRate = newMesonDayCount * state.mesonRate;
+          const newMasonDayCount = state.MasonDayCount + 1;
+          const newTotalMasonDayRate = newMasonDayCount * state.MasonRate;
           return {
-            mesonDayCount: newMesonDayCount,
-            totalMesonDayRate: newTotalMesonDayRate,
+            MasonDayCount: newMasonDayCount,
+            totalMasonDayRate: newTotalMasonDayRate,
             totalDayPrice:
-              newTotalMesonDayRate +
+              newTotalMasonDayRate +
               state.totalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
         }),
 
-      decrementMesonDay: () =>
+      decrementMasonDay: () =>
         set((state) => {
-          const newMesonDayCount = Math.max(1, state.mesonDayCount - 1);
-          const newTotalMesonDayRate = newMesonDayCount * state.mesonRate;
+          const newMasonDayCount = Math.max(1, state.MasonDayCount - 1);
+          const newTotalMasonDayRate = newMasonDayCount * state.MasonRate;
           return {
-            mesonDayCount: newMesonDayCount,
-            totalMesonDayRate: newTotalMesonDayRate,
+            MasonDayCount: newMasonDayCount,
+            totalMasonDayRate: newTotalMasonDayRate,
             totalDayPrice:
-              newTotalMesonDayRate +
+              newTotalMasonDayRate +
               state.totalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
@@ -209,9 +209,9 @@ export const useDayRateStore = create(
             helperDayCount: newHelperDayCount,
             totalHelperDayRate: newTotalHelperDayRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               newTotalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
@@ -225,41 +225,41 @@ export const useDayRateStore = create(
             helperDayCount: newHelperDayCount,
             totalHelperDayRate: newTotalHelperDayRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               newTotalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
         }),
 
-      incrementMesonOvertime: () =>
+      incrementMasonOvertime: () =>
         set((state) => {
-          const newMesonOvertimeCount = state.mesonOvertimeCount + 1;
-          const newTotalMesonOvertimeRate = newMesonOvertimeCount * state.mesonOvertimeRate;
+          const newMasonOvertimeCount = state.MasonOvertimeCount + 1;
+          const newTotalMasonOvertimeRate = newMasonOvertimeCount * state.MasonOvertimeRate;
           return {
-            mesonOvertimeCount: newMesonOvertimeCount,
-            totalMesonOvertimeRate: newTotalMesonOvertimeRate,
+            MasonOvertimeCount: newMasonOvertimeCount,
+            totalMasonOvertimeRate: newTotalMasonOvertimeRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               state.totalHelperDayRate +
-              newTotalMesonOvertimeRate +
+              newTotalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
         }),
 
-      decrementMesonOvertime: () =>
+      decrementMasonOvertime: () =>
         set((state) => {
-          const newMesonOvertimeCount = Math.max(0, state.mesonOvertimeCount - 1);
-          const newTotalMesonOvertimeRate = newMesonOvertimeCount * state.mesonOvertimeRate;
+          const newMasonOvertimeCount = Math.max(0, state.MasonOvertimeCount - 1);
+          const newTotalMasonOvertimeRate = newMasonOvertimeCount * state.MasonOvertimeRate;
           return {
-            mesonOvertimeCount: newMesonOvertimeCount,
-            totalMesonOvertimeRate: newTotalMesonOvertimeRate,
+            MasonOvertimeCount: newMasonOvertimeCount,
+            totalMasonOvertimeRate: newTotalMasonOvertimeRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               state.totalHelperDayRate +
-              newTotalMesonOvertimeRate +
+              newTotalMasonOvertimeRate +
               state.totalHelperOvertimeRate +
               state.tipValue,
           };
@@ -273,9 +273,9 @@ export const useDayRateStore = create(
             helperOvertimeCount: newHelperOvertimeCount,
             totalHelperOvertimeRate: newTotalHelperOvertimeRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               state.totalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               newTotalHelperOvertimeRate +
               state.tipValue,
           };
@@ -289,9 +289,9 @@ export const useDayRateStore = create(
             helperOvertimeCount: newHelperOvertimeCount,
             totalHelperOvertimeRate: newTotalHelperOvertimeRate,
             totalDayPrice:
-              state.totalMesonDayRate +
+              state.totalMasonDayRate +
               state.totalHelperDayRate +
-              state.totalMesonOvertimeRate +
+              state.totalMasonOvertimeRate +
               newTotalHelperOvertimeRate +
               state.tipValue,
           };

@@ -18,9 +18,9 @@ const CartPrices = ({
   isCOD,
   codChargeAmount,
 }: CouponProps) => {
-  const { totalMesonDayRate, totalHelperDayRate, totalMesonOvertimeRate, totalHelperOvertimeRate, totalDayPrice } =
+  const { totalMasonDayRate, totalHelperDayRate, totalMasonOvertimeRate, totalHelperOvertimeRate, totalDayPrice } =
     useDayRateStore();
-  const { totalHelperHourRate, totalHourPrice, totalMesonHourRate } = useHourRateStore();
+  const { totalHelperHourRate, totalHourPrice, totalMasonHourRate } = useHourRateStore();
 
   const [searchParams] = useSearchParams();
   const day = searchParams.get("service");
@@ -36,46 +36,58 @@ const CartPrices = ({
       <h3 className="font-semibold">Billing Overview</h3>
       {day === "day" ? (
         <div className="text-right divide-y">
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
-            Meson:
+          <p className="flex justify-between items-center text-base gap-4 py-4">
+            Mason:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalMesonDayRate}
+              <IndianRupee size={14} /> {totalMasonDayRate}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
+          <p className="flex justify-between items-center text-base gap-4 py-4">
             Helper:
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {totalHelperDayRate}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
-            Meson Overtime:
+          <p className="flex justify-between items-center text-base gap-4 py-4">
+            Mason Overtime:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalMesonOvertimeRate}
+              <IndianRupee size={14} /> {totalMasonOvertimeRate}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
+          <p className="flex justify-between items-center text-base gap-4 py-4">
             Helper Overtime:
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {totalHelperOvertimeRate}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
+          <p className="flex justify-between items-center text-base gap-4 py-4">
+            Pick & drop services free
+            <strong className="flex items-center gap-1">
+              <IndianRupee size={14} /> <s>500</s>
+            </strong>
+          </p>
+          <p className="flex justify-between items-center text-base gap-4 py-4">
             Tip:
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {tip}
             </strong>
           </p>
+          <p className="flex justify-between items-center text-base gap-4 py-4">
+            Platform fees
+            <strong className="flex items-center gap-1">
+              <IndianRupee size={14} /> <s>20</s>
+            </strong>
+          </p>
           {isCOD && (
-            <p className="flex justify-between items-center text-sm gap-4 py-4">
-              COD Charge:
+            <p className="flex justify-between items-center text-base gap-4 py-4">
+              Offline service charge
               <strong className="flex items-center gap-1">
                 <IndianRupee size={14} /> {codChargeAmount.toFixed(2)}
               </strong>
             </p>
           )}
           {couponDiscountedAmount > 0 && (
-            <p className="flex justify-between items-center text-sm gap-4 py-4">
+            <p className="flex justify-between items-center text-base gap-4 py-4">
               Coupon Discount:
               <strong className="flex items-center gap-1">
                 <IndianRupee size={14} /> {couponDiscountedAmount}
@@ -94,50 +106,50 @@ const CartPrices = ({
             <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
               Grand Total:
               <strong className="flex items-center gap-1 text-primary">
-                <IndianRupee size={14} /> {couponDayPrice}
+                <IndianRupee size={14} /> {couponDayPrice.toFixed(2)}
               </strong>
             </p>
           )}
         </div>
       ) : (
         <div className="text-right divide-y">
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
-            Meson:
+          <p className="flex justify-between items-center text-base gap-4 py-4">
+            Mason:
             <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalMesonHourRate}
+              <IndianRupee size={14} /> {totalMasonHourRate}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
+          <p className="flex justify-between items-center text-base gap-4 py-4">
             Helper:
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {totalHelperHourRate}
             </strong>
           </p>
-          <p className="flex justify-between items-center text-sm gap-4 py-4">
+          <p className="flex justify-between items-center text-base gap-4 py-4">
             Tip:
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {tip}
             </strong>
           </p>
           {couponDiscountedAmount > 0 && (
-            <p className="flex justify-between items-center text-sm gap-4 py-4">
+            <p className="flex justify-between items-center text-base gap-4 py-4">
               Coupon Discount:
               <strong className="flex items-center gap-1">
                 <IndianRupee size={14} /> {couponDiscountedAmount}
               </strong>
             </p>
           )}
-          <p className="flex justify-between items-center text-sm font-medium gap-4 py-6">
+          <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
             Total:
             <strong className="flex items-center gap-1 text-sm">
               <IndianRupee size={14} /> {totalHourPrice}
             </strong>
           </p>
           {couponHourPrice > 0 && (
-            <p className="flex justify-between items-center text-sm font-medium gap-4 py-6">
+            <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
               Grand Total:
               <strong className="flex items-center gap-1 text-primary">
-                <IndianRupee size={14} /> {couponHourPrice}
+                <IndianRupee size={14} /> {couponHourPrice.toFixed(2)}
               </strong>
             </p>
           )}

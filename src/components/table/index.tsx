@@ -74,17 +74,17 @@ const Table: React.FC<TableProps> = ({ headers, rows }) => {
                   <td className="max-w-[300px]">
                     {JSON.stringify(row.instantService)}
                     {/* <ul>
-                      <li>Meson Day Count: {row.instantService.mesonDayCount}</li>
+                      <li>Mason Day Count: {row.instantService.MasonDayCount}</li>
                       <li>Helper Day Count: {row.instantService.helperDayCount}</li>
-                      <li>Meson Rate: {row.instantService.mesonRate}</li>
+                      <li>Mason Rate: {row.instantService.MasonRate}</li>
                       <li>Helper Rate: {row.instantService.helperRate}</li>
-                      <li>Meson Overtime Count: {row.instantService.mesonOvertimeCount}</li>
+                      <li>Mason Overtime Count: {row.instantService.MasonOvertimeCount}</li>
                       <li>Helper Overtime Count: {row.instantService.helperOvertimeCount}</li>
-                      <li>Meson Overtime Rate: {row.instantService.mesonOvertimeRate}</li>
+                      <li>Mason Overtime Rate: {row.instantService.MasonOvertimeRate}</li>
                       <li>Helper Overtime Rate: {row.instantService.helperOvertimeRate}</li>
-                      <li>Total Meson Day Rate: {row.instantService.totalMesonDayRate}</li>
+                      <li>Total Mason Day Rate: {row.instantService.totalMasonDayRate}</li>
                       <li>Total Helper Day Rate: {row.instantService.totalHelperDayRate}</li>
-                      <li>Total Meson Overtime Rate: {row.instantService.totalMesonOvertimeRate}</li>
+                      <li>Total Mason Overtime Rate: {row.instantService.totalMasonOvertimeRate}</li>
                       <li>Total Helper Overtime Rate: {row.instantService.totalHelperOvertimeRate}</li>
                       <li>Total Day Price: {row.instantService.totalDayPrice}</li>
                       <li>Tip Value: {row.instantService.tipValue}</li>

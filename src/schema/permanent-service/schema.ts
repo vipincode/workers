@@ -13,7 +13,7 @@ export const employeeSchema = z.object({
   state_id: z.string().min(1, "State is required"),
   city_id: z.string().min(1, "City is required"),
   address: z.string().min(1, { message: "Address is required" }),
-  meson: z.number().min(1, { message: "Meson count is required" }),
+  Mason: z.number().min(1, { message: "Mason count is required" }),
   helper: z.number().min(1, { message: "Helper count is required" }),
 
   service_id: z.number().optional(),
@@ -22,7 +22,7 @@ export const employeeSchema = z.object({
   // Faculties as an array of strings (assuming it's a list of facilities offered)
   faculties: z.array(z.string()).optional(),
 
-  year: z.number().min(0, { message: "Year is required" }),
+  year: z.number().optional(),
   month: z.number().min(0, { message: "Month is required" }),
   day: z.number().min(0, { message: "Day is required" }),
   employee_position: z.string().min(1, { message: "Employee position is required" }),

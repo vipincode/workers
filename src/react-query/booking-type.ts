@@ -1,16 +1,16 @@
 // Type for the booked_services object
 interface InstantServiceObj {
-  mesonDayCount: number;
+  MasonDayCount: number;
   helperDayCount: number;
-  mesonRate: number;
+  MasonRate: number;
   helperRate: number;
-  mesonOvertimeCount: number;
+  MasonOvertimeCount: number;
   helperOvertimeCount: number;
-  mesonOvertimeRate: number;
+  MasonOvertimeRate: number;
   helperOvertimeRate: number;
-  totalMesonDayRate: number;
+  totalMasonDayRate: number;
   totalHelperDayRate: number;
-  totalMesonOvertimeRate: number;
+  totalMasonOvertimeRate: number;
   totalHelperOvertimeRate: number;
   totalDayPrice: number;
   tipValue: number;

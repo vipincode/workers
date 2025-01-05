@@ -171,7 +171,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             </div>
             <div>
               <label htmlFor="" className="font-medium text-sm">
-                Available Worker Shifts
+                Which shifts workers do you need
               </label>
               <select
                 disabled={mutation.isPending}
@@ -182,8 +182,8 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
                 <option value="" disabled>
                   Select shift
                 </option>
-                <option value="Day Shift">Day Shift</option>
-                <option value="Night Shift">Night Shift</option>
+                <option value="Day Shift">8 hrs + overtime</option>
+                <option value="Night Shift">12 hrs + overtime</option>
               </select>
               {errors.shift && <p className="text-xs text-red-600 font-normal mt-2">{errors.shift.message}</p>}
             </div>
@@ -260,16 +260,16 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
                 <div>
                   <label htmlFor="" className="font-medium text-sm">
-                    Meson
+                    Mason
                   </label>
                   <input
-                    {...register("meson", { valueAsNumber: true })}
+                    {...register("Mason", { valueAsNumber: true })}
                     type="number"
                     disabled={mutation.isPending}
                     placeholder="ex: 23"
                     className="input input-bordered w-full font-medium text-sm"
                   />
-                  {errors.meson && <p className="text-xs text-red-600 font-normal mt-2">{errors.meson.message}</p>}
+                  {errors.Mason && <p className="text-xs text-red-600 font-normal mt-2">{errors.Mason.message}</p>}
                 </div>
                 <div>
                   <label htmlFor="" className="font-medium text-sm">
@@ -289,12 +289,14 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             <div>
               <h3 className="text-[16px] font-medium mt-4">What faculties do you provide to workers?</h3>
               <div className="flex flex-wrap gap-6 mt-4">
-                {["food", "stay", "over_time", "medical_insurance"].map((facility) => (
-                  <label key={facility} className="font-medium text-sm flex items-center gap-2">
-                    <input type="checkbox" value={facility} onChange={handleCheckboxChange} className="checkbox" />
-                    {facility.replace("_", " ")} {/* Display facility name */}
-                  </label>
-                ))}
+                {["food", "stay", "over_time", "medical_insurance", "transport", "first_aid", "ppe_kit"].map(
+                  (facility) => (
+                    <label key={facility} className="font-medium text-sm flex items-center gap-2">
+                      <input type="checkbox" value={facility} onChange={handleCheckboxChange} className="checkbox" />
+                      {facility.replace("_", " ")} {/* Display facility name */}
+                    </label>
+                  )
+                )}
               </div>
             </div>
           </div>
@@ -340,7 +342,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
                     placeholder="ex: 2024"
                     className="input input-bordered w-full font-medium text-sm"
                   />
-                  {errors.year && <p className="text-xs text-red-600 font-normal mt-2">{errors.year.message}</p>}
+                  {/* {errors.year && <p className="text-xs text-red-600 font-normal mt-2">{errors.year.message}</p>} */}
                 </div>
               </div>
             </div>
@@ -386,7 +388,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             <>
               <div>
                 <label htmlFor="upload_photos" className="block text-sm font-medium mt-3">
-                  Upload Photos
+                  Upload Photos of site work
                 </label>
                 <Controller
                   name="upload_photos"
@@ -451,7 +453,7 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             </>
             <div>
               <label htmlFor="" className="font-medium text-sm">
-                Alternative Work
+                How many alternative types of work do you want to our workers perform
               </label>
               <input
                 {...register("alternative_work")}
@@ -468,8 +470,8 @@ const BookServicesForm = ({ serviceId, permanentServiceId }: { serviceId: number
             <input type="checkbox" {...register("term_and_conditions")} className="checkbox" />
             <label htmlFor="" className="font-medium text-xs md:text-sm">
               Do you accept our terms and conditions?{" "}
-              <Link to="#" title="Terms & Condition" className="text-blue-700">
-                Terms
+              <Link to="/terms-and-conditions" title="Terms & Condition" className="text-blue-700">
+                View our T&C
               </Link>
             </label>
           </div>
