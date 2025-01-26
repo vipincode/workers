@@ -23,6 +23,12 @@ interface CouponFormValues {
 }
 
 function ServiceLetterPage() {
+  //COD State
+  const [discountPercentage, setDiscountPercentage] = useState(0);
+  const [appliedCouponCode, setAppliedCouponCode] = useState("");
+  const [couponDiscount, setCouponDiscount] = useState(0);
+  //END COD State
+
   const [selectedStateId, setSelectedStateId] = useState<number | null>(null);
   const [active, setActive] = useState(true);
   const navigate = useNavigate();
@@ -159,6 +165,22 @@ function ServiceLetterPage() {
   const tip = mode === "day" ? dayRateStoreData?.state?.tipValue ?? 0 : hourRateStoreData?.state?.tipValue ?? 0;
   const totalPrice = mode === "day" ? dayRateStoreData.state.totalDayPrice : hourRateStoreData.state.totalHourPrice;
 
+  //-----------
+  // ONLINE
+  const TotalCouponDiscountedPrice =
+    mode === "day" ? totalDayPrice * (discountPercentage / 100) : totalHourPrice * (discountPercentage / 100);
+  const discountedDayPrice = totalDayPrice - TotalCouponDiscountedPrice;
+  const discountedHourPrice = totalHourPrice - TotalCouponDiscountedPrice;
+  const TotalCouponPrice = mode === "day" ? discountedDayPrice : discountedHourPrice;
+
+  // 2% Charge on COD
+  const codSurcharge = 0.02; // 2% surcharge for COD
+  const finalDayPrice = selectedPayment === "COD" ? discountedDayPrice * (1 + codSurcharge) : discountedDayPrice;
+  const finalHourPrice = selectedPayment === "COD" ? discountedHourPrice * (1 + codSurcharge) : discountedHourPrice;
+  const TotalCODPrice = mode === "day" ? finalDayPrice : finalHourPrice;
+
+  // END
+
   // Handle coupon
   const form = useForm<CouponFormValues>();
   const {
@@ -166,9 +188,9 @@ function ServiceLetterPage() {
     formState: { errors: couponErrors },
   } = form;
   // const [responseMessage, setResponseMessage] = useState("");
-  const [discountPercentage, setDiscountPercentage] = useState(0);
-  const [appliedCouponCode, setAppliedCouponCode] = useState("");
-  const [couponDiscount, setCouponDiscount] = useState(0);
+  // const [discountPercentage, setDiscountPercentage] = useState(0);
+  // const [appliedCouponCode, setAppliedCouponCode] = useState("");
+  // const [couponDiscount, setCouponDiscount] = useState(0);
 
   const onApplySubmit = async (data: CouponFormValues) => {
     try {
@@ -182,7 +204,8 @@ function ServiceLetterPage() {
         const percentage = response.data.coupon.percentage;
         setDiscountPercentage(percentage);
         setAppliedCouponCode(data.coupon); // Store applied coupon code
-        setCouponDiscount(totalPrice * (percentage / 100)); // Calculate discount
+        // setCouponDiscount(totalPrice * (percentage / 100)); // Calculate discount
+        setCouponDiscount(TotalCODPrice * (percentage / 100)); // Calculate discount
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
@@ -199,19 +222,23 @@ function ServiceLetterPage() {
     }
   };
 
-  const TotalCouponDiscountedPrice =
-    mode === "day" ? totalDayPrice * (discountPercentage / 100) : totalHourPrice * (discountPercentage / 100);
+  // const TotalCouponDiscountedPrice =
+  //   mode === "day" ? totalDayPrice * (discountPercentage / 100) : totalHourPrice * (discountPercentage / 100);
 
-  // ONLINE
-  const discountedDayPrice = totalDayPrice - TotalCouponDiscountedPrice;
-  const discountedHourPrice = totalHourPrice - TotalCouponDiscountedPrice;
-  const TotalCouponPrice = mode === "day" ? discountedDayPrice : discountedHourPrice;
+  // // ONLINE
+  // const discountedDayPrice = totalDayPrice - TotalCouponDiscountedPrice;
+  // const discountedHourPrice = totalHourPrice - TotalCouponDiscountedPrice;
+  // const TotalCouponPrice = mode === "day" ? discountedDayPrice : discountedHourPrice;
 
-  // 2% Charge on COD
-  const codSurcharge = 0.02; // 2% surcharge for COD
-  const finalDayPrice = selectedPayment === "COD" ? discountedDayPrice * (1 + codSurcharge) : discountedDayPrice;
-  const finalHourPrice = selectedPayment === "COD" ? discountedHourPrice * (1 + codSurcharge) : discountedHourPrice;
-  const TotalCODPrice = mode === "day" ? finalDayPrice : finalHourPrice;
+  // // 2% Charge on COD
+  // const codSurcharge = 0.02; // 2% surcharge for COD
+  // const finalDayPrice = selectedPayment === "COD" ? discountedDayPrice * (1 + codSurcharge) : discountedDayPrice;
+  // const finalHourPrice = selectedPayment === "COD" ? discountedHourPrice * (1 + codSurcharge) : discountedHourPrice;
+  // const TotalCODPrice = mode === "day" ? finalDayPrice : finalHourPrice;
+
+  // // console.log(finalDayPrice, "finalDayPrice");
+  // // console.log(finalHourPrice, "finalHourPrice");
+  // console.log(TotalCODPrice, "TotalCouponPrice");
 
   const codChargeAmount =
     mode === "day"
@@ -614,7 +641,8 @@ function ServiceLetterPage() {
                 <CartPrices
                   couponDayPrice={finalDayPrice}
                   couponHourPrice={finalHourPrice}
-                  couponDiscountedAmount={TotalCouponDiscountedPrice}
+                  couponDiscountedAmount={couponDiscount}
+                  // couponDiscountedAmount={TotalCouponDiscountedPrice}
                   isCOD={selectedPayment === "COD"}
                   codChargeAmount={codChargeAmount}
                 />

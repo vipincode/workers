@@ -18,9 +18,17 @@ const CartPrices = ({
   isCOD,
   codChargeAmount,
 }: CouponProps) => {
-  const { totalMasonDayRate, totalHelperDayRate, totalMasonOvertimeRate, totalHelperOvertimeRate, totalDayPrice } =
-    useDayRateStore();
-  const { totalHelperHourRate, totalHourPrice, totalMasonHourRate } = useHourRateStore();
+  const {
+    totalMasonDayRate,
+    totalHelperDayRate,
+    totalMasonOvertimeRate,
+    totalHelperOvertimeRate,
+    totalDayPrice,
+    MasonDayCount,
+    helperDayCount,
+  } = useDayRateStore();
+  const { totalHelperHourRate, totalHourPrice, totalMasonHourRate, MasonHourCount, helperHourCount } =
+    useHourRateStore();
 
   const [searchParams] = useSearchParams();
   const day = searchParams.get("service");
@@ -37,25 +45,31 @@ const CartPrices = ({
       {day === "day" ? (
         <div className="text-right divide-y">
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Mason:
-            <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalMasonDayRate}
-            </strong>
+            Mason
+            <div className="flex items-center gap-4">
+              <p className="text-sm text-gray-700">Quantity({`${MasonDayCount}`})</p>
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {totalMasonDayRate}
+              </strong>
+            </div>
           </p>
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Helper:
-            <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalHelperDayRate}
-            </strong>
+            Helper
+            <div className="flex items-center gap-4">
+              <p className="text-sm text-gray-700">Quantity({`${helperDayCount}`})</p>
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {totalHelperDayRate}
+              </strong>
+            </div>
           </p>
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Mason Overtime:
+            Mason Overtime
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {totalMasonOvertimeRate}
             </strong>
           </p>
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Helper Overtime:
+            Helper Overtime
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {totalHelperOvertimeRate}
             </strong>
@@ -114,23 +128,37 @@ const CartPrices = ({
       ) : (
         <div className="text-right divide-y">
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Mason:
-            <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalMasonHourRate}
-            </strong>
+            Mason
+            <div className="flex items-center gap-4">
+              <p className="text-sm text-gray-700">Quantity({`${MasonHourCount}`})</p>
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {totalMasonHourRate}
+              </strong>
+            </div>
           </p>
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Helper:
-            <strong className="flex items-center gap-1">
-              <IndianRupee size={14} /> {totalHelperHourRate}
-            </strong>
+            Helper
+            <div className="flex items-center gap-4">
+              <p className="text-sm text-gray-700">Quantity({`${helperHourCount}`})</p>
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {totalHelperHourRate}
+              </strong>
+            </div>
           </p>
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Tip:
+            Tip
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {tip}
             </strong>
           </p>
+          {isCOD && (
+            <p className="flex justify-between items-center text-base gap-4 py-4">
+              Offline service charge
+              <strong className="flex items-center gap-1">
+                <IndianRupee size={14} /> {codChargeAmount.toFixed(2)}
+              </strong>
+            </p>
+          )}
           {couponDiscountedAmount > 0 && (
             <p className="flex justify-between items-center text-base gap-4 py-4">
               Coupon Discount:
@@ -140,7 +168,7 @@ const CartPrices = ({
             </p>
           )}
           <p className="flex justify-between items-center text-base font-medium gap-4 py-6">
-            Total:
+            Total
             <strong className="flex items-center gap-1 text-sm">
               <IndianRupee size={14} /> {totalHourPrice}
             </strong>
