@@ -12,7 +12,7 @@ const Footer = () => {
             <ul className="text-primary/60 font-normal">
               <li className="mb-4">
                 <Link to="/about-us" className=" hover:underline">
-                  About
+                  About Us
                 </Link>
               </li>
               <li className="mb-4">
@@ -57,7 +57,7 @@ const Footer = () => {
               </li>
               <li className="mb-4">
                 <Link to="/cancellation-policy" className="hover:underline">
-                  Cancellation policy
+                  Cancellation Policy
                 </Link>
               </li>
               <li className="mb-4">

@@ -87,7 +87,7 @@ const CartPrices = ({
             </strong>
           </p>
           <p className="flex justify-between items-center text-base gap-4 py-4">
-            Platform fees
+            Platform fee
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> <s>20</s>
             </strong>
@@ -146,9 +146,21 @@ const CartPrices = ({
             </div>
           </p>
           <p className="flex justify-between items-center text-base gap-4 py-4">
+            Pick & drop services free
+            <strong className="flex items-center gap-1">
+              <IndianRupee size={14} /> <s>500</s>
+            </strong>
+          </p>
+          <p className="flex justify-between items-center text-base gap-4 py-4">
             Tip
             <strong className="flex items-center gap-1">
               <IndianRupee size={14} /> {tip}
+            </strong>
+          </p>
+          <p className="flex justify-between items-center text-base gap-4 py-4">
+            Platform fee
+            <strong className="flex items-center gap-1">
+              <IndianRupee size={14} /> <s>20</s>
             </strong>
           </p>
           {isCOD && (

@@ -62,6 +62,8 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
     }
   }, [instantServiceData, setMasonRate, setHelperRate, setMasonDayRate, setHelperDayRate, setHelperOvertimeRate]);
 
+  console.log(instantServiceData);
+
   return (
     <div role="tablist" className="tabs tabs-lifted">
       {/* DAYS RATE */}
@@ -72,7 +74,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
         name="my_tabs_2"
         role="tab"
         className="tab font-semibold"
-        aria-label="Day"
+        aria-label="Day basis"
         onChange={() => setMode("day")}
       />
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box md:p-6">
@@ -193,7 +195,7 @@ const InstantServicesTab = ({ instantServiceData }: InstantServiceProps) => {
         name="my_tabs_2"
         role="tab"
         className="tab font-semibold"
-        aria-label="Hours"
+        aria-label="Hours basis"
       />
       <div role="tabpanel" className="tab-content bg-base-100 border-base-300 rounded-box p-6">
         <div className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between items-center my-6">

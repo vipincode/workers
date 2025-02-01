@@ -46,7 +46,6 @@ const CartPage = () => {
               <div className="mt-[20px] space-y-4">
                 <div>
                   <strong className="text-lg">Description</strong>
-                  {/* <p className="text-sm leading-7">{data.service.description}</p> */}
                   <div className="text-sm leading-7" dangerouslySetInnerHTML={{ __html: data.service.description }} />
                 </div>
               </div>
@@ -104,13 +103,6 @@ const CartPage = () => {
                   <div className="text-sm leading-7" dangerouslySetInnerHTML={{ __html: data.service.description }} />
                 </div>
               </div>
-
-              <button
-                className="btn btn-primary w-full my-8"
-                onClick={() => navigation(`/service-letter?service=${mode}`)}
-              >
-                Proceed Now
-              </button>
             </div>
           )}
         </div>
